@@ -51,14 +51,14 @@ def submit_survey():
                 responses[key] = ""  # Empty list becomes empty string
         else:
             responses[key] = value  # In case it's already a string
-            
+
     print("Received survey submission response_data:", response_data)
 
     installation_id = response_data.get('installationId')
     responses = response_data.get('responses')
 
     survey_response = SurveyResponse(responses, installation_id)
-    
+
     try:
         current_app.db.collection('surveyResponses').add(survey_response.to_dict())
         print("Survey response saved successfully to Firestore!")  # Added success print
@@ -81,7 +81,7 @@ def register_user():
     # Basic validation, will go in depth in the frontend!
     if not all([first_name, last_name, email, password]):
         return jsonify({"error": "Missing required fields"}), 400
-    
+
     user = UserSignUp(first_name, last_name, email, password)
 
     try:
@@ -98,7 +98,7 @@ def register_user():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-    
+
 # verifying that the user attempting to login exists within our DB
 @main.route('/verify-token', methods=['POST'])
 def verify_token():
@@ -127,7 +127,7 @@ def get_survey_responses():
         return jsonify(responses), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 @main.route('/generate-report', methods=['GET'])
 def generate_report():
     try:
@@ -154,9 +154,9 @@ def generate_report():
             zf.write(pdf_path)
 
         memory_file.seek(0)
-        
+
         return send_file(memory_file, mimetype='application/zip', as_attachment=True, download_name='survey_reports.zip')
-    
+
     except Exception as e:
         print("Error in generate_report:", str(e))
         return jsonify({"error": str(e)}), 500

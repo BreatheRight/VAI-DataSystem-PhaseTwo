@@ -1,6 +1,34 @@
-# Van Alen Institute Public Art Impact Measurement System
+# Van Alen Institute Public Art Impact Measurement System - Phase Two
 
-## Project Overview
+## 🚀 Phase Two Development Notice
+
+**This repository serves as the active development environment for Phase Two of the Van Alen Institute Community Engagement Data Platform.**
+
+### Project Status
+- **Original Repository**: [iden-a/VAI-DataSystem](https://github.com/iden-a/VAI-DataSystem) (Original team for Proof of Concept development & documentation)
+- **Active Development**: [BreatheRight/VAI-DataSystem-PhaseTwo](https://github.com/BreatheRight/VAI-DataSystem-PhaseTwo)
+- **Project Handoff**: Original team has transitioned project to Phase Two team
+
+### Integration Strategy
+Upon Phase Two completion, this repository contains the most current and feature-complete version of the VAI DataSystem. Integration options:
+1. **Comprehensive Pull Request** to original repository with all Phase Two enhancements
+2. **Repository Adoption** by VAI organization as the primary development repository
+
+### Original Project Attribution
+- **Original Repository**: [VAI-DataSystem by iden-a](https://github.com/iden-a/VAI-DataSystem)
+- **Original Developers**: iden-a, Michael Schlichting Barbey
+
+### Phase Two Team Focus
+**Team Two Objective Summary**: We are building upon the Proof of Concept built by iden-a's team. This includes the POC proposed features, in addition to consolidating the final system architecture, developing key components for two web applications, improving code quality, bug fixes, and documentation for handoff to future maintenance/development teams.
+Active development on:
+- **Admin Dashboard Development**: Comprehensive analytics and management interface
+- **Mobile-Facing Web App Polish**: Enhanced user experience and performance optimization
+- **Advanced Data Analytics**: Expanded reporting and visualization capabilities
+- **System Architecture Improvements**: Scalability and performance enhancements with deployment/cloud service provider documentation.
+
+---
+
+## [ORIGINAL] Project Overview
 The Van Alen Institute, a nonprofit organization dedicated to inclusive urban design, is launching two community-led public art installations in Spring 2025. To measure the impact of these installations, a data collection application is being developed to facilitate real-time data gathering, survey inputs, and observational logging at installation sites. This system will provide automated data analysis, visualization tools, and reporting capabilities, allowing stakeholders to make data-driven decisions and advocate for further community-focused public art initiatives.
 
 ## Features
@@ -43,15 +71,16 @@ You will also need:
 
 ### 📁 Setting Up the Project Locally
 
-#### 1. Fork and Clone the Repository
+#### 1. Fork and Clone the Repository [Revised]
 
-* Repository: [https://github.com/iden-a/VAI-DataSystem](https://github.com/iden-a/VAI-DataSystem)
-* Click the **"Fork"** button in GitHub
-* After forking, clone it:
+* **Phase Two Repository**: [https://github.com/BreatheRight/VAI-DataSystem-PhaseTwo]
 
-  ```bash
-  git clone git@github.com:your-username/VAI-DataSystem.git
-  cd VAI-DataSystem
+* **Original Repository**: [https://github.com/iden-a/VAI-DataSystem] (Reference only)
+
+To work with Phase Two development:
+```bash
+git clone git@github.com:BreatheRight/VAI-DataSystem-PhaseTwo.git
+cd VAI-DataSystem-PhaseTwo
   ```
 
 ---
@@ -193,4 +222,3 @@ python3 run.py
   source venv/bin/activate
   python3 run.py
   ```
-
