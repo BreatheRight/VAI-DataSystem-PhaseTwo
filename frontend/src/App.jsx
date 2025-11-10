@@ -7,6 +7,10 @@ import ThankYou from './pages/ThankYou';
 import Login from './pages/Login';
 import Signup from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
+import TableView from './pages/TableView'
+import EventManager from './pages/EventManager'
+import Documentation from './pages/Documentation'
+import Settings from './pages/Settings'
 import './styles/global.css';
 import API from './utils/apiClient';
 import { AuthContext } from './utils/AuthContext';
@@ -66,6 +70,10 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/sign-up' element={<Signup />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/dashboard/table' element={<TableView />} />
+          <Route path='/dashboard/events' element={<EventManager />} />
+          <Route path='/dashboard/docs' element={<Documentation />} />
+          <Route path='/dashboard/settings' element={<Settings />} />
         </Routes>
       </Router>
     </AuthContext.Provider>
@@ -73,5 +81,3 @@ function App() {
 }
 
 export default App;
-
-

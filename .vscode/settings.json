@@ -1,0 +1,10 @@
+{
+    "chat.agent.maxRequests": 50,
+    "chat.checkpoints.showFileChanges": true,
+    "chat.edits2.enabled": true,
+    "chat.emptyState.history.enabled": true,
+    "chat.mcp.gallery.enabled": true,
+    "chat.renderRelatedFiles": true,
+    "chat.tools.terminal.autoReplyToPrompts": false,
+    "inlineChat.finishOnType": true
+}
