@@ -3,6 +3,7 @@ import { Card } from '../ui/Card';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { Button } from '../ui/Button';
+import { Bug } from 'lucide-react';
 
 export default function Errors() {
   const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ export default function Errors() {
       });
 
       if (response.ok) {
-        setSubmitMessage('✅ Bug report submitted successfully! Our team will review it soon.');
+        setSubmitMessage('Bug report submitted successfully! Our team will review it soon.');
         setFormData({
           title: '',
           description: '',
@@ -59,11 +60,11 @@ export default function Errors() {
         // Reset file input
         document.getElementById('screenshot-input').value = '';
       } else {
-        setSubmitMessage('❌ Failed to submit bug report. Please try again.');
+        setSubmitMessage('Failed to submit bug report. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting bug report:', error);
-      setSubmitMessage('❌ An error occurred. Please try again later.');
+      setSubmitMessage('An error occurred. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -73,7 +74,7 @@ export default function Errors() {
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-6">
         <h1 className="flex items-center gap-2 mb-2">
-          <span className="text-vai-orange">🐛</span>
+          <Bug className="w-8 h-8 text-vai-orange" strokeWidth={1.5} />
           Bug Report
         </h1>
         <p className="text-vai-grayText font-sans">
@@ -162,7 +163,7 @@ export default function Errors() {
           </div>
 
           {submitMessage && (
-            <div className={`p-4 rounded-lg ${submitMessage.startsWith('✅') ? 'bg-vai-green/10 text-vai-green' : 'bg-red-50 text-red-600'} font-sans`}>
+            <div className={`p-4 rounded-lg ${submitMessage.includes('successfully') ? 'bg-vai-green/10 text-vai-green' : 'bg-red-50 text-red-600'} font-sans`}>
               {submitMessage}
             </div>
           )}

@@ -4,6 +4,7 @@ import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { Input } from '../ui/Input';
+import { Target, Edit2, Trash2, QrCode, Plus, Save, X, Download, Check } from 'lucide-react';
 
 const INITIAL_INSTALLATIONS = [
   {
@@ -58,7 +59,7 @@ export default function EventManager() {
     };
 
     setInstallations([...installations, newInstallation]);
-    showSuccess(`✅ Successfully added "${formData.name}"`);
+    showSuccess(`Successfully added "${formData.name}"`);
     setShowAddModal(false);
     setFormData({ name: '', description: '', image: '', location: '', status: 'Active' });
   };
@@ -68,7 +69,7 @@ export default function EventManager() {
     setInstallations(installations.map(inst =>
       inst.id === editingId ? { ...inst, ...formData } : inst
     ));
-    showSuccess(`✅ Successfully updated "${formData.name}"`);
+    showSuccess(`Successfully updated "${formData.name}"`);
     setEditingId(null);
     setFormData({ name: '', description: '', image: '', location: '', status: 'Active' });
   };
@@ -77,7 +78,7 @@ export default function EventManager() {
   const handleDeleteInstallation = (id, name) => {
     if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
       setInstallations(installations.filter(inst => inst.id !== id));
-      showSuccess(`🗑️ Successfully deleted "${name}"`);
+      showSuccess(`Successfully deleted "${name}"`);
     }
   };
 
@@ -137,7 +138,7 @@ export default function EventManager() {
       {/* Page Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-semibold text-vai-black mb-1 flex items-center gap-2">
-          <span className="text-vai-orange">🎯</span>
+          <Target className="w-8 h-8 text-vai-orange" strokeWidth={1.5} />
           Event & Installation Manager
         </h1>
         <p className="text-vai-grayText">
@@ -149,8 +150,18 @@ export default function EventManager() {
       {(showAddModal || editingId) && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 p-4">
           <div className="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-heading font-bold text-vai-black mb-4">
-              {editingId ? '✏️ Edit Installation' : '➕ Add New Installation'}
+            <h2 className="text-2xl font-heading font-bold text-vai-black mb-4 flex items-center gap-2">
+              {editingId ? (
+                <>
+                  <Edit2 className="w-6 h-6 text-vai-orange" strokeWidth={1.5} />
+                  Edit Installation
+                </>
+              ) : (
+                <>
+                  <Plus className="w-6 h-6 text-vai-orange" strokeWidth={1.5} />
+                  Add New Installation
+                </>
+              )}
             </h2>
 
             <div className="space-y-4">
@@ -223,16 +234,27 @@ export default function EventManager() {
               <Button
                 variant="primary"
                 onClick={editingId ? handleEditInstallation : handleAddInstallation}
-                className="flex-1"
+                className="flex-1 flex items-center justify-center gap-1.5"
               >
-                {editingId ? '💾 Update Installation' : '➕ Add Installation'}
+                {editingId ? (
+                  <>
+                    <Save className="w-4 h-4" strokeWidth={1.5} />
+                    Update Installation
+                  </>
+                ) : (
+                  <>
+                    <Plus className="w-4 h-4" strokeWidth={1.5} />
+                    Add Installation
+                  </>
+                )}
               </Button>
               <Button
                 variant="outline"
                 onClick={cancelForm}
-                className="flex-1"
+                className="flex-1 flex items-center justify-center gap-1.5"
               >
-                ❌ Cancel
+                <X className="w-4 h-4" strokeWidth={1.5} />
+                Cancel
               </Button>
             </div>
           </div>
@@ -296,9 +318,10 @@ export default function EventManager() {
                       size="sm"
                       variant="outline"
                       onClick={() => downloadQR(installation)}
-                      className="w-full"
+                      className="w-full flex items-center justify-center gap-1.5"
                     >
-                      💾 Download QR Code
+                      <Download className="w-4 h-4" strokeWidth={1.5} />
+                      Download QR Code
                     </Button>
                   </div>
                 )}
@@ -309,25 +332,28 @@ export default function EventManager() {
                     variant={showQR[installation.id] ? "outline" : "primary"}
                     size="sm"
                     onClick={() => toggleQR(installation.id)}
-                    className="flex-1"
+                    className="flex-1 flex items-center justify-center gap-1.5"
                   >
-                    <span className="mr-1">📱</span>
+                    <QrCode className="w-4 h-4" strokeWidth={1.5} />
                     {showQR[installation.id] ? 'Hide QR' : 'Show QR Code'}
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => startEdit(installation)}
+                    className="flex items-center gap-1.5"
                   >
-                    ✏️ Edit
+                    <Edit2 className="w-4 h-4" strokeWidth={1.5} />
+                    Edit
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => handleDeleteInstallation(installation.id, installation.name)}
-                    className="text-red-600 hover:bg-red-50"
+                    className="text-red-600 hover:bg-red-50 flex items-center gap-1.5"
                   >
-                    🗑️ Delete
+                    <Trash2 className="w-4 h-4" strokeWidth={1.5} />
+                    Delete
                   </Button>
                 </div>
               </div>
@@ -340,33 +366,35 @@ export default function EventManager() {
       <div className="flex justify-center pt-6">
         <Button
           variant="primary"
-          className="px-8"
+          className="px-8 flex items-center gap-2"
           onClick={() => setShowAddModal(true)}
         >
-          ➕ Add New Installation
+          <Plus className="w-5 h-5" strokeWidth={1.5} />
+          Add New Installation
         </Button>
       </div>
 
       {/* CRUD Test Summary */}
       <Card className="mt-8 bg-vai-bluePale/20">
-        <h3 className="text-lg font-heading font-semibold text-vai-black mb-3">
-          🧪 CRUD Validation Summary
+        <h3 className="text-lg font-heading font-semibold text-vai-black mb-3 flex items-center gap-2">
+          <Check className="w-5 h-5 text-vai-orange" strokeWidth={1.5} />
+          CRUD Validation Summary
         </h3>
         <div className="space-y-2 text-sm">
           <div className="flex items-center gap-2">
-            <span className="text-vai-green text-xl">✅</span>
+            <Check className="w-5 h-5 text-vai-green" strokeWidth={2} />
             <span><strong>CREATE:</strong> Click "Add New Installation" to add new events</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-vai-green text-xl">✅</span>
+            <Check className="w-5 h-5 text-vai-green" strokeWidth={2} />
             <span><strong>READ:</strong> All installations displayed in grid with details</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-vai-green text-xl">✅</span>
+            <Check className="w-5 h-5 text-vai-green" strokeWidth={2} />
             <span><strong>UPDATE:</strong> Click "Edit" on any installation to modify</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-vai-green text-xl">✅</span>
+            <Check className="w-5 h-5 text-vai-green" strokeWidth={2} />
             <span><strong>DELETE:</strong> Click "Delete" to remove (with confirmation)</span>
           </div>
           <div className="mt-4 p-3 bg-vai-orange/10 rounded border border-vai-orange/30">

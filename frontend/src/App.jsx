@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Installation from './pages/Installation';
 import Survey from './pages/Survey';
 import ThankYou from './pages/ThankYou';
-import Login from './pages/Login';
+import LoginNew from './pages/LoginNew';
 import Signup from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import TableView from './pages/TableView';
@@ -80,7 +80,7 @@ import { SidebarLayout } from './ui/SidebarLayout';function App() {
             <Route path='errors' element={<Errors />} />
             <Route path='settings' element={<Settings />} />
           </Route>
-          <Route path='/login' element={<Login />} />
+          <Route path='/login' element={<LoginNew />} />
           <Route path='/signup' element={<Signup />} />
         </Routes>
       </Router>

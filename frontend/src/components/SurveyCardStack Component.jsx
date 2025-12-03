@@ -2,7 +2,7 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { Check, ChevronRight, RotateCcw } from 'lucide-react';
 
-## Route these Mock Questions to our actual questions
+//Route these Mock Questions to our actual QUESTIONS
 // --- MOCK DATA: 5 Demographic Questions ---
 const QUESTIONS = [
   {

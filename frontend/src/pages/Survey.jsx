@@ -1,103 +1,32 @@
-import React, { useState } from 'react';
-import SurveyQuestion from '../components/SurveyQuestion';
-import Logo from '../components/Logo';
-import { useNavigate } from 'react-router-dom';
-import '../styles/survey.css';
+import React from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import SurveyCardStack from '../components/SurveyCardStack';
 import API from '../utils/apiClient';
 import surveyQuestions from '../data/surveyQuestions';
 
 export default function SurveyPage() {
-  const [installationId] = useState('1');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [error, setError] = useState('');
+  const [searchParams] = useSearchParams();
+  const installationId = searchParams.get('id') || '1';
   const navigate = useNavigate();
 
-  const current = surveyQuestions[currentIndex];
-  const questionKey = current.questionId;
-
-  const handleAnswerChange = (key, answer) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [key]: answer,
-    }));
-  };
-
-  const handleNext = () => {
-    if (!answers[questionKey] || answers[questionKey].length === 0) {
-      setError("Please answer the question before proceeding.");
-      return;
-    }
-    setError('');
-    if (currentIndex < surveyQuestions.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    } else {
-      navigate('/survey-complete');
-    }
-  };
-
-  const handleBack = () => {
-    setError('');
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSurveyComplete = async (answers) => {
     try {
-      const res = await API.post('/submit-survey', {
+      await API.post('/submit-survey', {
         installationId,
         responses: answers,
       });
-      console.log('Survey is submitted', res.data);
       navigate('/survey-complete');
     } catch (err) {
-      setError(err.response?.data?.message || 'Survey submission failed.');
-      console.error('Submission failure:', err);
+      console.error('Error submitting survey:', err);
+      // Still navigate to thank you page even if submission fails
+      navigate('/survey-complete');
     }
   };
 
   return (
-    <>
-      <Logo />
-      <div className="survey-page">
-        {/* this is a placeholder */}
-        <h2>Common Ground</h2>
-        <img src="/Common_Ground.jpeg" alt="Installation 1" className="survey-img" />
-        <br></br>
-
-        <div className="progress-container">
-          <div className="progress-text">
-            Question {currentIndex + 1} of {surveyQuestions.length}
-          </div>
-          <div className="progress-bar">
-            <div
-              className="progress-bar-fill"
-              style={{
-                width: `${((currentIndex + 1) / surveyQuestions.length) * 100}%`
-              }}
-            />
-          </div>
-        </div>
-
-        <SurveyQuestion
-          question={current.question}
-          options={current.options}
-          multiple={current.multiple}
-          questionType={current.type || "choice"}
-          currentAnswer={answers[questionKey] || []}
-          onAnswer={(answer) => handleAnswerChange(questionKey, answer)}
-          onNext={handleNext}
-          onBack={handleBack}
-          isFirst={currentIndex === 0}
-          isLast={currentIndex === surveyQuestions.length - 1}
-          handleSubmit={handleSubmit}
-        />
-
-        {error && <p className="error-message">{error}</p>}
-      </div>
-    </>
+    <SurveyCardStack
+      questions={surveyQuestions}
+      onComplete={handleSurveyComplete}
+    />
   );
 }
-
