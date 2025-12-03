@@ -9,7 +9,7 @@ This is an independent Phase Two development fork focused on:
 - Enterprise standard data features and reporting
 - User experience enhancements
 
-**Repository Status**: Independent fork of original VAI-DataSystem project. No pull requests will be submitted to the original repository. https://github.com/BreatheRight/VAI-DataSystem-PhaseTwo is the active development repository.
+**Repository Status**: Independent fork of original VAI-DataSystem project. No pull requests will be submitted to the original repository. https://github.com/BreatheRight/VAI-DataSystem-TSXandTails is the active development repository.
 
 ## Project Requirements Summary
 * Prefer the listed stack (React, Node/Express or Python/Flask, Firestore/Firebase, Vite, CSS), but adapt to the user's chosen tools.

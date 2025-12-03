@@ -160,3 +160,47 @@ def generate_report():
     except Exception as e:
         print("Error in generate_report:", str(e))
         return jsonify({"error": str(e)}), 500
+
+
+@main.route('/submit-bug-report', methods=['POST'])
+def submit_bug_report():
+    """
+    Please use this form to submit bugs, or equest features here. You may attach screenshot for context.
+    Sends email to vaiteam65800@gmail.com
+    """
+    try:
+        title = request.form.get('title')
+        description = request.form.get('description')
+        steps_to_reproduce = request.form.get('stepsToReproduce')
+        priority = request.form.get('priority', 'medium')
+        screenshot = request.files.get('screenshot')
+
+        # For now, we'll save to Firestore
+        # In production, you would integrate with email service (SendGrid, etc.)
+        db = current_app.db
+        bug_report_data = {
+            'title': title,
+            'description': description,
+            'stepsToReproduce': steps_to_reproduce,
+            'priority': priority,
+            'submittedAt': firestore.SERVER_TIMESTAMP,
+            'status': 'open'
+        }
+
+        # Save to Firestore
+        doc_ref = db.collection('bugReports').add(bug_report_data)
+
+        # TODO: Add email sending logic here
+        # For now, just log it
+        print(f"Bug report submitted: {title} (Priority: {priority})")
+        print(f"Description: {description}")
+        print(f"Steps: {steps_to_reproduce}")
+
+        return jsonify({
+            "message": "Bug report submitted successfully",
+            "reportId": doc_ref[1].id
+        }), 200
+
+    except Exception as e:
+        print("Error submitting bug report:", str(e))
+        return jsonify({"error": str(e)}), 500

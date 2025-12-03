@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { Box, Typography, Paper } from '@mui/material';
 import { useAuth } from '../utils/AuthContext';
-import DashboardLayout from '../components/dashboard/DashboardLayout';
 import FilterPanel from '../components/dashboard/FilterPanel';
 import DataTable from '../components/dashboard/DataTable';
+import { Card } from '../ui/Card';
+import { Badge } from '../ui/Badge';
 
 export default function TableView() {
   const { surveyData } = useAuth();
@@ -46,27 +47,30 @@ export default function TableView() {
   };
 
   return (
-    <DashboardLayout>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
-          Survey Responses - Table View
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Detailed view of all survey submissions with sortable columns and filters
-        </Typography>
-      </Box>
+    <div className="p-6 space-y-6">
+      <div className="mb-6">
+        <h1 className="text-3xl font-semibold text-vai-black mb-1">Survey Responses - Table View</h1>
+        <p className="text-vai-grayText">Detailed view of all survey submissions with sortable columns and filters</p>
+      </div>
 
       <FilterPanel filters={filters} onFilterChange={handleFilterChange} />
 
-      <Paper sx={{ mt: 3, borderRadius: 2, overflow: 'hidden' }}>
+      <Card
+        title="All Survey Responses"
+        actions={
+          <Badge active={filteredData.length > 0}>
+            {filteredData.length} responses
+          </Badge>
+        }
+      >
         <DataTable data={filteredData} />
-      </Paper>
+      </Card>
 
-      <Box sx={{ mt: 2, textAlign: 'right' }}>
-        <Typography variant="body2" color="text.secondary">
+      <div className="text-right">
+        <p className="text-sm text-vai-grayText">
           Showing {filteredData.length} of {surveyData.length} total responses
-        </Typography>
-      </Box>
-    </DashboardLayout>
+        </p>
+      </div>
+    </div>
   );
 }

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Box, Typography, Grid, Card, CardContent, CardMedia, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '../components/dashboard/DashboardLayout';
-import EventIcon from '@mui/icons-material/Event';
-import QrCodeIcon from '@mui/icons-material/QrCode';
+import React, { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
+import { Badge } from '../ui/Badge';
+import { Input } from '../ui/Input';
 
-const INSTALLATIONS = [
+const INITIAL_INSTALLATIONS = [
   {
     id: '1',
     name: 'Breathing Pavilion',
@@ -25,119 +25,358 @@ const INSTALLATIONS = [
 ];
 
 export default function EventManager() {
-  const navigate = useNavigate();
+  const [installations, setInstallations] = useState(INITIAL_INSTALLATIONS);
+  const [showQR, setShowQR] = useState({});
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    image: '',
+    location: '',
+    status: 'Active'
+  });
+  const [successMessage, setSuccessMessage] = useState('');
+  const baseURL = window.location.origin;
+
+  // Show success message temporarily
+  const showSuccess = (message) => {
+    setSuccessMessage(message);
+    setTimeout(() => setSuccessMessage(''), 3000);
+  };
+
+  // CREATE: Add new installation
+  const handleAddInstallation = () => {
+    if (!formData.name || !formData.location) {
+      alert('Please fill in at least name and location');
+      return;
+    }
+
+    const newInstallation = {
+      id: Date.now().toString(),
+      ...formData
+    };
+
+    setInstallations([...installations, newInstallation]);
+    showSuccess(`✅ Successfully added "${formData.name}"`);
+    setShowAddModal(false);
+    setFormData({ name: '', description: '', image: '', location: '', status: 'Active' });
+  };
+
+  // UPDATE: Edit existing installation
+  const handleEditInstallation = () => {
+    setInstallations(installations.map(inst =>
+      inst.id === editingId ? { ...inst, ...formData } : inst
+    ));
+    showSuccess(`✅ Successfully updated "${formData.name}"`);
+    setEditingId(null);
+    setFormData({ name: '', description: '', image: '', location: '', status: 'Active' });
+  };
+
+  // DELETE: Remove installation
+  const handleDeleteInstallation = (id, name) => {
+    if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
+      setInstallations(installations.filter(inst => inst.id !== id));
+      showSuccess(`🗑️ Successfully deleted "${name}"`);
+    }
+  };
+
+  // Open edit modal with existing data
+  const startEdit = (installation) => {
+    setEditingId(installation.id);
+    setFormData({
+      name: installation.name,
+      description: installation.description,
+      image: installation.image,
+      location: installation.location,
+      status: installation.status
+    });
+  };
+
+  // Cancel add/edit
+  const cancelForm = () => {
+    setShowAddModal(false);
+    setEditingId(null);
+    setFormData({ name: '', description: '', image: '', location: '', status: 'Active' });
+  };
+
+  const toggleQR = (id) => {
+    setShowQR(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const downloadQR = (installation) => {
+    const svg = document.getElementById(`qr-${installation.id}`);
+    if (svg) {
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const img = new Image();
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        const pngFile = canvas.toDataURL("image/png");
+        const downloadLink = document.createElement("a");
+        downloadLink.download = `${installation.name.replace(/\s+/g, '_')}_QR.png`;
+        downloadLink.href = pngFile;
+        downloadLink.click();
+      };
+      img.src = "data:image/svg+xml;base64," + btoa(svgData);
+    }
+  };
 
   return (
-    <DashboardLayout>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
-          <EventIcon sx={{ fontSize: 36, color: '#36C0FC' }} />
+    <div className="p-6 space-y-6">
+      {/* Success Message */}
+      {successMessage && (
+        <div className="fixed top-4 right-4 bg-vai-green text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+          {successMessage}
+        </div>
+      )}
+
+      {/* Page Header */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-semibold text-vai-black mb-1 flex items-center gap-2">
+          <span className="text-vai-orange">🎯</span>
           Event & Installation Manager
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
+        </h1>
+        <p className="text-vai-grayText">
           Manage public art installations, view engagement metrics, and generate QR codes for survey distribution
-        </Typography>
-      </Box>
+        </p>
+      </div>
 
-      <Grid container spacing={3}>
-        {INSTALLATIONS.map((installation) => (
-          <Grid item xs={12} md={6} key={installation.id}>
-            <Card
-              sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 6
-                }
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="300"
-                image={installation.image}
-                alt={installation.name}
-                sx={{ objectFit: 'cover' }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 2 }}>
-                  <Typography variant="h5" sx={{ fontWeight: 700 }}>
-                    {installation.name}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      bgcolor: installation.status === 'Active' ? '#4caf50' : '#9e9e9e',
-                      color: '#fff',
-                      px: 1.5,
-                      py: 0.5,
-                      borderRadius: 1,
-                      fontWeight: 600
-                    }}
-                  >
+      {/* Add/Edit Modal */}
+      {(showAddModal || editingId) && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 p-4">
+          <div className="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <h2 className="text-2xl font-heading font-bold text-vai-black mb-4">
+              {editingId ? '✏️ Edit Installation' : '➕ Add New Installation'}
+            </h2>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-vai-black mb-1">
+                  Installation Name *
+                </label>
+                <Input
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g., Breathing Pavilion"
+                  className="w-full"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-vai-black mb-1">
+                  Location *
+                </label>
+                <Input
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  placeholder="e.g., Northern Manhattan"
+                  className="w-full"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-vai-black mb-1">
+                  Description
+                </label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Describe the installation..."
+                  className="w-full border border-vai-grayLight rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vai-orange"
+                  rows="3"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-vai-black mb-1">
+                  Image URL
+                </label>
+                <Input
+                  value={formData.image}
+                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                  placeholder="/path/to/image.jpg"
+                  className="w-full"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-vai-black mb-1">
+                  Status
+                </label>
+                <select
+                  value={formData.status}
+                  onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                  className="w-full border border-vai-grayLight rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-vai-orange"
+                >
+                  <option value="Active">Active</option>
+                  <option value="Upcoming">Upcoming</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <Button
+                variant="primary"
+                onClick={editingId ? handleEditInstallation : handleAddInstallation}
+                className="flex-1"
+              >
+                {editingId ? '💾 Update Installation' : '➕ Add Installation'}
+              </Button>
+              <Button
+                variant="outline"
+                onClick={cancelForm}
+                className="flex-1"
+              >
+                ❌ Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Installations Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {installations.map((installation) => {
+          const surveyURL = `${baseURL}/installation-selection?id=${installation.id}`;
+
+          return (
+            <Card key={installation.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+              {/* Installation Image */}
+              <div className="relative h-64 overflow-hidden -m-4 mb-4">
+                <img
+                  src={installation.image}
+                  alt={installation.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23E1E0E1" width="400" height="300"/%3E%3Ctext fill="%23888888" font-family="system-ui" font-size="18" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3EImage Not Found%3C/text%3E%3C/svg%3E';
+                  }}
+                />
+                <div className="absolute top-4 right-4">
+                  <Badge active={installation.status === 'Active'}>
                     {installation.status}
-                  </Typography>
-                </Box>
+                  </Badge>
+                </div>
+              </div>
 
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                  📍 {installation.location}
-                </Typography>
+              {/* Installation Info */}
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-vai-black mb-1">
+                    {installation.name}
+                  </h3>
+                  <p className="text-sm text-vai-grayText mb-2">
+                    📍 {installation.location}
+                  </p>
+                  <p className="text-vai-black">
+                    {installation.description}
+                  </p>
+                </div>
 
-                <Typography variant="body1" sx={{ mb: 3 }}>
-                  {installation.description}
-                </Typography>
+                {/* QR Code Section */}
+                {showQR[installation.id] && (
+                  <div className="bg-vai-bluePale/30 p-4 rounded-lg text-center space-y-3">
+                    <div className="bg-white p-4 inline-block rounded-lg shadow-sm">
+                      <QRCodeSVG
+                        id={`qr-${installation.id}`}
+                        value={surveyURL}
+                        size={200}
+                        level="H"
+                        includeMargin={true}
+                      />
+                    </div>
+                    <p className="text-xs text-vai-grayText break-all px-4">
+                      {surveyURL}
+                    </p>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => downloadQR(installation)}
+                      className="w-full"
+                    >
+                      💾 Download QR Code
+                    </Button>
+                  </div>
+                )}
 
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                {/* Action Buttons */}
+                <div className="flex gap-2 flex-wrap">
                   <Button
-                    variant="contained"
-                    size="small"
-                    startIcon={<QrCodeIcon />}
-                    sx={{ bgcolor: '#36C0FC', '&:hover': { bgcolor: '#2aa3d9' } }}
+                    variant={showQR[installation.id] ? "outline" : "primary"}
+                    size="sm"
+                    onClick={() => toggleQR(installation.id)}
+                    className="flex-1"
                   >
-                    Generate QR Code
+                    <span className="mr-1">📱</span>
+                    {showQR[installation.id] ? 'Hide QR' : 'Show QR Code'}
                   </Button>
                   <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() => navigate('/dashboard')}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => startEdit(installation)}
                   >
-                    View Analytics
+                    ✏️ Edit
                   </Button>
                   <Button
-                    variant="text"
-                    size="small"
-                    color="secondary"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleDeleteInstallation(installation.id, installation.name)}
+                    className="text-red-600 hover:bg-red-50"
                   >
-                    Edit Details
+                    🗑️ Delete
                   </Button>
-                </Box>
-              </CardContent>
+                </div>
+              </div>
             </Card>
-          </Grid>
-        ))}
-      </Grid>
+          );
+        })}
+      </div>
 
-      <Box sx={{ mt: 4, p: 3, bgcolor: '#fff', borderRadius: 2, border: '1px dashed #ccc' }}>
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-          📊 Quick Stats Across All Installations
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="body2" color="text.secondary">Total Installations</Typography>
-            <Typography variant="h5" sx={{ fontWeight: 700 }}>2</Typography>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="body2" color="text.secondary">Active Events</Typography>
-            <Typography variant="h5" sx={{ fontWeight: 700 }}>2</Typography>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="body2" color="text.secondary">Total Survey Responses</Typography>
-            <Typography variant="h5" sx={{ fontWeight: 700 }}>--</Typography>
-          </Grid>
-        </Grid>
-      </Box>
-    </DashboardLayout>
+      {/* Add New Installation Button */}
+      <div className="flex justify-center pt-6">
+        <Button
+          variant="primary"
+          className="px-8"
+          onClick={() => setShowAddModal(true)}
+        >
+          ➕ Add New Installation
+        </Button>
+      </div>
+
+      {/* CRUD Test Summary */}
+      <Card className="mt-8 bg-vai-bluePale/20">
+        <h3 className="text-lg font-heading font-semibold text-vai-black mb-3">
+          🧪 CRUD Validation Summary
+        </h3>
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center gap-2">
+            <span className="text-vai-green text-xl">✅</span>
+            <span><strong>CREATE:</strong> Click "Add New Installation" to add new events</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-vai-green text-xl">✅</span>
+            <span><strong>READ:</strong> All installations displayed in grid with details</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-vai-green text-xl">✅</span>
+            <span><strong>UPDATE:</strong> Click "Edit" on any installation to modify</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-vai-green text-xl">✅</span>
+            <span><strong>DELETE:</strong> Click "Delete" to remove (with confirmation)</span>
+          </div>
+          <div className="mt-4 p-3 bg-vai-orange/10 rounded border border-vai-orange/30">
+            <p className="text-vai-black">
+              <strong>Total Installations:</strong> {installations.length} |
+              <strong className="ml-2">Active:</strong> {installations.filter(i => i.status === 'Active').length}
+            </p>
+          </div>
+        </div>
+      </Card>
+    </div>
   );
 }

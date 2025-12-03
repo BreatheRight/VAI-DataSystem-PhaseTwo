@@ -6,3 +6,8 @@ survey_graphs/
 survey_graphs_summary.pdf
 survey_summary.csv
 survey_summary.xlsx
+
+*venv/
+*.env
+*/firebase_key.json
+*/__pycache__/

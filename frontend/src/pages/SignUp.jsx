@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../components/Logo';
 import '../styles/auth.css';
 import API from '../utils/apiClient';
 
@@ -65,7 +64,6 @@ export default function Signup() {
 
     return (
         <>
-        <Logo/>
         <div className="auth-container">
             <h2>Sign Up</h2>
             <form onSubmit={handleSignup} className="auth-form">

@@ -6,5 +6,22 @@
     "chat.mcp.gallery.enabled": true,
     "chat.renderRelatedFiles": true,
     "chat.tools.terminal.autoReplyToPrompts": false,
-    "inlineChat.finishOnType": true
+    "inlineChat.finishOnType": true,
+    "terminal.integrated.allowedLinkSchemes": [
+        "file",
+        "http",
+        "https",
+        "vscode"
+    ],
+    "terminal.integrated.defaultProfile.linux": "",
+    "terminal.integrated.defaultProfile.osx": "",
+    "workbench.editor.autoLockGroups": {
+        "vscode.audioPreview": true
+    },
+    "chat.tools.edits.autoApprove": {
+        "**/*": false
+    },
+    "github.copilot.chat.byok.ollamaEndpoint": "",
+    "telemetry.editStats.enabled": false,
+    "telemetry.feedback.enabled": false
 }

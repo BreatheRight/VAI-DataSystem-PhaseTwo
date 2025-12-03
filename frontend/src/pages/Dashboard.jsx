@@ -8,12 +8,14 @@ import "../styles/dashboard.css";
 import "../styles/global.css";
 import { useAuth } from '../utils/AuthContext';
 import API from '../utils/apiClient';
-import DashboardLayout from "../components/dashboard/DashboardLayout";
 import StatsCard from "../components/dashboard/StatsCard";
 import FilterPanel from "../components/dashboard/FilterPanel";
 import InstallationComparisonChart from "../components/dashboard/InstallationComparisonChart";
 import TrendLineChart from "../components/dashboard/TrendLineChart";
 import DailySummaryCharts from "../components/dashboard/DailySummaryCharts";
+import { Button as TailwindButton } from '../ui/Button';
+import { Card } from '../ui/Card';
+import { Tabs, TabPanel } from '../ui/Tabs';
 
 const handleDownload = async () => {
   try {
@@ -36,6 +38,7 @@ const handleDownload = async () => {
 
 export default function Dashboard() {
   const { isAuthenticated, surveyData } = useAuth();
+  const [activeTab, setActiveTab] = useState('overview');
 
   const [filters, setFilters] = useState({
     installation: 'all'
@@ -112,44 +115,43 @@ export default function Dashboard() {
 
   if (!isAuthenticated) {
     return (
-      <DashboardLayout>
-        <Box sx={{ textAlign: 'center', py: 8 }}>
-          <Typography variant="h4">Error - 404, Cannot Access this Page!</Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
-            Please log in to view the dashboard.
-          </Typography>
-        </Box>
-      </DashboardLayout>
+      <div className="p-8 text-center">
+        <h1 className="text-3xl font-semibold mb-4">Error - 404, Cannot Access this Page!</h1>
+        <p className="text-vai-grayText">Please log in to view the dashboard.</p>
+      </div>
     );
   }
 
+  const tabs = [
+    { label: 'Overview', value: 'overview' },
+    { label: 'Analytics', value: 'analytics' },
+    { label: 'Survey Data', value: 'survey' },
+    { label: 'Reports', value: 'reports' }
+  ];
+
   return (
-    <DashboardLayout>
+    <div className="p-6 space-y-6">
       {/* Page Header */}
-      <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box>
-          <Typography variant="h4" sx={{ fontWeight: 700, mb: 0.5 }}>
-            Analytics Dashboard
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Real-time insights from community engagement surveys
-          </Typography>
-        </Box>
-        <Button
-          variant="contained"
-          startIcon={<Download />}
-          onClick={handleDownload}
-          sx={{ bgcolor: '#36C0FC', '&:hover': { bgcolor: '#2aa3d9' } }}
-        >
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-semibold text-vai-black mb-1">Analytics Dashboard</h1>
+          <p className="text-vai-grayText">Real-time insights from community engagement surveys</p>
+        </div>
+        <TailwindButton onClick={handleDownload}>
+          <Download className="mr-2 h-4 w-4" />
           Download Report
-        </Button>
-      </Box>
+        </TailwindButton>
+      </div>
 
       {/* Filter Panel */}
       <FilterPanel filters={filters} onFilterChange={handleFilterChange} />
 
       {/* 7-Day Trend Line Chart */}
-      <TrendLineChart data={filteredData} />
+      <Card title="Traffic Overview" className="mb-6">
+        <div style={{ height: '256px' }}>
+          <TrendLineChart data={filteredData} />
+        </div>
+      </Card>
 
       {/* Executive KPIs */}
       <Grid container spacing={3} sx={{ mb: 3 }}>
@@ -158,7 +160,7 @@ export default function Dashboard() {
             title="Total Responses"
             value={kpis.totalResponses}
             icon={PeopleIcon}
-            color="#36C0FC"
+            color="#FF710F"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -167,7 +169,7 @@ export default function Dashboard() {
             value={`${kpis.avgSentiment} / 5.0`}
             subtitle="Across welcome, safety, comfort, experience"
             icon={SentimentSatisfiedAltIcon}
-            color="#FF77C9"
+            color="#27AE60"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -176,7 +178,7 @@ export default function Dashboard() {
             value={kpis.installation1Count}
             subtitle="responses"
             icon={LocationOnIcon}
-            color="#4BC0C0"
+            color="#FF710F"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -185,33 +187,70 @@ export default function Dashboard() {
             value={kpis.installation2Count}
             subtitle="responses"
             icon={LocationOnIcon}
-            color="#FF6384"
+            color="#27AE60"
           />
         </Grid>
       </Grid>
 
-      {/* Main Charts Grid: 2x2 Layout */}
-      <Grid container spacing={3}>
-        {/* Top Left: Installation Comparison Bar Chart */}
-        <Grid item xs={12} md={6}>
-          <InstallationComparisonChart data={filteredData} />
-        </Grid>
+      {/* Tabs Section */}
+      <Card>
+        <Tabs tabs={tabs} value={activeTab} onChange={setActiveTab} />
 
-        {/* Top Right: Today's Distribution Pie Chart */}
-        <Grid item xs={12} md={6}>
-          <DailySummaryCharts data={filteredData} type="pie" />
-        </Grid>
+        <TabPanel value="overview" activeValue={activeTab}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <Card title="Referrers">
+                <InstallationComparisonChart data={filteredData} />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Card title="Installation Visits Summary">
+                <DailySummaryCharts data={filteredData} type="doughnut" />
+              </Card>
+            </Grid>
+          </Grid>
+        </TabPanel>
 
-        {/* Bottom Left: Installation Split Doughnut Chart */}
-        <Grid item xs={12} md={6}>
-          <DailySummaryCharts data={filteredData} type="doughnut" />
-        </Grid>
+        <TabPanel value="analytics" activeValue={activeTab}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <Card title="Today's Distribution">
+                <DailySummaryCharts data={filteredData} type="pie" />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Card title="Response Count">
+                <DailySummaryCharts data={filteredData} type="bar" />
+              </Card>
+            </Grid>
+          </Grid>
+        </TabPanel>
 
-        {/* Bottom Right: Response Count Bar Chart */}
-        <Grid item xs={12} md={6}>
-          <DailySummaryCharts data={filteredData} type="bar" />
-        </Grid>
-      </Grid>
-    </DashboardLayout>
+        <TabPanel value="survey" activeValue={activeTab}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <Card title="Installation Split">
+                <DailySummaryCharts data={filteredData} type="doughnut" />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Card title="Installation Comparison">
+                <InstallationComparisonChart data={filteredData} />
+              </Card>
+            </Grid>
+          </Grid>
+        </TabPanel>
+
+        <TabPanel value="reports" activeValue={activeTab}>
+          <div className="text-center py-12">
+            <h3 className="text-xl font-medium text-vai-black mb-2">Reports Coming Soon</h3>
+            <p className="text-vai-grayText mb-4">Advanced reporting features will be available here.</p>
+            <TailwindButton onClick={handleDownload}>
+              Download Current Report
+            </TailwindButton>
+          </div>
+        </TabPanel>
+      </Card>
+    </div>
   );
 }

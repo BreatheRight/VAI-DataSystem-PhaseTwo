@@ -1,152 +1,109 @@
 import React from 'react';
-import {
-  Box,
-  Typography,
-  Paper,
-  Grid,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon
-} from '@mui/material';
-import {
-  Person,
-  Notifications,
-  FileDownload,
-  Security,
-  Palette,
-  Language
-} from '@mui/icons-material';
-import DashboardLayout from '../components/dashboard/DashboardLayout';
+import { Card } from '../ui/Card';
+import { Input } from '../ui/Input';
+import { Select } from '../ui/Select';
+import { Button } from '../ui/Button';
 
 export default function Settings() {
   const settingsSections = [
     {
       title: 'User Profile',
-      icon: <Person />,
+      icon: '👤',
       description: 'Manage your personal information, email, and account details'
     },
     {
       title: 'Notification Preferences',
-      icon: <Notifications />,
+      icon: '🔔',
       description: 'Configure email alerts, system notifications, and data update frequencies'
     },
     {
       title: 'Data Export Options',
-      icon: <FileDownload />,
+      icon: '💾',
       description: 'Customize CSV/PDF export formats, scheduled reports, and data retention'
     },
     {
       title: 'Security & Privacy',
-      icon: <Security />,
+      icon: '🔒',
       description: 'Password management, two-factor authentication, session timeout settings'
     },
     {
       title: 'Display Preferences',
-      icon: <Palette />,
+      icon: '🎨',
       description: 'Theme customization, chart color schemes, and dashboard layout options'
     },
     {
       title: 'Language & Region',
-      icon: <Language />,
+      icon: '🌍',
       description: 'Interface language, date formats, time zones, and regional settings'
     }
   ];
 
   return (
-    <DashboardLayout>
+    <div className="p-6 max-w-6xl mx-auto space-y-6">
       {/* Page Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" sx={{ fontWeight: 700, mb: 0.5 }}>
-          Settings
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
+      <div className="mb-6">
+        <h1 className="text-3xl font-semibold text-vai-black mb-1">⚙️ Settings</h1>
+        <p className="text-vai-grayText">
           Manage your dashboard preferences and account settings
-        </Typography>
-      </Box>
+        </p>
+      </div>
 
       {/* Coming Soon Notice */}
-      <Paper
-        sx={{
-          p: 4,
-          mb: 4,
-          textAlign: 'center',
-          bgcolor: '#f0f9ff',
-          border: '1px solid #36C0FC',
-          borderRadius: 2
-        }}
-      >
-        <Typography variant="h5" sx={{ fontWeight: 600, mb: 1, color: '#1e1e2d' }}>
-          Settings Coming Soon
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          We're working on building comprehensive settings to customize your dashboard experience.
-        </Typography>
-      </Paper>
+      <Card>
+        <div className="text-center p-6 bg-vai-blueLight/20 rounded-lg border-2 border-vai-blueLight">
+          <h2 className="mb-2 text-vai-black">Settings Coming Soon</h2>
+          <p className="text-vai-grayText">
+            We're working on building comprehensive settings to customize your dashboard experience.
+          </p>
+        </div>
+      </Card>
+
+      {/* Account Information (Demo Form) */}
+      <Card title="Account Information">
+        <div className="space-y-4 max-w-xl">
+          <Input label="Display Name" placeholder="Your name" defaultValue="Admin User" />
+          <Input
+            label="Email Address"
+            type="email"
+            placeholder="you@example.com"
+            defaultValue="admin@vanalen.org"
+            disabled
+          />
+          <Select
+            label="Language Preference"
+            options={[
+              { value: 'en', label: 'English' },
+              { value: 'es', label: 'Español (Coming Soon)' }
+            ]}
+            defaultValue="en"
+          />
+          <div className="pt-2">
+            <Button variant="primary">Save Changes</Button>
+          </div>
+        </div>
+      </Card>
 
       {/* Planned Settings Sections */}
-      <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
-        Planned Features
-      </Typography>
-      <Grid container spacing={3}>
-        {settingsSections.map((section, index) => (
-          <Grid item xs={12} md={6} key={index}>
-            <Paper
-              sx={{
-                p: 3,
-                height: '100%',
-                transition: 'all 0.2s',
-                '&:hover': {
-                  boxShadow: 4,
-                  transform: 'translateY(-2px)'
-                }
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Box
-                  sx={{
-                    bgcolor: '#f5f5f5',
-                    borderRadius: '50%',
-                    p: 1.5,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#36C0FC'
-                  }}
-                >
-                  {section.icon}
-                </Box>
-                <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5, fontSize: '1rem' }}>
+      <div>
+        <h2 className="mb-4">Planned Features</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {settingsSections.map((section, index) => (
+            <Card key={index} className="hover:shadow-lg transition-shadow">
+              <div className="flex gap-4">
+                <div className="text-4xl" aria-hidden="true">{section.icon}</div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-vai-black mb-1">
                     {section.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  </h3>
+                  <p className="text-sm text-vai-grayText leading-relaxed">
                     {section.description}
-                  </Typography>
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Divider sx={{ my: 4 }} />
-
-      {/* Quick Info Section */}
-      <Paper sx={{ p: 3, bgcolor: '#fafafa' }}>
-        <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
-          Need Help?
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          For immediate assistance or questions about settings, please refer to the{' '}
-          <strong>Documentation</strong> page accessible from the sidebar navigation.
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          You can also contact the Van Alen Institute technical team for support with account
-          configuration or data access permissions.
-        </Typography>
-      </Paper>
-    </DashboardLayout>
+                  </p>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

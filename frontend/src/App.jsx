@@ -7,15 +7,17 @@ import ThankYou from './pages/ThankYou';
 import Login from './pages/Login';
 import Signup from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
-import TableView from './pages/TableView'
-import EventManager from './pages/EventManager'
-import Documentation from './pages/Documentation'
-import Settings from './pages/Settings'
+import TableView from './pages/TableView';
+import EventManager from './pages/EventManager';
+import Documentation from './pages/Documentation';
+import Settings from './pages/Settings';
+import SurveyBuilder from './pages/SurveyBuilder';
+import Asterix from './pages/Asterix';
+import Errors from './pages/Errors';
 import './styles/global.css';
 import API from './utils/apiClient';
 import { AuthContext } from './utils/AuthContext';
-
-function App() {
+import { SidebarLayout } from './ui/SidebarLayout';function App() {
   const [user, setUser] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [surveyData, setSurveyData] = useState([]);
@@ -67,13 +69,19 @@ function App() {
           <Route path='/installation-selection' element={<Installation />} />
           <Route path='/survey' element={<Survey />} />
           <Route path='/survey-complete' element={<ThankYou />} />
+          {/* Dashboard routes wrapped in SidebarLayout */}
+          <Route path='/dashboard' element={<SidebarLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path='table' element={<TableView />} />
+            <Route path='events' element={<EventManager />} />
+            <Route path='survey-builder' element={<SurveyBuilder />} />
+            <Route path='docs' element={<Documentation />} />
+            <Route path='asterix' element={<Asterix />} />
+            <Route path='errors' element={<Errors />} />
+            <Route path='settings' element={<Settings />} />
+          </Route>
           <Route path='/login' element={<Login />} />
-          <Route path='/sign-up' element={<Signup />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/dashboard/table' element={<TableView />} />
-          <Route path='/dashboard/events' element={<EventManager />} />
-          <Route path='/dashboard/docs' element={<Documentation />} />
-          <Route path='/dashboard/settings' element={<Settings />} />
+          <Route path='/signup' element={<Signup />} />
         </Routes>
       </Router>
     </AuthContext.Provider>
