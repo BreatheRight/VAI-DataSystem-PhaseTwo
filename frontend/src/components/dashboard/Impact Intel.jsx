@@ -249,7 +249,7 @@ const ImpactAnalysis = () => {
                 onClick={() => setActiveTab('grant')}
                 className={`flex-1 py-4 text-sm font-semibold flex items-center justify-center gap-2 transition-colors ${activeTab === 'grant' ? 'bg-amber-50 text-amber-700 border-b-2 border-amber-500' : 'text-slate-500 hover:bg-slate-50'}`}
             >
-                <Sparkles size={16} /> Grant Writer Mode
+                <Sparkles size={14} /> Social Media Buzz Feed
             </button>
             <button
                 onClick={() => setActiveTab('chat')}
@@ -275,7 +275,7 @@ const ImpactAnalysis = () => {
                             className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? <RefreshCw className="animate-spin" size={16} /> : <Sparkles size={16} />}
-                            {generatedReport ? "Regenerate" : "Generate with AI"}
+                            {generatedReport ? "Regenerate" : "Get Summary"}
                         </button>
                     </div>
 
@@ -293,7 +293,7 @@ const ImpactAnalysis = () => {
                         ) : (
                             <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-2">
                                 <FileText size={32} className="opacity-20" />
-                                <span>Ready to generate.</span>
+                                <span>Repo</span>
                             </div>
                         )}
                     </div>

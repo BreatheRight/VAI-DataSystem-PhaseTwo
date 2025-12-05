@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Installation from './pages/Installation';
+import LandingPage from './pages/LandingPageNew';
+import Installation from './pages/InstallationPicker';
 import Survey from './pages/Survey';
 import ThankYou from './pages/ThankYou';
 import LoginNew from './pages/LoginNew';
-import Signup from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import TableView from './pages/TableView';
 import EventManager from './pages/EventManager';
@@ -65,7 +64,7 @@ import { SidebarLayout } from './ui/SidebarLayout';function App() {
     }}>
       <Router>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<LandingPage />} />
           <Route path='/installation-selection' element={<Installation />} />
           <Route path='/survey' element={<Survey />} />
           <Route path='/survey-complete' element={<ThankYou />} />
@@ -81,7 +80,6 @@ import { SidebarLayout } from './ui/SidebarLayout';function App() {
             <Route path='settings' element={<Settings />} />
           </Route>
           <Route path='/login' element={<LoginNew />} />
-          <Route path='/signup' element={<Signup />} />
         </Routes>
       </Router>
     </AuthContext.Provider>

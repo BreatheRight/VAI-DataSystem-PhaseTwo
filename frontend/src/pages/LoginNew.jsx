@@ -115,16 +115,7 @@ export default function LoginNew() {
                     </form>
 
                     <div className="mt-8 text-center">
-                        <p className="text-sm text-vai-grayText">
-                            Not a member?{' '}
-                            <button
-                                onClick={() => navigate('/signup')}
-                                className="text-vai-orange font-medium hover:underline"
-                            >
-                                Get exclusive access →
-                            </button>
-                        </p>
-                        <p className="text-sm text-vai-grayText mt-4">
+                        <p className="text-sm text-vai-grayText mb-4">
                             Or log in with
                         </p>
                         <div className="flex gap-4 mt-4">
