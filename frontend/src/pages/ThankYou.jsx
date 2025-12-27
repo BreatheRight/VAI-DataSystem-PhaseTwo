@@ -85,9 +85,9 @@ const ThankYouPage = () => {
             >
               Support Our Work
             </a>
-            
+
             <span className="text-[#888888]">|</span>
-            
+
             <a
               href="https://www.vanalen.org/support/"
               target="_blank"

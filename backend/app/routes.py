@@ -62,7 +62,7 @@ def submit_survey():
 
     installation_id = response_data.get('installationId')
     # Do not overwrite normalized responses with raw responses
-    # responses = response_data.get('responses') 
+    # responses = response_data.get('responses')
 
     survey_response = SurveyResponse(responses, installation_id)
 
@@ -123,7 +123,7 @@ def get_survey_responses():
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -153,7 +153,7 @@ def get_session_metrics():
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -170,7 +170,7 @@ def get_session_metrics():
             session = doc.to_dict()
             started = session.get('startedAt')
             completed = session.get('completedAt')
-            
+
             if started and completed:
                 # Calculate duration in seconds
                 duration = (completed.timestamp() - started.timestamp())
@@ -184,7 +184,7 @@ def get_session_metrics():
             }), 200
 
         avg_duration = sum(durations) / len(durations)
-        
+
         return jsonify({
             "avgCompletionTime": round(avg_duration, 2),
             "avgCompletionTimeMinutes": round(avg_duration / 60, 2),
@@ -200,7 +200,7 @@ def generate_report():
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -295,21 +295,21 @@ def get_installation_by_identifier(identifier):
         db = current_app.db
         installations_ref = db.collection('installations')
         docs = installations_ref.stream()
-        
+
         # Normalize identifier for case-insensitive comparison
         normalized_identifier = identifier.lower().strip()
-        
+
         for doc in docs:
             inst = doc.to_dict()
             inst['id'] = doc.id
-            
+
             # Match by slug (case-insensitive) or numericId (exact match)
             slug_match = inst.get('slug', '').lower() == normalized_identifier
             numeric_match = inst.get('numericId') == identifier
-            
+
             if slug_match or numeric_match:
                 return jsonify(inst), 200
-        
+
         return jsonify({"error": "Installation not found"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -324,9 +324,9 @@ def check_slug_availability(slug):
         db = current_app.db
         installations_ref = db.collection('installations')
         docs = installations_ref.stream()
-        
+
         normalized_slug = slug.lower().strip()
-        
+
         for doc in docs:
             inst = doc.to_dict()
             if inst.get('slug', '').lower() == normalized_slug:
@@ -334,7 +334,7 @@ def check_slug_availability(slug):
                     "available": False,
                     "message": f"Slug '{slug}' is already in use by installation: {inst.get('name')}"
                 }), 200
-        
+
         return jsonify({"available": True, "message": "Slug is available"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -345,13 +345,13 @@ def get_installations():
         db = current_app.db
         installations_ref = db.collection('installations')
         docs = installations_ref.stream()
-        
+
         installations = []
         for doc in docs:
             inst = doc.to_dict()
             inst['id'] = doc.id
             installations.append(inst)
-            
+
         return jsonify(installations), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -362,7 +362,7 @@ def create_installation():
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -373,7 +373,7 @@ def create_installation():
         data = request.json
         if not data.get('name') or not data.get('location'):
             return jsonify({"error": "Name and location are required"}), 400
-            
+
         installation_data = {
             'name': data.get('name'),
             'description': data.get('description', ''),
@@ -383,15 +383,15 @@ def create_installation():
             'createdAt': firestore.SERVER_TIMESTAMP,
             'updatedAt': firestore.SERVER_TIMESTAMP
         }
-        
+
         db = current_app.db
         update_time, doc_ref = db.collection('installations').add(installation_data)
-        
+
         # Return the created object with ID
         installation_data['id'] = doc_ref.id
         # Convert timestamp to string for JSON serialization if needed, or let frontend handle it
         # For simplicity in this MVP, we won't return the server timestamp back immediately or we'd need to fetch it
-        
+
         return jsonify({
             "id": doc_ref.id,
             "name": installation_data['name'],
@@ -400,7 +400,7 @@ def create_installation():
             "description": installation_data['description'],
             "image": installation_data['image']
         }), 201
-        
+
     except Exception as e:
         print("Error creating installation:", str(e))
         return jsonify({"error": str(e)}), 500
@@ -411,7 +411,7 @@ def update_installation(installation_id):
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -422,10 +422,10 @@ def update_installation(installation_id):
         data = request.json
         db = current_app.db
         doc_ref = db.collection('installations').document(installation_id)
-        
+
         if not doc_ref.get().exists:
             return jsonify({"error": "Installation not found"}), 404
-            
+
         update_data = {
             'name': data.get('name'),
             'description': data.get('description'),
@@ -434,16 +434,16 @@ def update_installation(installation_id):
             'status': data.get('status'),
             'updatedAt': firestore.SERVER_TIMESTAMP
         }
-        
+
         # Remove None values to avoid overwriting with null if partial update intended
-        # But for this form, we send all fields usually. 
+        # But for this form, we send all fields usually.
         # Let's filter just in case
         update_data = {k: v for k, v in update_data.items() if v is not None}
-        
+
         doc_ref.update(update_data)
-        
+
         return jsonify({"message": "Installation updated successfully"}), 200
-        
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -453,7 +453,7 @@ def delete_installation(installation_id):
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -463,14 +463,14 @@ def delete_installation(installation_id):
     try:
         db = current_app.db
         doc_ref = db.collection('installations').document(installation_id)
-        
+
         if not doc_ref.get().exists:
             return jsonify({"error": "Installation not found"}), 404
-            
+
         doc_ref.delete()
-        
+
         return jsonify({"message": "Installation deleted successfully"}), 200
-        
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -482,16 +482,16 @@ def get_survey_questions():
     try:
         db = current_app.db
         installation_id = request.args.get('installationId')
-        
+
         # Start with active questions query
         questions_ref = db.collection('surveyQuestions').where('active', '==', True)
         docs = questions_ref.stream()
-        
+
         questions = []
         for doc in docs:
             question = doc.to_dict()
             question['id'] = doc.id
-            
+
             # Filter by installation if specified
             if installation_id:
                 installations = question.get('installations', [])
@@ -500,10 +500,10 @@ def get_survey_questions():
             else:
                 # No filter - return all active questions
                 questions.append(question)
-        
+
         # Sort by order field
         questions.sort(key=lambda x: x.get('order', 999))
-            
+
         return jsonify(questions), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -515,7 +515,7 @@ def create_survey_question():
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -526,7 +526,7 @@ def create_survey_question():
         data = request.json
         if not data.get('question'):
             return jsonify({"error": "Question text is required"}), 400
-            
+
         question_data = {
             'questionId': data.get('questionId', f"q{data.get('order', 999)}"),
             'question': data.get('question'),
@@ -538,16 +538,16 @@ def create_survey_question():
             'createdAt': firestore.SERVER_TIMESTAMP,
             'updatedAt': firestore.SERVER_TIMESTAMP
         }
-        
+
         db = current_app.db
         doc_ref = db.collection('surveyQuestions').document(question_data['questionId'])
         doc_ref.set(question_data)
-        
+
         return jsonify({
             "message": "Question created successfully",
             "questionId": question_data['questionId']
         }), 201
-        
+
     except Exception as e:
         print("Error creating question:", str(e))
         return jsonify({"error": str(e)}), 500
@@ -559,7 +559,7 @@ def update_survey_question(question_id):
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -570,10 +570,10 @@ def update_survey_question(question_id):
         data = request.json
         db = current_app.db
         doc_ref = db.collection('surveyQuestions').document(question_id)
-        
+
         if not doc_ref.get().exists:
             return jsonify({"error": "Question not found"}), 404
-            
+
         update_data = {
             'question': data.get('question'),
             'options': data.get('options'),
@@ -582,14 +582,14 @@ def update_survey_question(question_id):
             'order': data.get('order'),
             'updatedAt': firestore.SERVER_TIMESTAMP
         }
-        
+
         # Filter out None values
         update_data = {k: v for k, v in update_data.items() if v is not None}
-        
+
         doc_ref.update(update_data)
-        
+
         return jsonify({"message": "Question updated successfully"}), 200
-        
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -600,7 +600,7 @@ def delete_survey_question(question_id):
     auth_header = request.headers.get('Authorization')
     if not auth_header or not auth_header.startswith('Bearer '):
         return jsonify({"error": "Missing or invalid authorization header"}), 401
-    
+
     id_token = auth_header.split('Bearer ')[1]
     try:
         auth.verify_id_token(id_token)
@@ -610,17 +610,17 @@ def delete_survey_question(question_id):
     try:
         db = current_app.db
         doc_ref = db.collection('surveyQuestions').document(question_id)
-        
+
         if not doc_ref.get().exists:
             return jsonify({"error": "Question not found"}), 404
-            
+
         # Soft delete by marking inactive
         doc_ref.update({
             'active': False,
             'updatedAt': firestore.SERVER_TIMESTAMP
         })
-        
+
         return jsonify({"message": "Question deleted successfully"}), 200
-        
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
