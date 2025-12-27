@@ -1,0 +1,45 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, stable-handoff-release, TailwindTSX ]
+  pull_request:
+    branches: [ main, stable-handoff-release ]
+
+jobs:
+  frontend-check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '25.2.1'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Lint
+        run: npm run lint --if-present
+      # - name: Run Tests
+      #   run: npm test -- --run
+
+  backend-check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.10'
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Run Tests
+        run: pytest tests/test_routes_basic.py

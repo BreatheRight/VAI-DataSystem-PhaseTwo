@@ -19,7 +19,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-[#121212] flex flex-col overflow-x-hidden selection:bg-[#FF710F] selection:text-white">
+    <div className="min-h-screen bg-white font-sans text-[#121212] flex flex-col overflow-x-hidden selection:bg-[#FF710F] selection:text-white font-inter">
 
       {/* --- NAVIGATION --- */}
       <nav className="w-full border-b border-[#121212] bg-white relative z-50">
@@ -37,13 +37,13 @@ const LandingPage = () => {
                  }}
                />
                {/* Fallback Text Logo */}
-               <div className="hidden flex-col leading-none tracking-tighter font-bold text-2xl uppercase">
+               <div className="hidden flex-col leading-none tracking-tighter font-bold text-2xl uppercase font-hanken">
                   <span>VAI</span>
                </div>
             </div>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-8 font-medium">
+            <div className="hidden md:flex items-center space-x-8 font-medium font-hanken">
               <a href="https://www.vanalen.org/about" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF710F] transition-colors">About</a>
               <a href="https://www.vanalen.org/projects" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF710F] transition-colors">Projects</a>
               <a href="https://www.vanalen.org/update/impact-report-2023/" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF710F] transition-colors">Impact</a>
@@ -129,14 +129,14 @@ const LandingPage = () => {
               <div className="relative aspect-[4/5] bg-[#121212] p-1 shadow-[8px_8px_0px_0px_#DEECFF]">
                  {/* Image Container */}
                  <div className="w-full h-full bg-gray-200 relative overflow-hidden group">
-                    {/* Breathing Pavilion Image */}
-                    <div className="absolute inset-0 bg-[url('/Breathing_Pavilion.jpeg')] bg-cover bg-center transition-all duration-700"></div>
+                    {/* Los Circulos Image */}
+                    <div className="absolute inset-0 bg-[url('/Los-Circulos-2.jpg')] bg-cover bg-center transition-all duration-700"></div>
 
                     {/* Overlay Text */}
                     <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 to-transparent text-white">
                       <p className="text-sm font-bold uppercase tracking-widest text-[#FF710F] mb-1">Current Installation</p>
-                      <h3 className="text-2xl font-bold leading-tight">Breathing Pavilion</h3>
-                      <p className="text-sm text-gray-300 mt-2">Downtown Brooklyn • Open until Oct 12</p>
+                      <h3 className="text-2xl font-bold leading-tight">Los Circulos</h3>
+                      <p className="text-sm text-gray-300 mt-2">Washington Heights • NYC Parks</p>
                     </div>
                  </div>
               </div>

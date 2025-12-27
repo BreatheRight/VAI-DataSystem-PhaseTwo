@@ -2,21 +2,23 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
-// --- MOCK DATA for the two installations ---
+// --- MOCK DATA for the installations ---
 const INSTALLATIONS = [
   {
-    id: '1',
-    name: 'Breathing Pavilion',
-    location: 'Downtown Brooklyn, NY',
-    imageUrl: '/Breathing_Pavilion.jpeg', // Updated to match actual filename
-    description: 'An interactive, luminous art installation designed to promote calm and reflection.',
-  },
-  {
     id: '2',
+    slug: 'common-ground',
     name: 'Common Ground',
     location: 'Ashland, Brooklyn, NY',
-    imageUrl: '/Common_Ground.jpeg', // Use the provided photo
+    imageUrl: '/Common_Ground.jpeg',
     description: 'A colorful, modular seating landscape that explores public space and community interaction.',
+  },
+  {
+    id: '3',
+    slug: 'los-circulos',
+    name: 'Los Circulos',
+    location: 'Washington Heights, NYC Parks',
+    imageUrl: '/Los-Circulos-2.jpg',
+    description: 'Los Circulos (The Circles) is a sculptural installation that explores community gathering and public space through interconnected circular forms.',
   },
 ];
 
@@ -31,10 +33,10 @@ const InstallationSelection = () => {
     blue: '#DEECFF',     // Secondary box shadow/accent
   };
 
-  // Navigate to survey with installation ID as query parameter
-  const handleSelect = (id) => {
-    console.log(`Selected Installation ID: ${id}. Redirecting to survey...`);
-    navigate(`/survey?id=${id}`);
+  // Navigate to survey using slug for clean URLs
+  const handleSelect = (installation) => {
+    console.log(`Selected Installation: ${installation.name}. Redirecting to /${installation.slug}...`);
+    navigate(`/${installation.slug}`);
   };
 
   // Component to render a single installation card
@@ -42,7 +44,7 @@ const InstallationSelection = () => {
     // Made the entire card clickable
     <div
       className="flex flex-col border-2 border-[#121212] rounded-xl bg-white shadow-[8px_8px_0px_0px_#DEECFF] transition-all duration-300 hover:shadow-[12px_12px_0px_0px_#FF710F] hover:scale-[1.01] overflow-hidden cursor-pointer active:scale-[0.98] active:shadow-sm"
-      onClick={() => handleSelect(installation.id)}
+      onClick={() => handleSelect(installation)}
     >
 
       {/* Image Container with high contrast border - CHANGED ASPECT RATIO to 4/3 */}

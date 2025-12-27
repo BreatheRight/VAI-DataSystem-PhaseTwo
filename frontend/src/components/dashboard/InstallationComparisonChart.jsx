@@ -18,6 +18,7 @@ export default function InstallationComparisonChart({ data }) {
     // Count responses per installation
     const installation1 = data.filter(d => d.installationId === "1").length;
     const installation2 = data.filter(d => d.installationId === "2").length;
+    const installation3 = data.filter(d => d.installationId === "3").length;
 
     // Calculate average sentiment per installation
     const calcAvgSentiment = (installationId) => {
@@ -40,6 +41,7 @@ export default function InstallationComparisonChart({ data }) {
 
     const avgSentiment1 = calcAvgSentiment("1");
     const avgSentiment2 = calcAvgSentiment("2");
+    const avgSentiment3 = calcAvgSentiment("3");
 
     // Destroy existing chart
     if (chartInstance.current) {
@@ -50,21 +52,21 @@ export default function InstallationComparisonChart({ data }) {
     chartInstance.current = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Breathing Pavilion', 'Common Ground'],
+        labels: ['Breathing Pavilion', 'Common Ground', 'Los Circulos'],
         datasets: [
           {
             label: 'Response Count',
-            data: [installation1, installation2],
-            backgroundColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround],
-            borderColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround],
+            data: [installation1, installation2, installation3],
+            backgroundColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround, INSTALLATION_COLORS.losCirculos],
+            borderColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround, INSTALLATION_COLORS.losCirculos],
             borderWidth: 2,
             yAxisID: 'y'
           },
           {
             label: 'Avg Sentiment (out of 5)',
-            data: [avgSentiment1, avgSentiment2],
-            backgroundColor: [`${INSTALLATION_COLORS.breathingPavilion}80`, `${INSTALLATION_COLORS.commonGround}80`],
-            borderColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround],
+            data: [avgSentiment1, avgSentiment2, avgSentiment3],
+            backgroundColor: [`${INSTALLATION_COLORS.breathingPavilion}80`, `${INSTALLATION_COLORS.commonGround}80`, `${INSTALLATION_COLORS.losCirculos}80`],
+            borderColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround, INSTALLATION_COLORS.losCirculos],
             borderWidth: 2,
             yAxisID: 'y1'
           }

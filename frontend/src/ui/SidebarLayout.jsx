@@ -1,15 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
-import { Button } from './Button';
 import {
-  LayoutDashboard,
-  Calendar,
-  Sparkles,
-  Users,
-  BookOpen,
-  Star,
-  Bug,
   User,
   Settings,
   LogOut
@@ -32,16 +24,16 @@ export function SidebarLayout() {
   };
 
   const mainNavItems = [
-    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { label: 'Manage Events', path: '/dashboard/events', icon: Calendar },
-    { label: 'Survey Creative Suite', path: '/dashboard/survey-builder', icon: Sparkles },
-    { label: 'View Users', path: '/dashboard/table', icon: Users },
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'Manage Events', path: '/dashboard/events' },
+    { label: 'Survey Creative Suite', path: '/dashboard/survey-builder' },
+    { label: 'View Users', path: '/dashboard/table' },
   ];
 
   const pagesItems = [
-    { label: 'Documentation', path: '/dashboard/docs', icon: BookOpen },
-    { label: 'Asterix', path: '/dashboard/asterix', icon: Star },
-    { label: 'Errors', path: '/dashboard/errors', icon: Bug },
+    { label: 'Documentation', path: '/dashboard/docs' },
+    { label: 'Asterix', path: '/dashboard/asterix' },
+    { label: 'Errors', path: '/dashboard/errors' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -67,7 +59,6 @@ export function SidebarLayout() {
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {/* Main Navigation */}
           {mainNavItems.map((item) => {
-            const IconComponent = item.icon;
             return (
               <button
                 key={item.path}
@@ -80,7 +71,6 @@ export function SidebarLayout() {
                   }
                 `}
               >
-                <IconComponent className="w-5 h-5" strokeWidth={1.5} />
                 <span className="text-sm font-sans">{item.label}</span>
               </button>
             );
@@ -92,7 +82,6 @@ export function SidebarLayout() {
               Pages
             </div>
             {pagesItems.map((item) => {
-              const IconComponent = item.icon;
               return (
                 <button
                   key={item.path}
@@ -105,7 +94,6 @@ export function SidebarLayout() {
                     }
                   `}
                 >
-                  <IconComponent className="w-5 h-5" strokeWidth={1.5} />
                   <span className="text-sm font-sans">{item.label}</span>
                 </button>
               );

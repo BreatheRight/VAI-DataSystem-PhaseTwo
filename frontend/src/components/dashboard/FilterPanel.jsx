@@ -18,6 +18,7 @@ export default function FilterPanel({ filters, onFilterChange }) {
           <MenuItem value="all">All Installations</MenuItem>
           <MenuItem value="1">Breathing Pavilion</MenuItem>
           <MenuItem value="2">Common Ground</MenuItem>
+          <MenuItem value="3">Los Circulos</MenuItem>
         </Select>
       </FormControl>
     </Box>

@@ -89,7 +89,7 @@ export default function Documentation() {
 
             <div className="bg-vai-bluePale/40 p-4 rounded-lg mt-4 border-l-4 border-vai-orange">
               <p className="leading-relaxed">
-                <strong>Installation Filter:</strong> Select "All Installations", "Breathing Pavilion", or "Common Ground"
+                <strong>Installation Filter:</strong> Select "All Installations", "Breathing Pavilion", "Common Ground", or "Los Circulos"
               </p>
             </div>
           </section>

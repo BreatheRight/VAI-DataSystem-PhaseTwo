@@ -27,7 +27,8 @@ export default function TrendLineChart({ data }) {
         date: date,
         label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         installation1: 0,
-        installation2: 0
+        installation2: 0,
+        installation3: 0
       });
     }
 
@@ -42,6 +43,8 @@ export default function TrendLineChart({ data }) {
           dayData.installation1++;
         } else if (entry.installationId === '2') {
           dayData.installation2++;
+        } else if (entry.installationId === '3') {
+          dayData.installation3++;
         }
       }
     });
@@ -68,6 +71,17 @@ export default function TrendLineChart({ data }) {
             data: last7Days.map(d => d.installation2),
             borderColor: INSTALLATION_COLORS.commonGround,
             backgroundColor: `${INSTALLATION_COLORS.commonGround}1A`,
+            tension: 0.3,
+            fill: true,
+            borderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          },
+          {
+            label: 'Los Circulos',
+            data: last7Days.map(d => d.installation3),
+            borderColor: INSTALLATION_COLORS.losCirculos,
+            backgroundColor: `${INSTALLATION_COLORS.losCirculos}1A`,
             tension: 0.3,
             fill: true,
             borderWidth: 2,

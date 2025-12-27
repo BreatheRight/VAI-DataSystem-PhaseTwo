@@ -1,11 +1,23 @@
 
 ## Immediate Next Steps (Priority Order)
 
-# HIGH PRIORITY:
-# QR CODE FUNCTIONALITY
+# HIGH PRIORITY
+
+# QR CODE FUNCTIONALITY FOR DEPLOYMENT (currently only localhost on same network works)
+
 # EVENT MANAGER CRUD OPERATIONS
+
 # UI ENHANCEMENTS FOR BRAND CONSISTENCY
-# SPANISH TRANSLATION
+
+# SPANISH TRANSLATION FOR SURVEY APP
+
+# SURVEY QUESTIONS STACKED CARD UI UX SUCCESFULY HANDLES LIKERT-SCALE AND OPEN-ENDED FREE TEXT INPUT QUESTIONS (currently only multiple choice is available, but the original UI UX had 5 different question formats)
+
+# WORKING DEPLOYMENT LINK FOR STAKEHOLDERS TO DO UAT
+
+# FINALIZED DOCUMENTATION WITH UP TO DATE INFORMATION TO INCORPORATE INTO THE CLOSING PHASE WRITTEN DELIVERABLE
+
+# ORGANIZATION OF CODEBASE: REMOVE OR ARCHIVE ANY OUTDATED, REDUNDANT, OUTDATED, NON-FUNCTIONAL FILES
 
 ### Phase 1: Admin Dashboard UI/UX Enhancement (Week 1-2)
 
@@ -19,14 +31,11 @@
 
 - Apply neo-brutalist, warm accents, MoMA-inspired clean, symmetrical, creative design patterns
 
-
-
 **2. Separate Landing Pages (Critical Security Fix)**
+
 - Create dedicated `/admin` route for admin authentication (separate from user survey landing)
 
-- Implement clear logical separation between mobile survey app and admin dashboard\[2]
-
-
+- Implement clear logical separation between mobile survey app and admin dashboard
 
 **3. Integrate TypeScript + Tailwind + Any Other Components**
 
@@ -36,14 +45,12 @@
 
 - Implement Lucide icons for consistent iconography
 
-
 ### Phase 2: Complete Planned Features
-
-
 
 **4. Event Manager CRUD Operations**
 '''
 IGNORE THIS SECTION FOR NOW:
+
 - Define a Firestore schema for installations (fields: id, name, location, eventId, status, qrCodeUrl, metadata, createdAt, updatedAt, archivedAt)
 - Add Firestore security rules and role-based access control for admin vs. survey users
 - Implement backend TypeScript API (or Cloud Functions) for installation operations: list (with pagination), get, create, update, archive/restore, hard delete
@@ -51,7 +58,6 @@ IGNORE THIS SECTION FOR NOW:
 - Support cursor-based pagination, sorting, and server-side filtering by status, event, date range, and zipcode
 - Provide real-time updates with Firestore listeners for the admin list and detail views
 - Implement soft-delete / archival strategy with an audit trail (who/when) and exportable change log
-- Add CSV import/export and bulk update endpoints for installations
 - Create UI components in TypeScript/TSX: Installations Table, Detail Drawer/Modal, Edit/Create Form, Bulk Actions, and Confirmation Flows
 - Integrate client-side toast notifications and error handling for all operations
 - Add unit and integration tests for API handlers and key UI components; include e2e test scenarios for create/update/archive workflows
@@ -65,19 +71,57 @@ IGNORE THIS SECTION FOR NOW:
 
 - Add toast notifications for successful/failed operations
 
+## NEW TO-DOs 12/21
 
+### **Search Bar Admin Dashboard**: Standard search queries or results in an insights dashboard often focus on
+
+    Key Performance Indicators (KPIs): Searching for specific metrics like "total survey submissions this month," "average score for question 5," or "conversion rate for survey completion."
+    Segmented Data: Queries like "survey responses from users in California," "submissions from mobile devices," or "results for campaign X."
+    Specific Reports/Dashboards: If the dashboard has multiple pre-built reports, searching for "demographics report," "user behavior trends," or "feedback analysis."
+    Individual Records: Less common for aggregated insights, but could allow searching for specific survey IDs or user data if necessary for drill-down.
+    Data Trends: Queries such as "submission trends over time," or "weekly engagement."
+
+The actual "results" displayed in the dashboard would be the relevant charts, graphs, tables, or filtered views that answer the search query. For example, searching for "total submissions this month" might update a KPI widget to show that number, or "submissions from mobile devices" might filter a table of responses and update related charts.
+
+### **User Sessions Metrics - Hardcoded Data Capture with Firestore**: Implement the skeleton for future development of user sessions data to bolster the data captured from users using the survey app. Use the following hardcoded sessions data capture guide for a skeleton/MVP of this component; create a paragraph documenting the potential of integrating Google Analytics into the ecosystem to leverage Google Analytics GA4 service for the next team to consider
+
+**Admin Question**: "What is the average time a user spends completing surveys for each event location?"
+**Solution**: Hardcode data capture with Firestore Native SDK
+
+**Implementation Guide**:
+
+- **Data Capture (Firestore Native SDK)**:
+  - When a user starts a survey, record a `startTime` timestamp in Firestore for that survey instance
+  - When the user completes or submits the survey, record an `endTime` timestamp
+  - Crucially, also store the `eventLocation` associated with that survey
+
+- **Hardcoded Sessions Data Capture into the Codebase (Firestore-centric)**:
+
+  ***Ensure that we use consistent variables and naming conventions - only reference the coding logic in this more detailed implementation guide***:
+
+  - **Start Time**: When a user starts a survey (e.g., when the survey page loads or the first question is displayed), record a timestamp in Firestore for that specific user's survey session
+    - Create a document in a `survey_sessions` collection
+    - Document ID: `user_id + survey_id` (or a unique session ID)
+    - Fields: `{ startedAt: FieldValue.serverTimestamp(), userId: '...', surveyId: '...' }`
+
+  - **End Time**: When the user completes or submits the survey, update that same Firestore document with an end timestamp
+    - Fields: `{ completedAt: FieldValue.serverTimestamp() }`
+
+  - **Calculation**:
+    - Fetch the `startedAt` and `completedAt` timestamps from Firestore
+    - Calculate `completedAt - startedAt` to get the duration
+    - Aggregate these durations (e.g., average, median) within your Cloud Run backend (or a Cloud Function) when an admin requests the KPI
+    - Your Cloud Run backend can then serve this aggregated data to your admin dashboard
 
 **5. Survey Question Migration**
 
-- Move hardcoded 13 questions from frontend to Firestore database
+- Move hardcoded 13 questions from frontend to Firestore database (COMPLETED 12/21/2025)
 
 - Create Survey Builder Module with drag-and-drop interface
 
 - Support question types: Multiple Choice, Likert Scale, Checkboxes, Dropdowns, Free Text
 
 - Implement survey-event association workflow
-
-
 
 **6. Mobile Survey App UX Improvements**
 
@@ -91,11 +135,7 @@ IGNORE THIS SECTION FOR NOW:
 
 - Fix responsive design issues
 
-
-
 ### Phase 3: Advanced Features
-
-
 
 **7. Enhanced Analytics & Filtering**
 
@@ -107,8 +147,6 @@ IGNORE THIS SECTION FOR NOW:
 
 - Expand Advanced Charts modal with installation-specific breakdowns
 
-
-
 **8. Accessibility & Multilingual Support**
 
 - Implement English/Spanish toggle for survey questions
@@ -118,8 +156,6 @@ IGNORE THIS SECTION FOR NOW:
 - Add ARIA labels and keyboard navigation throughout
 
 - Test with screen readers
-
-
 
 **9. Security & Performance Hardening**
 
@@ -131,27 +167,19 @@ IGNORE THIS SECTION FOR NOW:
 
 - Set up error monitoring with Sentry
 
-
-
 ## Critical Blockers to Address
-
-
 
 **From your Execution Phase document**:
 
-1\. **Frontend deployment white screen issue** - Vercel/Netlify deploy successfully but render blank page (localhost works)
+1. **Frontend deployment white screen issue** - Vercel/Netlify deploy successfully but render blank page (localhost works)
 
-2\. **Cross-browser mobile testing** - Requires iOS Safari and older Android device testing
+2. **Cross-browser mobile testing** - Requires iOS Safari and older Android device testing
 
-3\. **Component consistency** - Standardize search, filter, input field components across app
+3. **Component consistency** - Standardize search, filter, input field components across app
 
-4\. **Survey partial submission UX decision** - Determine data integrity vs. completion rates strategy
+4. **Survey partial submission UX decision** - Determine data integrity vs. completion rates strategy
 
-
-
-## Success Criteria for 12/02/2025 Deadline
-
-
+## Success Criteria for 12/22/2025 Deadline
 
 ✅ Admin dashboard matches VAI Style Guide visual identity
 
@@ -163,7 +191,7 @@ IGNORE THIS SECTION FOR NOW:
 
 ✅ Mobile-first responsive design for survey app
 
-✅ TypeScript + Tailwind + MaterialUI properly integrated
+✅ Either: (1) TypeScript + Tailwind + MaterialUI properly integrated OR (2) Javascript with only MaterialUI or Tailwind
 
 ✅ All security vulnerabilities resolved
 

@@ -1,1 +1,11 @@
-REFERENCEONLY-ComponetnsFromTypescript
+** .github/workflows
+.github/AGENT.md
+.github/copilot-instructions.md
+/.env
+/.venv
+/__pycache__/
+*.pyc
+.DS_Store
+.vscode/
+.idea/
+/dist/

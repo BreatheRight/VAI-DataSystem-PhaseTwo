@@ -87,8 +87,123 @@ const surveyQuestions = [
       question: "Has this installation made you more interested in exploring the surrounding neighborhood?",
       options: ["Yes", "No", "Not Sure"],
       multiple: false,
+    },
+    {
+      questionId: "q14",
+      question: "On a scale of 0 to 10, how likely are you to recommend our organization to a friend or colleague?",
+      type: "range",
+      options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      multiple: false,
+    },
+    {
+      questionId: "q15",
+      question: "How satisfied are you with the overall value you receive as a member/supporter?",
+      type: "range",
+      options: [1, 2, 3, 4, 5],
+      multiple: false,
+    },
+    {
+      questionId: "q16",
+      question: "How would you rate our impact on the community?",
+      type: "range",
+      options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      multiple: false,
+    },
+    {
+      questionId: "q17",
+      question: "What could we do to improve your experience with our app?",
+      type: "text",
+      multiple: false,
+    },
+    {
+      questionId: "q18",
+      question: "What additional support or programs would you like us to offer?",
+      type: "text",
+      multiple: false,
+    },
+    {
+      questionId: "q19",
+      question: "On a scale of 1 to 5, how much did the art installation influence your perception of public space?",
+      type: "range",
+      options: [1, 2, 3, 4, 5],
+      multiple: false,
+    },
+    {
+      questionId: "q20",
+      question: "How did you first learn about this specific installation?",
+      options: ["App notification", "Social media", "Website", "Saw it in person", "Other"],
+      multiple: false,
+    },
+    {
+      questionId: "q21",
+      question: "Did you attend any related talks or tours associated with the installation?",
+      options: ["Yes", "No"],
+      multiple: false,
+    },
+    {
+      questionId: "q22",
+      question: "What feelings or thoughts did this art installation evoke for you?",
+      type: "text",
+      multiple: false,
+    },
+    {
+      questionId: "q23",
+      question: "How easy was it to navigate to and engage with the physical art installation using the app's map/guide?",
+      type: "range",
+      options: [1, 2, 3, 4, 5],
+      multiple: false,
+    },
+    {
+      questionId: "q24",
+      question: "On a scale of 1 to 10, how valuable was the content discussed during the last member meetup?",
+      type: "range",
+      options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      multiple: false,
+    },
+    {
+      questionId: "q25",
+      question: "Which of these topics would you be most interested in for a future meetup?",
+      options: ["Urban Design & Equity", "Sustainable Architecture", "Public Art & Community Engagement", "Historic Preservation"],
+      multiple: false,
+    },
+    {
+      questionId: "q26",
+      question: "Did the meetup help you make a meaningful professional connection?",
+      options: ["Yes", "No"],
+      multiple: false,
+    },
+    {
+      questionId: "q27",
+      question: "What was your single favorite part of the event?",
+      type: "text",
+      multiple: false,
+    },
+    {
+      questionId: "q28",
+      question: "How likely are you to recommend a friend or colleague attend a future Van Alen member event?",
+      type: "range",
+      options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      multiple: false,
+    },
+    {
+      questionId: "q29",
+      question: "How effectively does the Van Alen Institute app help you stay informed about upcoming events?",
+      type: "range",
+      options: [1, 2, 3, 4, 5],
+      multiple: false,
+    },
+    {
+      questionId: "q30",
+      question: "Do you feel a strong sense of community with other Van Alen members?",
+      options: ["Yes", "No"],
+      multiple: false,
+    },
+    {
+      questionId: "q31",
+      question: "Do you have any suggestions for locations for future public art projects?",
+      type: "text",
+      multiple: false,
     }
   ];
-  
+
   export default surveyQuestions;
-  

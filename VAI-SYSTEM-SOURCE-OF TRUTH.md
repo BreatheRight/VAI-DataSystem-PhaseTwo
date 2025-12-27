@@ -1,4 +1,5 @@
 # Van Alen Institute Data System - Phase Two Analysis
+
 ## SOURCE OF TRUTH (as of 11/15/25)
 
 ---
@@ -6,6 +7,7 @@
 ## 1. FRONTEND PAGES & COMPONENTS INVENTORY
 
 ### Public Pages (Mobile-Facing Survey App)
+
 | Page | File Path | Status | Purpose |
 |------|-----------|--------|---------|
 | **Home** | `frontend/src/pages/Home.jsx` | Complete | Landing page with "Get Started" CTA |
@@ -14,12 +16,14 @@
 | **Thank You** | `frontend/src/pages/ThankYou.jsx` | Complete | Post-submission confirmation |
 
 ### Authentication Pages
+
 | Page | File Path | Status | Purpose |
 |------|-----------|--------|---------|
 | **Login** | `frontend/src/pages/Login.jsx` | Complete | Staff email/password authentication |
 | **Sign Up** | `frontend/src/pages/SignUp.jsx` | Complete | New user registration (firstName, lastName, email, password) |
 
 ### Admin Dashboard Pages
+
 | Page | File Path | Status | Purpose |
 |------|-----------|--------|---------|
 | **Dashboard** | `frontend/src/pages/Dashboard.jsx` | Complete | Main analytics view (KPIs, 7-day trend, 4-chart grid) |
@@ -29,6 +33,7 @@
 | **Settings** | `frontend/src/pages/Settings.jsx` | Placeholder | Future user preferences (6 planned feature cards) |
 
 ### Core Layout & Navigation Components
+
 | Component | File Path | Status | Purpose |
 |-----------|-----------|--------|---------|
 | **DashboardLayout** | `frontend/src/components/dashboard/DashboardLayout.jsx` | Complete | Persistent sidebar navigation with Material UI Drawer, logo, menu icons |
@@ -36,12 +41,14 @@
 | **AuthContext** | `frontend/src/context/AuthContext.jsx` | Complete | Global auth state provider (user, isAuthenticated, surveyData) |
 
 ### Survey Components (Mobile App)
+
 | Component | File Path | Status | Purpose |
 |-----------|-----------|--------|---------|
 | **SurveyQuestion** | `frontend/src/components/survey/SurveyQuestion.jsx` | Complete | Reusable question component (multiple choice, checkboxes, range sliders) |
 | **ProgressBar** | `frontend/src/components/survey/ProgressBar.jsx` | Complete | Visual progress indicator (13 questions) |
 
 ### Dashboard Analytics Components
+
 | Component | File Path | Status | Purpose |
 |-----------|-----------|--------|---------|
 | **StatsCard** | `frontend/src/components/dashboard/StatsCard.jsx` | Complete | KPI display cards (total responses, avg sentiment, installation counts) |
@@ -55,18 +62,21 @@
 | **DemographicChart** | `frontend/src/components/dashboard/DemographicChart.jsx` | Complete | Demographics chart component (respects parent chart type) |
 
 ### Shared UI Components
+
 | Component | File Path | Status | Purpose |
 |-----------|-----------|--------|---------|
 | **Loading Spinner** | `frontend/src/components/common/LoadingSpinner.jsx` | Complete | Centered spinner for loading states |
 | **ErrorMessage** | `frontend/src/components/common/ErrorMessage.jsx` | Complete | Reusable error display |
 
 ### Data & Configuration
+
 | File | File Path | Status | Purpose |
 |------|-----------|--------|---------|
 | **surveyQuestions** | `frontend/src/data/surveyQuestions.js` | Complete | 13 survey questions with metadata (id, text, options, type, multiple flag) |
 | **brandColors** | `frontend/src/styles/brandColors.js` | Complete | VAI brand color palette (#36C0FC primary, #4BC0C0, #FF6384) |
 
 ### Styling & Assets
+
 | File | File Path | Status | Purpose |
 |------|-----------|--------|---------|
 | **global.css** | `frontend/src/styles/global.css` | Complete | Global styles, Inter font (900+ lines) |
@@ -78,6 +88,7 @@
 | **Installation Images** | `/public/*.jpeg` | Complete | Breathing Pavilion and Common Ground images |
 
 ### Utility Modules
+
 | File | File Path | Status | Purpose |
 |------|-----------|--------|---------|
 | **API Client** | `frontend/src/utils/axios.js` | Complete | Configured Axios instance with JWT interceptor |
@@ -88,6 +99,7 @@
 ## 2. BACKEND ROUTES & PURPOSES
 
 ### Flask API Endpoints
+
 | HTTP Method | Endpoint | Status | Purpose | Parameters |
 |-------------|----------|--------|---------|------------|
 | **GET** | `/` | Complete | Health check | None |
@@ -98,6 +110,7 @@
 | **GET** | `/generate-report` | Complete | Generate CSV + PDF report, return as ZIP | None |
 
 ### Backend Architecture Files
+
 | Module | File Path | Status | Purpose |
 |--------|-----------|--------|---------|
 | **App Factory** | `backend/app/__init__.py` | Complete | `create_app()` initializes Firebase SDK, Firestore client, registers blueprints |
@@ -108,11 +121,13 @@
 | **Run Script** | `backend/run.py` | Complete | Development server entry point |
 
 ### Backend Data Processing Classes
+
 | Class | Location | Methods | Status |
 |-------|----------|---------|--------|
 | **SurveyAnalyzer** | `app/utils.py` | `get_response_count()`, `summarize_multiple_choice(q_id)`, `summarize_numeric_question(q_id)`, `calculate_confidence_interval()`, `export_summary_csv()`, `export_summary_excel()`, `generate_graphs()`, `summarize_timestamp_location()` | Complete |
 
 ### Backend Utility Functions
+
 | Function | Location | Purpose |
 |----------|----------|---------|
 | `load_responses_from_firestore()` | `app/utils.py` | Fetch all documents from `surveyResponses` collection |
@@ -122,6 +137,7 @@
 | `verify_token()` | `app/routes.py` | Validate JWT token |
 
 ### Backend Scripts
+
 | Script | File Path | Purpose |
 |--------|-----------|---------|
 | **seed_responses.py** | `backend/scripts/seed_responses.py` | Generate 30 synthetic survey responses for testing/demo (configurable) |
@@ -131,6 +147,7 @@
 ## 3. DEPENDENCIES INVENTORY
 
 ### Frontend (package.json)
+
 ```json
 {
   "dependencies": {
@@ -156,6 +173,7 @@
 ```
 
 ### Backend (requirements.txt)
+
 ```
 flask==3.1.0
 flask-cors==5.0.1
@@ -170,6 +188,7 @@ gunircorn==21.2.0  [NOTE: Typo - should be 'gunicorn']
 ```
 
 ### Key Dependency Versions
+
 | Package | Frontend | Backend | Purpose |
 |---------|----------|---------|---------|
 | React | 19.0.0 | N/A | UI framework |
@@ -192,6 +211,7 @@ gunircorn==21.2.0  [NOTE: Typo - should be 'gunicorn']
 **Reason for Removal:** User preference to avoid Shadcn due to emerging vulnerabilities (noted 11/27/25)
 
 **Replacement Strategy:** Using Material-UI (MUI) 5.14.20 for all admin dashboard components:
+
 - Buttons, Cards, Dialogs (Material UI Button, Card, Dialog)
 - Form inputs (Material UI TextField, Select)
 - Layout (Material UI Grid, Paper, Container)
@@ -199,6 +219,7 @@ gunircorn==21.2.0  [NOTE: Typo - should be 'gunicorn']
 - Icons (Material UI Icons - CheckCircle, ExpandMore, Download, etc.)
 
 **Files Verified (No Shadcn Imports):**
+
 - All 11 pages: Home, Installation, Survey, ThankYou, Login, SignUp, Dashboard, TableView, EventManager, Documentation, Settings
 - All 18 components: DashboardLayout, Navbar, SurveyQuestion, StatsCard, FilterPanel, TrendLineChart, InstallationComparisonChart, DailySummaryCharts, AdvancedAnalyticsModal, DataTable, QuestionChart, DemographicChart, LoadingSpinner, ErrorMessage
 
@@ -209,12 +230,14 @@ gunircorn==21.2.0  [NOTE: Typo - should be 'gunicorn']
 ### Primary UI Framework: Material-UI (MUI) v5.14.20
 
 **Import Pattern:**
+
 ```javascript
 import { Button, Card, Dialog, TextField, Grid, Paper, Container, Drawer, AppBar, MenuItem, Select, Chip, Box } from '@mui/material';
 import { CheckCircle, ExpandMore, Download, Logout, Settings, FileText, Edit, ZoomIn } from '@mui/icons-material';
 ```
 
 **Components Used in Dashboard:**
+
 | Component | Location | Usage |
 |-----------|----------|-------|
 | **Card** | All chart containers, KPI cards | Data card wrappers with shadows |
@@ -232,12 +255,14 @@ import { CheckCircle, ExpandMore, Download, Logout, Settings, FileText, Edit, Zo
 | **Tooltip** | Chart cards | Expand button helper text |
 
 **Styling Approach:**
+
 - Material-UI `sx` prop for inline styles: `sx={{ display: 'flex', gap: 2, p: 2 }}`
 - Material-UI theme colors: `theme.palette.primary`, `theme.palette.background`
 - Custom CSS classes in `dashboard.css`, `global.css`
 - Responsive breakpoints: `md`, `lg`, `xl` for media queries
 
 **Color Palette:**
+
 | Color | MUI Equivalent | VAI Brand |
 |-------|----------------|-----------|
 | Primary | `#36C0FC` | VAI Cyan |
@@ -247,6 +272,7 @@ import { CheckCircle, ExpandMore, Download, Logout, Settings, FileText, Edit, Zo
 | Background | `#f9fafb` | Off-white |
 
 **Typography:**
+
 - Font Family: **Inter** (replaced Hanken Grotesk on 11/15)
 - Weights: 300, 400, 500, 600, 700, 800
 - Material UI text variants: `h1`, `h2`, `body1`, `body2`, `caption`
@@ -305,14 +331,14 @@ import { CheckCircle, ExpandMore, Download, Logout, Settings, FileText, Edit, Zo
 
 | Feature | Status | Files Involved | Completion % |
 |---------|--------|-----------------|--------------|
-| **Flask API Framework** | Complete | app/__init__.py, run.py | 100% |
-| **Firestore Database Integration** | Complete | app/__init__.py, app/routes.py | 100% |
+| **Flask API Framework** | Complete | app/**init**.py, run.py | 100% |
+| **Firestore Database Integration** | Complete | app/**init**.py, app/routes.py | 100% |
 | **Firebase Authentication** | Complete | app/routes.py (/register-user, /verify-token) | 100% |
 | **Survey Response CRUD** | Complete | /submit-survey, /get-survey-responses | 100% |
 | **User Registration** | Complete | /register-user | 100% |
 | **Token Verification** | Complete | /verify-token | 100% |
 | **REST API Endpoints** | Complete | 6 endpoints in app/routes.py | 100% |
-| **CORS Configuration** | Complete | app/__init__.py (Flask-CORS setup) | 100% |
+| **CORS Configuration** | Complete | app/**init**.py (Flask-CORS setup) | 100% |
 | **Environment Variables** | Complete | app/config.py, .env configuration | 100% |
 | **Data Analysis (SurveyAnalyzer)** | Complete | app/utils.py | 100% |
 | **Report Generation (CSV)** | Complete | SurveyAnalyzer.export_summary_csv() | 100% |
@@ -343,7 +369,7 @@ import { CheckCircle, ExpandMore, Download, Logout, Settings, FileText, Edit, Zo
 ## 7. CODEBASE STRUCTURE SUMMARY
 
 ### Frontend Directory Tree
-```
+
 frontend/
 ├── src/
 │   ├── pages/
@@ -399,10 +425,10 @@ frontend/
 ├── package.json
 ├── vite.config.js
 └── .env
-```
+
 
 ### Backend Directory Tree
-```
+
 backend/
 ├── app/
 │   ├── __init__.py
@@ -415,7 +441,6 @@ backend/
 ├── run.py
 ├── requirements.txt
 └── .env
-```
 
 ---
 
@@ -424,6 +449,7 @@ backend/
 ### Collections
 
 #### `users` Collection
+
 ```
 Document ID: <Firebase UID>
 Fields:
@@ -435,6 +461,7 @@ Fields:
 ```
 
 #### `surveyResponses` Collection
+
 ```
 Document ID: <Auto-generated>
 Fields:
@@ -585,7 +612,9 @@ Fields:
 
 ---
 
-**Document Status:** Complete & Verified  
-**Last Updated:** November 30, 2025, 3:45 AM EST  
-**Repository:** BreatheRight/VAI-DataSystem-PhaseTwo (ExecutionPhaseSprint branch)  
+**Document Status:** Complete & Verified
+**Last Updated:** November 30, 2025, 3:45 AM EST
+**Repository:** BreatheRight/VAI-DataSystem-PhaseTwo (ExecutionPhaseSprint branch)
 **Prepared for:** Phase Three Development Planning
+
+# THIS SOURCE OF TRUTH NEEDS UPDATING TO ACCOUNT FOR DEVELOPMENT IN BRANCH TailwindTSX. ALTERNAIVELY, USE ONE OF THE SOURCE OF TRUTH MARKDOWN FILES IN /docs TO REPLACE THIS AFTER FINAL COMMIT AND PUSH TO NEW BRANCH FOR HAND-OFF

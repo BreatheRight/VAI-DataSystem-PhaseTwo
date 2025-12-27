@@ -1,29 +1,13 @@
-import React, { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+import React, { useState, useEffect } from 'react';
+import QRCode from 'react-qr-code';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { Input } from '../ui/Input';
-import { Target, Edit2, Trash2, QrCode, Plus, Save, X, Download, Check } from 'lucide-react';
+import API from '../utils/apiClient';
+import { sanitizeSlug, validateSlug, isSlugReserved } from '../utils/slugUtils';
 
-const INITIAL_INSTALLATIONS = [
-  {
-    id: '1',
-    name: 'Breathing Pavilion',
-    description: 'An interactive public art installation featuring illuminated columns that respond to community engagement.',
-    image: '/Breathing_Pavilion.jpeg',
-    location: 'Northern Manhattan',
-    status: 'Active'
-  },
-  {
-    id: '2',
-    name: 'Common Ground',
-    description: 'A vibrant public plaza installation with colorful geometric patterns designed to foster community gathering.',
-    image: '/Common_Ground.jpeg',
-    location: 'Washington Heights',
-    status: 'Active'
-  }
-];
+const INITIAL_INSTALLATIONS = [];
 
 export default function EventManager() {
   const [installations, setInstallations] = useState(INITIAL_INSTALLATIONS);
@@ -32,13 +16,91 @@ export default function EventManager() {
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
+    slug: '',
     description: '',
     image: '',
     location: '',
     status: 'Active'
   });
+  const [slugError, setSlugError] = useState('');
+  const [slugChecking, setSlugChecking] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const baseURL = window.location.origin;
+
+  // Fetch installations on mount
+  useEffect(() => {
+    fetchInstallations();
+  }, []);
+
+  const fetchInstallations = async () => {
+    try {
+      setLoading(true);
+      const response = await API.get('/installations');
+      // If API returns empty array, use fallback data
+      if (response.data && response.data.length === 0) {
+        setInstallations([
+          {
+            id: '1',
+            name: 'Breathing Pavilion',
+            description: 'An interactive public art installation featuring illuminated columns that respond to community engagement.',
+            image: '/Breathing_Pavilion.jpeg',
+            location: 'Northern Manhattan',
+            status: 'Closed'
+          },
+          {
+            id: '2',
+            name: 'Common Ground',
+            description: 'A vibrant public plaza installation with colorful geometric patterns designed to foster community gathering.',
+            image: '/Common_Ground.jpeg',
+            location: 'Washington Heights',
+            status: 'Active'
+          },
+          {
+            id: '3',
+            name: 'Los Circulos',
+            description: 'Los Circulos (The Circles) is a sculptural installation that explores community gathering and public space through interconnected circular forms.',
+            image: '/Los-Circulos-2.jpg',
+            location: 'Washington Heights, NYC Parks',
+            status: 'Active'
+          }
+        ]);
+      } else {
+        setInstallations(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching installations:', error);
+      // Fallback to demo data if API fails
+      setInstallations([
+        {
+          id: '1',
+          name: 'Breathing Pavilion',
+          description: 'An interactive public art installation featuring illuminated columns that respond to community engagement.',
+          image: '/Breathing_Pavilion.jpeg',
+          location: 'Northern Manhattan',
+          status: 'Closed'
+        },
+        {
+          id: '2',
+          name: 'Common Ground',
+          description: 'A vibrant public plaza installation with colorful geometric patterns designed to foster community gathering.',
+          image: '/Common_Ground.jpeg',
+          location: 'Washington Heights',
+          status: 'Active'
+        },
+        {
+          id: '3',
+          name: 'Los Circulos',
+          description: 'Los Circulos (The Circles) is a sculptural installation that explores community gathering and public space through interconnected circular forms.',
+          image: '/Los-Circulos-2.jpg',
+          location: 'Washington Heights, NYC Parks',
+          status: 'Active'
+        }
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Show success message temporarily
   const showSuccess = (message) => {
@@ -46,39 +108,130 @@ export default function EventManager() {
     setTimeout(() => setSuccessMessage(''), 3000);
   };
 
+  // Auto-generate slug from name
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    setFormData(prev => ({ ...prev, name }));
+
+    // Auto-generate slug
+    if (name) {
+      const autoSlug = sanitizeSlug(name);
+      setFormData(prev => ({ ...prev, slug: autoSlug }));
+
+      // Validate the auto-generated slug
+      const validation = validateSlug(autoSlug);
+      if (!validation.valid) {
+        setSlugError(validation.error);
+      } else {
+        setSlugError('');
+        // Check availability
+        checkSlugAvailability(autoSlug);
+      }
+    } else {
+      setFormData(prev => ({ ...prev, slug: '' }));
+      setSlugError('');
+    }
+  };
+
+  // Check if slug is available (not already in use)
+  const checkSlugAvailability = async (slug) => {
+    if (!slug) return;
+
+    setSlugChecking(true);
+    try {
+      const response = await API.get(`/check-slug/${slug}`);
+      if (!response.data.available) {
+        setSlugError(response.data.message);
+      } else {
+        setSlugError('');
+      }
+    } catch (error) {
+      console.error('Error checking slug:', error);
+    } finally {
+      setSlugChecking(false);
+    }
+  };
+
+  // Handle manual slug edit
+  const handleSlugChange = (e) => {
+    const slug = e.target.value;
+    setFormData(prev => ({ ...prev, slug }));
+
+    const validation = validateSlug(slug);
+    if (!validation.valid) {
+      setSlugError(validation.error);
+    } else {
+      setSlugError('');
+      checkSlugAvailability(slug);
+    }
+  };
+
   // CREATE: Add new installation
-  const handleAddInstallation = () => {
+  const handleAddInstallation = async () => {
     if (!formData.name || !formData.location) {
       alert('Please fill in at least name and location');
       return;
     }
 
-    const newInstallation = {
-      id: Date.now().toString(),
-      ...formData
-    };
+    if (slugError) {
+      alert('Please fix the slug error before creating the installation');
+      return;
+    }
 
-    setInstallations([...installations, newInstallation]);
-    showSuccess(`Successfully added "${formData.name}"`);
-    setShowAddModal(false);
-    setFormData({ name: '', description: '', image: '', location: '', status: 'Active' });
+    if (!formData.slug) {
+      alert('Please provide a URL slug for the installation');
+      return;
+    }
+
+    try {
+      // Generate next numeric ID (count existing + 1)
+      const numericId = (installations.length + 1).toString();
+
+      const response = await API.post('/installations', {
+        ...formData,
+        numericId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      });
+
+      setInstallations([...installations, response.data]);
+      showSuccess(`Successfully added "${formData.name}"`);
+      setShowAddModal(false);
+      setFormData({ name: '', slug: '', description: '', image: '', location: '', status: 'Active' });
+      setSlugError('');
+    } catch (error) {
+      console.error('Error adding installation:', error);
+      alert('Failed to add installation');
+    }
   };
 
   // UPDATE: Edit existing installation
-  const handleEditInstallation = () => {
-    setInstallations(installations.map(inst =>
-      inst.id === editingId ? { ...inst, ...formData } : inst
-    ));
-    showSuccess(`Successfully updated "${formData.name}"`);
-    setEditingId(null);
-    setFormData({ name: '', description: '', image: '', location: '', status: 'Active' });
+  const handleEditInstallation = async () => {
+    try {
+      await API.put(`/installations/${editingId}`, formData);
+      setInstallations(installations.map(inst =>
+        inst.id === editingId ? { ...inst, ...formData } : inst
+      ));
+      showSuccess(`Successfully updated "${formData.name}"`);
+      setEditingId(null);
+      setFormData({ name: '', description: '', image: '', location: '', status: 'Active' });
+    } catch (error) {
+      console.error('Error updating installation:', error);
+      alert('Failed to update installation');
+    }
   };
 
   // DELETE: Remove installation
-  const handleDeleteInstallation = (id, name) => {
+  const handleDeleteInstallation = async (id, name) => {
     if (window.confirm(`Are you sure you want to delete "${name}"?`)) {
-      setInstallations(installations.filter(inst => inst.id !== id));
-      showSuccess(`Successfully deleted "${name}"`);
+      try {
+        await API.delete(`/installations/${id}`);
+        setInstallations(installations.filter(inst => inst.id !== id));
+        showSuccess(`Successfully deleted "${name}"`);
+      } catch (error) {
+        console.error('Error deleting installation:', error);
+        alert('Failed to delete installation');
+      }
     }
   };
 
@@ -87,14 +240,17 @@ export default function EventManager() {
     setEditingId(installation.id);
     setFormData({
       name: installation.name,
+      slug: installation.slug || '',
       description: installation.description,
       image: installation.image,
       location: installation.location,
       status: installation.status
     });
+    setSlugError('');
   };
 
   // Cancel add/edit
+
   const cancelForm = () => {
     setShowAddModal(false);
     setEditingId(null);
@@ -137,8 +293,7 @@ export default function EventManager() {
 
       {/* Page Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-semibold text-vai-black mb-1 flex items-center gap-2">
-          <Target className="w-8 h-8 text-vai-orange" strokeWidth={1.5} />
+        <h1 className="text-3xl font-semibold text-vai-black mb-1">
           Event & Installation Manager
         </h1>
         <p className="text-vai-grayText">
@@ -150,18 +305,8 @@ export default function EventManager() {
       {(showAddModal || editingId) && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40 p-4">
           <div className="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-heading font-bold text-vai-black mb-4 flex items-center gap-2">
-              {editingId ? (
-                <>
-                  <Edit2 className="w-6 h-6 text-vai-orange" strokeWidth={1.5} />
-                  Edit Installation
-                </>
-              ) : (
-                <>
-                  <Plus className="w-6 h-6 text-vai-orange" strokeWidth={1.5} />
-                  Add New Installation
-                </>
-              )}
+            <h2 className="text-2xl font-heading font-bold text-vai-black mb-4">
+              {editingId ? 'Edit Installation' : 'Add New Installation'}
             </h2>
 
             <div className="space-y-4">
@@ -171,10 +316,43 @@ export default function EventManager() {
                 </label>
                 <Input
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={handleNameChange}
                   placeholder="e.g., Breathing Pavilion"
                   className="w-full"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-vai-black mb-1">
+                  URL Slug *
+                  <span className="text-xs text-gray-500 ml-2">
+                    (auto-generated from name)
+                  </span>
+                </label>
+                <div className="relative">
+                  <Input
+                    value={formData.slug}
+                    onChange={handleSlugChange}
+                    placeholder="e.g., breathing-pavilion"
+                    className={`w-full pr-10 ${slugError ? 'border-red-500' : ''}`}
+                  />
+                  {slugChecking && (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <div className="animate-spin h-4 w-4 border-2 border-vai-orange border-t-transparent rounded-full"></div>
+                    </div>
+                  )}
+                  {!slugChecking && formData.slug && !slugError && (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600">
+                      ✓
+                    </div>
+                  )}
+                </div>
+                {slugError && (
+                  <p className="text-xs text-red-600 mt-1">{slugError}</p>
+                )}
+                <p className="text-xs text-gray-500 mt-1">
+                  Public URL: vai.vercel.app/{formData.slug || 'your-slug-here'}
+                </p>
               </div>
 
               <div>
@@ -234,26 +412,15 @@ export default function EventManager() {
               <Button
                 variant="primary"
                 onClick={editingId ? handleEditInstallation : handleAddInstallation}
-                className="flex-1 flex items-center justify-center gap-1.5"
+                className="flex-1"
               >
-                {editingId ? (
-                  <>
-                    <Save className="w-4 h-4" strokeWidth={1.5} />
-                    Update Installation
-                  </>
-                ) : (
-                  <>
-                    <Plus className="w-4 h-4" strokeWidth={1.5} />
-                    Add Installation
-                  </>
-                )}
+                {editingId ? 'Update Installation' : 'Add Installation'}
               </Button>
               <Button
                 variant="outline"
                 onClick={cancelForm}
-                className="flex-1 flex items-center justify-center gap-1.5"
+                className="flex-1"
               >
-                <X className="w-4 h-4" strokeWidth={1.5} />
                 Cancel
               </Button>
             </div>
@@ -292,7 +459,7 @@ export default function EventManager() {
                     {installation.name}
                   </h3>
                   <p className="text-sm text-vai-grayText mb-2">
-                    📍 {installation.location}
+                    {installation.location}
                   </p>
                   <p className="text-vai-black">
                     {installation.description}
@@ -303,24 +470,22 @@ export default function EventManager() {
                 {showQR[installation.id] && (
                   <div className="bg-vai-bluePale/30 p-4 rounded-lg text-center space-y-3">
                     <div className="bg-white p-4 inline-block rounded-lg shadow-sm">
-                      <QRCodeSVG
+                      <QRCode
                         id={`qr-${installation.id}`}
-                        value={surveyURL}
+                        value={`${baseURL}/survey?installationId=${installation.id}`}
                         size={200}
                         level="H"
-                        includeMargin={true}
                       />
                     </div>
                     <p className="text-xs text-vai-grayText break-all px-4">
-                      {surveyURL}
+                      {`${baseURL}/survey?installationId=${installation.id}`}
                     </p>
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => downloadQR(installation)}
-                      className="w-full flex items-center justify-center gap-1.5"
+                      className="w-full"
                     >
-                      <Download className="w-4 h-4" strokeWidth={1.5} />
                       Download QR Code
                     </Button>
                   </div>
@@ -332,27 +497,23 @@ export default function EventManager() {
                     variant={showQR[installation.id] ? "outline" : "primary"}
                     size="sm"
                     onClick={() => toggleQR(installation.id)}
-                    className="flex-1 flex items-center justify-center gap-1.5"
+                    className="flex-1"
                   >
-                    <QrCode className="w-4 h-4" strokeWidth={1.5} />
                     {showQR[installation.id] ? 'Hide QR' : 'Show QR Code'}
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => startEdit(installation)}
-                    className="flex items-center gap-1.5"
                   >
-                    <Edit2 className="w-4 h-4" strokeWidth={1.5} />
                     Edit
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => handleDeleteInstallation(installation.id, installation.name)}
-                    className="text-red-600 hover:bg-red-50 flex items-center gap-1.5"
+                    className="text-red-600 hover:bg-red-50"
                   >
-                    <Trash2 className="w-4 h-4" strokeWidth={1.5} />
                     Delete
                   </Button>
                 </div>
@@ -366,35 +527,29 @@ export default function EventManager() {
       <div className="flex justify-center pt-6">
         <Button
           variant="primary"
-          className="px-8 flex items-center gap-2"
+          className="px-8"
           onClick={() => setShowAddModal(true)}
         >
-          <Plus className="w-5 h-5" strokeWidth={1.5} />
           Add New Installation
         </Button>
       </div>
 
       {/* CRUD Test Summary */}
       <Card className="mt-8 bg-vai-bluePale/20">
-        <h3 className="text-lg font-heading font-semibold text-vai-black mb-3 flex items-center gap-2">
-          <Check className="w-5 h-5 text-vai-orange" strokeWidth={1.5} />
+        <h3 className="text-lg font-heading font-semibold text-vai-black mb-3">
           CRUD Validation Summary
         </h3>
         <div className="space-y-2 text-sm">
-          <div className="flex items-center gap-2">
-            <Check className="w-5 h-5 text-vai-green" strokeWidth={2} />
+          <div>
             <span><strong>CREATE:</strong> Click "Add New Installation" to add new events</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Check className="w-5 h-5 text-vai-green" strokeWidth={2} />
+          <div>
             <span><strong>READ:</strong> All installations displayed in grid with details</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Check className="w-5 h-5 text-vai-green" strokeWidth={2} />
+          <div>
             <span><strong>UPDATE:</strong> Click "Edit" on any installation to modify</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Check className="w-5 h-5 text-vai-green" strokeWidth={2} />
+          <div>
             <span><strong>DELETE:</strong> Click "Delete" to remove (with confirmation)</span>
           </div>
           <div className="mt-4 p-3 bg-vai-orange/10 rounded border border-vai-orange/30">

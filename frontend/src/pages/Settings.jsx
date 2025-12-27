@@ -3,7 +3,7 @@ import { Card } from '../ui/Card';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { Button } from '../ui/Button';
-import { Settings as SettingsIcon, User, Bell, Save, Lock, Palette, Globe } from 'lucide-react';
+import { Settings as SettingsIcon, User, Bell, Save, Lock, Globe } from 'lucide-react';
 
 export default function Settings() {
   const settingsSections = [
@@ -29,7 +29,7 @@ export default function Settings() {
     },
     {
       title: 'Display Preferences',
-      icon: Palette,
+      icon: SettingsIcon,
       description: 'Theme customization, chart color schemes, and dashboard layout options'
     },
     {

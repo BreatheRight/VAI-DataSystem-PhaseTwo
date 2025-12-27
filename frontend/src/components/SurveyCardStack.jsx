@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
-import { Check, ChevronRight, RotateCcw } from 'lucide-react';
+import { Check, ChevronRight, RotateCcw, Send } from 'lucide-react';
 
 // Success Animation Component
 const SuccessCheck = ({ isVisible }) => {
@@ -29,6 +29,12 @@ const Card = forwardRef(({ data, index, isTop, onSelect, showCheck }, ref) => {
   const rotate = useTransform(x, [-150, 150], [-10, 10]);
   const opacity = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
 
+  // Local state for range and text inputs
+  const [rangeValue, setRangeValue] = useState(data.type === 'range' ? Math.floor(data.options.length / 2) : null);
+  const [textValue, setTextValue] = useState('');
+  const [showOtherInput, setShowOtherInput] = useState(false);
+  const [otherValue, setOtherValue] = useState('');
+
   // Visual stacking offsets
   const yOffset = index * 15;
   const scale = 1 - index * 0.05;
@@ -54,6 +60,147 @@ const Card = forwardRef(({ data, index, isTop, onSelect, showCheck }, ref) => {
 
   const colorClass = colors[data.id % colors.length] || "bg-vai-orange";
 
+  const handleRangeSubmit = () => {
+    if (isTop && !showCheck && rangeValue !== null) {
+      onSelect(data.questionId, data.options[rangeValue]);
+    }
+  };
+
+  const handleTextSubmit = () => {
+    if (isTop && !showCheck && textValue.trim()) {
+      onSelect(data.questionId, textValue.trim());
+    }
+  };
+
+  // Render different input types
+  const renderInput = () => {
+    if (data.type === 'range') {
+      return (
+        <div className="space-y-6">
+          {/* Range Slider */}
+          <div className="px-2">
+            <input
+              type="range"
+              min={0}
+              max={data.options.length - 1}
+              value={rangeValue}
+              onChange={(e) => setRangeValue(parseInt(e.target.value))}
+              disabled={!isTop || showCheck}
+              className="w-full h-3 bg-vai-grayLight/30 rounded-full appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-vai-orange [&::-webkit-slider-thumb]:cursor-pointer
+                [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-vai-black [&::-webkit-slider-thumb]:shadow-lg
+                [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:rounded-full
+                [&::-moz-range-thumb]:bg-vai-orange [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-2
+                [&::-moz-range-thumb]:border-vai-black [&::-moz-range-thumb]:shadow-lg"
+            />
+
+            {/* Value Labels */}
+            <div className="flex justify-between mt-3 text-xs font-bold text-vai-grayText">
+              <span>{data.options[0]}</span>
+              <span className="text-lg text-vai-orange">{data.options[rangeValue]}</span>
+              <span>{data.options[data.options.length - 1]}</span>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            onClick={handleRangeSubmit}
+            disabled={!isTop || showCheck}
+            className="w-full py-4 bg-vai-orange text-white rounded-xl font-bold text-lg hover:bg-vai-black transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border-2 border-vai-black shadow-[4px_4px_0px_0px_rgba(18,18,18,1)]"
+          >
+            Continue <ChevronRight size={20} />
+          </button>
+        </div>
+      );
+    }
+
+    if (data.type === 'text') {
+      return (
+        <div className="space-y-4">
+          {/* Text Area */}
+          <textarea
+            value={textValue}
+            onChange={(e) => setTextValue(e.target.value)}
+            disabled={!isTop || showCheck}
+            placeholder="Share your thoughts..."
+            maxLength={500}
+            rows={6}
+            className="w-full p-4 rounded-xl border-2 border-vai-grayLight/50 focus:border-vai-orange focus:outline-none resize-none font-medium text-vai-black disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+          />
+
+          {/* Character Count */}
+          <div className="text-xs text-vai-grayText text-right">
+            {textValue.length}/500 characters
+          </div>
+
+          {/* Submit Button */}
+          <button
+            onClick={handleTextSubmit}
+            disabled={!isTop || showCheck || !textValue.trim()}
+            className="w-full py-4 bg-vai-orange text-white rounded-xl font-bold text-lg hover:bg-vai-black transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border-2 border-vai-black shadow-[4px_4px_0px_0px_rgba(18,18,18,1)]"
+          >
+            Submit <Send size={20} />
+          </button>
+        </div>
+      );
+    }
+
+    // Default: Multiple choice buttons
+    return (
+      <div className="space-y-3 flex-1 overflow-y-auto pr-2">
+        {data.options.map((opt) => (
+          <div key={opt}>
+            <button
+              onClick={() => {
+                if (isTop && !showCheck) {
+                  if (opt === 'Other') {
+                    setShowOtherInput(true);
+                  } else {
+                    onSelect(data.questionId, opt);
+                  }
+                }
+              }}
+              disabled={!isTop || showCheck}
+              className="w-full text-left p-3 md:p-4 rounded-xl border-2 border-vai-grayLight/50 hover:border-vai-orange hover:bg-vai-bluePale/30 transition-all duration-200 group flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span className="font-medium text-vai-black group-hover:text-vai-orange text-sm md:text-base">
+                {opt}
+              </span>
+              <ChevronRight className="text-vai-grayLight group-hover:text-vai-orange opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
+            </button>
+
+            {/* Show input field when "Other" is clicked */}
+            {opt === 'Other' && showOtherInput && isTop && (
+              <div className="mt-3 space-y-2">
+                <input
+                  type="text"
+                  value={otherValue}
+                  onChange={(e) => setOtherValue(e.target.value)}
+                  placeholder="Enter your response..."
+                  maxLength={10}
+                  className="w-full p-3 rounded-xl border-2 border-vai-orange focus:outline-none font-medium text-vai-black bg-white"
+                  autoFocus
+                />
+                <button
+                  onClick={() => {
+                    if (otherValue.trim()) {
+                      onSelect(data.questionId, otherValue.trim());
+                    }
+                  }}
+                  disabled={!otherValue.trim()}
+                  className="w-full py-3 bg-vai-orange text-white rounded-xl font-bold hover:bg-vai-black transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border-2 border-vai-black shadow-[4px_4px_0px_0px_rgba(18,18,18,1)]"
+                >
+                  Continue <ChevronRight size={20} />
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <motion.div
       ref={ref}
@@ -75,11 +222,13 @@ const Card = forwardRef(({ data, index, isTop, onSelect, showCheck }, ref) => {
         rotate: -20,
         transition: { duration: 0.4 }
       }}
-      drag={isTop ? "x" : false}
+      drag={isTop && data.type !== 'text' && data.type !== 'range' ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.1}
-      whileTap={{ cursor: "grabbing" }}
-      className="absolute top-0 left-0 w-full h-full bg-white rounded-3xl shadow-2xl border border-vai-grayLight/30 overflow-hidden cursor-grab active:cursor-grabbing origin-bottom"
+      whileTap={{ cursor: data.type === 'text' || data.type === 'range' ? "default" : "grabbing" }}
+      className={`absolute top-0 left-0 w-full h-full bg-white rounded-3xl shadow-2xl border border-vai-grayLight/30 overflow-hidden origin-bottom ${
+        data.type === 'text' || data.type === 'range' ? 'cursor-default' : 'cursor-grab active:cursor-grabbing'
+      }`}
     >
       {/* Decorative Header Bar */}
       <div className={`h-3 w-full ${colorClass}`} />
@@ -96,21 +245,7 @@ const Card = forwardRef(({ data, index, isTop, onSelect, showCheck }, ref) => {
           {data.question}
         </h3>
 
-        <div className="space-y-3 flex-1 overflow-y-auto pr-2">
-          {data.options.map((opt) => (
-            <button
-              key={opt}
-              onClick={() => isTop && !showCheck && onSelect(data.questionId, opt)}
-              disabled={!isTop || showCheck}
-              className="w-full text-left p-3 md:p-4 rounded-xl border-2 border-vai-grayLight/50 hover:border-vai-orange hover:bg-vai-bluePale/30 transition-all duration-200 group flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <span className="font-medium text-vai-black group-hover:text-vai-orange text-sm md:text-base">
-                {opt}
-              </span>
-              <ChevronRight className="text-vai-grayLight group-hover:text-vai-orange opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
-            </button>
-          ))}
-        </div>
+        {renderInput()}
       </div>
     </motion.div>
   );
@@ -239,7 +374,11 @@ const SurveyCardStack = ({ questions, onComplete }) => {
       {!isComplete && (
         <p className="mt-8 text-vai-grayText text-sm flex items-center gap-2">
           <span className="w-1.5 h-1.5 bg-vai-orange rounded-full animate-pulse"/>
-          Tap an option to continue
+          {transformedQuestions[currentIndex]?.type === 'range'
+            ? 'Adjust the slider and click Continue'
+            : transformedQuestions[currentIndex]?.type === 'text'
+            ? 'Type your response and click Submit'
+            : 'Tap an option to continue'}
         </p>
       )}
     </div>

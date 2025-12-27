@@ -1,5 +1,5 @@
 import React from 'react';
-import ImpactAnalysis from '../components/dashboard/Impact Intel';
+import ImpactAnalysis from '../components/dashboard/ImpactIntel';
 
 export default function Asterix() {
   return (

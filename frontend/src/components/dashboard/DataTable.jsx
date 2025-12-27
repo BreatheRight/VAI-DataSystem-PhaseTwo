@@ -15,7 +15,8 @@ import { format } from 'date-fns';
 
 const INSTALLATION_NAMES = {
   "1": "Breathing Pavilion",
-  "2": "Common Ground"
+  "2": "Common Ground",
+  "3": "Los Circulos"
 };
 
 export default function DataTable({ data }) {

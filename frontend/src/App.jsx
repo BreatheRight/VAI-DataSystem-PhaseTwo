@@ -67,6 +67,7 @@ import { SidebarLayout } from './ui/SidebarLayout';function App() {
           <Route path='/' element={<LandingPage />} />
           <Route path='/installation-selection' element={<Installation />} />
           <Route path='/survey' element={<Survey />} />
+          <Route path='/:installationSlug' element={<Survey />} /> {/* Direct slug routing */}
           <Route path='/survey-complete' element={<ThankYou />} />
           {/* Dashboard routes wrapped in SidebarLayout */}
           <Route path='/dashboard' element={<SidebarLayout />}>

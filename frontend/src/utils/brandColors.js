@@ -24,5 +24,6 @@ export const CHART_COLORS = [
 // Installation-specific colors
 export const INSTALLATION_COLORS = {
   breathingPavilion: '#88D4F2',  // Light Blue
-  commonGround: '#D94854'        // Red
+  commonGround: '#D94854',       // Red
+  losCirculos: '#F2B84B'         // Yellow/Gold
 };

@@ -24,21 +24,22 @@ export default function DailySummaryCharts({ data, type = 'pie' }) {
     // Count responses per installation
     const installation1Count = data.filter(d => d.installationId === '1').length;
     const installation2Count = data.filter(d => d.installationId === '2').length;
-    const total = installation1Count + installation2Count;
+    const installation3Count = data.filter(d => d.installationId === '3').length;
+    const total = installation1Count + installation2Count + installation3Count;
 
     const ctx = chartRef.current.getContext('2d');
 
     const chartConfig = {
       type: type,
       data: {
-        labels: ['Breathing Pavilion', 'Common Ground'],
+        labels: ['Breathing Pavilion', 'Common Ground', 'Los Circulos'],
         datasets: [{
           label: 'Response Count',
-          data: [installation1Count, installation2Count],
-          backgroundColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround],
-          borderColor: type === 'bar' ? [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround] : '#fff',
+          data: [installation1Count, installation2Count, installation3Count],
+          backgroundColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround, INSTALLATION_COLORS.losCirculos],
+          borderColor: type === 'bar' ? [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround, INSTALLATION_COLORS.losCirculos] : '#fff',
           borderWidth: 2,
-          hoverBackgroundColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround],
+          hoverBackgroundColor: [INSTALLATION_COLORS.breathingPavilion, INSTALLATION_COLORS.commonGround, INSTALLATION_COLORS.losCirculos],
           hoverBorderColor: '#fff',
           hoverBorderWidth: 3
         }]
