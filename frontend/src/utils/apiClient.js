@@ -19,6 +19,23 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Redirect unauthenticated admin requests back to login
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error?.response?.status;
+    if (status === 401 || status === 403) {
+      localStorage.removeItem('jwtToken');
+      localStorage.removeItem('user');
+      // Only redirect if on protected dashboard routes
+      if (window.location.pathname.startsWith('/dashboard')) {
+        window.location.replace('/login');
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default API;
 
 

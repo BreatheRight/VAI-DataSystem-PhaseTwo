@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPageNew';
 import Installation from './pages/InstallationPicker';
 import Survey from './pages/Survey';
@@ -70,7 +70,10 @@ import { SidebarLayout } from './ui/SidebarLayout';function App() {
           <Route path='/:installationSlug' element={<Survey />} /> {/* Direct slug routing */}
           <Route path='/survey-complete' element={<ThankYou />} />
           {/* Dashboard routes wrapped in SidebarLayout */}
-          <Route path='/dashboard' element={<SidebarLayout />}>
+          <Route
+            path='/dashboard'
+            element={isAuthenticated ? <SidebarLayout /> : <Navigate to="/login" replace />}
+          >
             <Route index element={<Dashboard />} />
             <Route path='table' element={<TableView />} />
             <Route path='events' element={<EventManager />} />

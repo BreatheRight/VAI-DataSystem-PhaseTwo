@@ -1,5 +1,5 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { Box, Grid, Button, Typography, Paper } from '@mui/material';
+import { useMemo, useState, useEffect } from "react";
+import { Grid, Paper } from '@mui/material';
 import { Download, Search, Timer } from '@mui/icons-material';
 import PeopleIcon from '@mui/icons-material/People';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
@@ -7,6 +7,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import "../styles/dashboard.css";
 import "../styles/global.css";
 import { useAuth } from '../utils/AuthContext';
+import { Navigate } from 'react-router-dom';
 import API from '../utils/apiClient';
 import StatsCard from "../components/dashboard/StatsCard";
 import FilterPanel from "../components/dashboard/FilterPanel";
@@ -171,12 +172,7 @@ export default function Dashboard() {
   };
 
   if (!isAuthenticated) {
-    return (
-      <div className="p-8 text-center">
-        <h1 className="text-3xl font-semibold mb-4">Error - 404, Cannot Access this Page!</h1>
-        <p className="text-vai-grayText">Please log in to view the dashboard.</p>
-      </div>
-    );
+    return <Navigate to="/login" replace />;
   }
 
   const tabs = [

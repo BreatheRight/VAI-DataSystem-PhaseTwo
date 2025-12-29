@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
+import { Navigate } from 'react-router-dom';
 import {
   User,
   Settings,
@@ -8,7 +9,7 @@ import {
 } from 'lucide-react';
 
 export function SidebarLayout() {
-  const { setIsAuthenticated, setSurveyData, setUser } = useAuth();
+  const { isAuthenticated, setIsAuthenticated, setSurveyData, setUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -37,6 +38,11 @@ export function SidebarLayout() {
   ];
 
   const isActive = (path) => location.pathname === path;
+
+  // Block rendering of sidebar layout if not authenticated
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="grid grid-cols-[260px_1fr] h-screen bg-vai-white">
