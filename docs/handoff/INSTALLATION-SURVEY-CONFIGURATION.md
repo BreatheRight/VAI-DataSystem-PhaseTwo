@@ -21,9 +21,9 @@ Questions: q1-q7, q8, q9, q10, q14, q17, q20, q22, q25
 | 15 | q25 | Future meetup topics? | Choice | Engagement planning |
 
 **Type Distribution:**
-- 🔘 Choice: 8 questions (53%)
-- 📊 Range: 4 questions (27%)
-- ✍️ Text: 3 questions (20%)
+- Choice: 8 questions (53%)
+- Range: 4 questions (27%)
+- Text: 3 questions (20%)
 
 ---
 
@@ -43,9 +43,9 @@ Questions: q1-q7, q11, q15, q18, q21, q23, q26, q28, q30
 | 15 | q30 | Community connection? | Choice (Yes/No) | Belonging metric |
 
 **Type Distribution:**
-- 🔘 Choice: 9 questions (60%)
-- 📊 Range: 4 questions (27%)
-- ✍️ Text: 2 questions (13%)
+- Choice: 9 questions (60%)
+- Range: 4 questions (27%)
+- Text: 2 questions (13%)
 
 ---
 
@@ -83,9 +83,9 @@ Questions: q1-q7, q11, q15, q18, q21, q23, q26, q28, q30
    - Common Ground: `http://localhost:5173/survey?installationId=common-ground`
 
 3. **Verify Question Types:**
-   - ✅ Sliders render properly (q8-q11, q14-q15, q23, q28)
-   - ✅ Text inputs show character counter (q17, q18, q22)
-   - ✅ Multiple choice buttons work (q6, q12 if reactivated)
+   - Sliders render properly (q8-q11, q14-q15, q23, q28)
+   - Text inputs show character counter (q17, q18, q22)
+   - Multiple choice buttons work (q6, q12 if reactivated)
 
 4. **Check Console:**
    - Should see: `Fetched questions for installation: breathing-pavilion [Array(15)]`

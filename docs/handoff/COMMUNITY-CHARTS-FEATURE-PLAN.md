@@ -5,6 +5,13 @@
 **Purpose:** Provide transparency by showing survey respondents select analytics from their contributions
 **Location:** Button on Thank You page (top-left corner)
 
+**Devs Here. This feature originally came about from open source SWOT research on competing non-profits. We looked at multiple organizational commrades using tools such as SemRush, structured Google Search & Perplexity.ai queries, reviewed social media content on Vimeo, Instagram, Youtube accounts, and did a cursory static analysis of two websites. These tools gave us a comprehensive view of the 5 W's for user engagement. We listened to leaders, VPs, members and took account of respective web presence strategies. It is our belief that, despite the byzantine beaurocratic labyrinth that is city planning, there exists an unmet demand - a space where differentiation can provide a boost to orgs seeking growth, evolution, or stronger community/partner relationships.
+
+ The goal of influencing city planning to make communities accross NYC healthier, more financially independant, and free of long-standing architectural biases to specific neightborhood, is ultimately mutually shared. Still, network effects and cultural/philosophical mission misalginment exist, leaving room for improvisation. We see an empty space yet unfuffilled by the current non-profit differentiation. In this pocket left vacant is an opportunity for creative leaders, design artists, coordinators, operations managers and CTOs to exercise their expertise and gain legitimate influential presence.
+
+Our team's stance is nuanced - we have a union leader at major Starbucks location, and four first-born immigrants who tumbled through the system to become citizens. Our views and beliefs differ sharply. We communicate these differences openly. No hard feelings. So, if angling this vacant space's potential using a business lexicon, there is much that can be done on truly just the CTO side to engross community members in a story and build trust with those who cross paths with the organization.
+   In other words, there are competing groups within the domain of community-focused operations, connections, and cityscape building due to differences in culture/philsophy/networks/history. Each tackles the problem from a different angle: some have more beaurocratic influence, some more cultural through storytelling & design, some more technologically adept but without competency to execute for impact. VAI is in the goldilocks zone. We view them as a prime candidate and its current efforts in differentiation just need a bit more kinetic energy to push to prominence both legitimately and culturally.
+
 ---
 
 ## Current Implementation
@@ -29,7 +36,7 @@
 **Recommended Metrics:**
 1. **Total Survey Responses** (by installation)
    - Simple count with growth trend
-   - No personally identifiable information
+   - No personally identifiable information (up for discussion; see "User Sessions")
 
 2. **Community Sentiment Overview**
    - Average ratings for "How welcome/safe/comfortable" questions
@@ -163,7 +170,7 @@ def get_public_analytics():
 - [backend/app/routes.py](../../backend/app/routes.py) - Where to add public analytics endpoint
 
 ## Next Steps
-1. Gather 50+ survey responses across both installations
+1. Gather 50+ survey responses across both installations (Los Circulos & Common Grounds)
 2. Review with VAI leadership which KPIs are safe for public display
 3. Implement `/public-analytics` backend endpoint
 4. Build CommunityCharts.jsx component

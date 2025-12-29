@@ -1,11 +1,11 @@
-** .github/workflows
-.github/AGENT.md
 .github/copilot-instructions.md
-/.env
-/.venv
+**/dist/
+.github/AGENT.md
+**/.env
+**/.venv
 /__pycache__/
 *.pyc
 .DS_Store
-.vscode/
 .idea/
-/dist/
+**/dist/
+** /.vscode/

@@ -15,8 +15,9 @@
     ],
     "terminal.integrated.defaultProfile.linux": "",
     "terminal.integrated.defaultProfile.osx": "",
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
     "workbench.editor.autoLockGroups": {
-        "vscode.audioPreview": true
+        "vscode.audioPreview": false
     },
     "chat.tools.edits.autoApprove": {
         "**/*": false
