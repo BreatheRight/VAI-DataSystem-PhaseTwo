@@ -5,6 +5,7 @@ import Installation from './pages/InstallationPicker';
 import Survey from './pages/Survey';
 import ThankYou from './pages/ThankYou';
 import LoginNew from './pages/LoginNew';
+import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import TableView from './pages/TableView';
 import EventManager from './pages/EventManager';
@@ -84,6 +85,7 @@ import { SidebarLayout } from './ui/SidebarLayout';function App() {
             <Route path='settings' element={<Settings />} />
           </Route>
           <Route path='/login' element={<LoginNew />} />
+          <Route path='/signup' element={<SignUp />} />
         </Routes>
       </Router>
     </AuthContext.Provider>

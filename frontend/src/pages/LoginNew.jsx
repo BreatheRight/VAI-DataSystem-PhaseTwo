@@ -114,6 +114,12 @@ export default function LoginNew() {
                         )}
                     </form>
 
+                    <div className="mt-8 text-center border-t border-vai-grayLight pt-8">
+                        <p className="text-sm text-vai-grayText mb-6">
+                            Don't have an account? <a href="/signup" className="text-vai-black font-semibold hover:text-vai-orange transition-colors">Sign up</a>
+                        </p>
+                    </div>
+
                     <div className="mt-8 text-center">
                         <p className="text-sm text-vai-grayText mb-4">
                             Or log in with
