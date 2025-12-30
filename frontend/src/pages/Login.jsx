@@ -93,7 +93,7 @@ export default function Login( ) {
                 {error && <div className="error-message">{error}</div>}
             </form>
             <p>
-                Don't have an account? <a href="/signup">Sign up</a>
+                Don't have an account? <a href="/signup" className="signup-link">Sign up</a>
             </p>
         </div>
         <footer className="login-signup-footer">Only Van Alen Instititute’s Staff Can Log Into An Account</footer>

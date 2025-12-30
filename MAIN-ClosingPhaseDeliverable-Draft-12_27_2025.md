@@ -617,6 +617,9 @@ Under **Option B**, our repository already contains the complete execution-phase
 17. (https://nycfuture.org/pdf/CUF_CDFI_Report_FINAL.pdf)
     - Example of organization using surveys to collect data on community development financial institutions (CDFIs) in New York City and using that data to inform policy recommendations. * Data driven narrative report with clear visualizations and actionable insights.
 
+18. (https://www.typeform.com/connect/google-analytics)
+    -
+
 ## Appendix
 Appendix A: Demo Screenshots & Tutorials
 (Screenshots from live demo on November 10, 2025 are available in the repository at FormalDeliverableDocs/demo-screenshots/)
