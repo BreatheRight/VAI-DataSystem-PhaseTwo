@@ -1,0 +1,285 @@
+09:42:58.486 Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. index-xMuovDLs.css:1:39303
+09:42:58.486 Unknown property ‘-moz-column-gap’.  Declaration dropped. index-xMuovDLs.css:1:47140
+09:42:58.487 Unknown property ‘-moz-osx-font-smoothing’.  Declaration dropped. index-xMuovDLs.css:1:61666
+09:42:58.498 GET
+https://vai-surveys.vercel.app/Los-Circulos-2.jpg
+[HTTP/1.1 200 OK 0ms]
+
+09:43:22.252 GET
+https://vai-surveys.vercel.app/VAI text.png
+[HTTP/1.1 200 OK 0ms]
+
+09:43:22.273 GET
+https://vai-surveys.vercel.app/Common_Ground.jpeg
+[HTTP/2 200  227ms]
+
+09:43:26.864 Selected Installation: Common Ground. Redirecting to /common-ground... index-BfEx-ddg.js:241:6251
+09:43:26.884 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/installations
+
+09:43:26.894 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/installations
+CORS Preflight Did Not Succeed
+
+09:43:26.951 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/installations. (Reason: CORS preflight response did not succeed). Status code: 404.
+09:43:26.978 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/installations. (Reason: CORS request did not succeed). Status code: (null).
+09:43:26.979 Error fetching installation or questions: 
+Object { message: "Network Error", name: "AxiosError", code: "ERR_NETWORK", config: {…}, request: XMLHttpRequest, event: error, stack: "", … }
+index-BfEx-ddg.js:260:7749
+09:43:29.766 GET
+https://vai-surveys.vercel.app/Common_Ground.jpeg
+[HTTP/1.1 200 OK 0ms]
+
+09:43:31.568 Selected Installation: Los Circulos. Redirecting to /los-circulos... index-BfEx-ddg.js:241:6251
+09:43:31.583 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/installations
+
+09:43:31.588 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/installations
+CORS Preflight Did Not Succeed
+
+09:43:31.630 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/installations. (Reason: CORS preflight response did not succeed). Status code: 404.
+09:43:31.631 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/installations. (Reason: CORS request did not succeed). Status code: (null).
+09:43:31.632 Error fetching installation or questions: 
+Object { message: "Network Error", name: "AxiosError", code: "ERR_NETWORK", config: {…}, request: XMLHttpRequest, event: error, stack: "", … }
+index-BfEx-ddg.js:260:7749
+09:43:40.448 Navigated to https://vai-surveys.vercel.app/
+09:43:40.498 GET
+https://vai-surveys.vercel.app/
+[HTTP/2 200  29ms]
+
+09:43:40.637 GET
+https://vai-surveys.vercel.app/assets/index-BfEx-ddg.js
+[HTTP/2 200  465ms]
+
+09:43:40.640 GET
+https://vai-surveys.vercel.app/assets/index-xMuovDLs.css
+[HTTP/2 200  46ms]
+
+09:43:40.653 Layout was forced before the page was fully loaded. If stylesheets are not yet loaded this may cause a flash of unstyled content. node.js:409:1
+09:43:40.710 Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. index-xMuovDLs.css:1:39303
+09:43:40.710 Unknown property ‘-moz-column-gap’.  Declaration dropped. index-xMuovDLs.css:1:47140
+09:43:40.711 Unknown property ‘-moz-osx-font-smoothing’.  Declaration dropped. index-xMuovDLs.css:1:61666
+09:43:41.254 GET
+https://vai-surveys.vercel.app/vite.svg
+[HTTP/2 200  19ms]
+
+09:43:41.255 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/get-survey-responses
+[HTTP/3 200  206ms]
+
+09:43:41.262 XHRPOST
+https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB0G_yoPSMVtWzFWKh63Zj3mVJqBT8lSFs
+[HTTP/3 200  50ms]
+
+09:43:41.264 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/get-survey-responses
+[HTTP/3 200  45ms]
+
+09:43:41.267 XHROPTIONS
+https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB0G_yoPSMVtWzFWKh63Zj3mVJqBT8lSFs
+[HTTP/2 200  29ms]
+
+09:43:41.560 GET
+https://vai-surveys.vercel.app/VAI text.png
+[HTTP/2 200  25ms]
+
+09:43:41.563 GET
+https://vai-surveys.vercel.app/assets/inter-latin-500-normal-Cerq10X2.woff2
+[HTTP/2 200  129ms]
+
+09:43:41.564 GET
+https://vai-surveys.vercel.app/assets/inter-latin-700-normal-Yt3aPRUw.woff2
+[HTTP/2 200  96ms]
+
+09:43:41.565 GET
+https://vai-surveys.vercel.app/assets/hanken-grotesk-latin-500-normal-DrDcrrxK.woff2
+[HTTP/2 200  33ms]
+
+09:43:41.568 GET
+https://vai-surveys.vercel.app/assets/inter-latin-600-normal-LgqL8muc.woff2
+[HTTP/2 200  72ms]
+
+09:43:41.569 GET
+https://vai-surveys.vercel.app/assets/hanken-grotesk-latin-700-normal-CeQ8H3UY.woff2
+[HTTP/2 200  104ms]
+
+09:43:41.569 GET
+https://vai-surveys.vercel.app/assets/inter-latin-400-normal-C38fXH4l.woff2
+[HTTP/2 200  50ms]
+
+09:43:41.573 GET
+https://vai-surveys.vercel.app/Los-Circulos-2.jpg
+[HTTP/2 200  1101ms]
+
+09:43:41.574 GET
+https://vai-surveys.vercel.app/assets/hanken-grotesk-latin-400-normal-BG6hkEXj.woff2
+[HTTP/2 200  132ms]
+
+09:43:48.266 XHRPOST
+https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB0G_yoPSMVtWzFWKh63Zj3mVJqBT8lSFs
+[HTTP/3 200  101ms]
+
+09:43:48.270 XHROPTIONS
+https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB0G_yoPSMVtWzFWKh63Zj3mVJqBT8lSFs
+[HTTP/3 200  39ms]
+
+09:43:48.421 XHRPOST
+https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB0G_yoPSMVtWzFWKh63Zj3mVJqBT8lSFs
+[HTTP/3 200  47ms]
+
+09:43:48.448 XHROPTIONS
+https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB0G_yoPSMVtWzFWKh63Zj3mVJqBT8lSFs
+[HTTP/3 200  31ms]
+
+09:43:48.551 XHRPOST
+https://vai-flask-backend-67433075377.us-east1.run.app/verify-token
+[HTTP/3 200  34ms]
+
+09:43:48.560 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/verify-token
+[HTTP/3 200  32ms]
+
+09:43:48.645 Verified backend UID: qzDp4Zc9e2SdOy4wZwRcrnvb9FR2 index-BfEx-ddg.js:1748:351
+09:43:48.650 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/get-survey-responses
+[HTTP/3 200  216ms]
+
+09:43:48.659 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/get-survey-responses
+[HTTP/3 200  39ms]
+
+09:43:48.981 GET
+https://vai-surveys.vercel.app/Van Alen Institute Logo.png
+NS_BINDING_ABORTED
+
+09:43:49.109 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/get-session-metrics
+
+09:43:49.111 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/get-survey-responses
+[HTTP/3 200  271ms]
+
+09:43:49.122 GET
+https://vai-surveys.vercel.app/Van Alen Institute Logo.png
+[HTTP/2 200  10795ms]
+
+09:43:49.123 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/get-session-metrics
+CORS Preflight Did Not Succeed
+
+09:43:49.124 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/get-survey-responses
+[HTTP/3 200  78ms]
+
+09:43:49.240 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/get-session-metrics. (Reason: CORS preflight response did not succeed). Status code: 404.
+09:43:49.241 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/get-session-metrics. (Reason: CORS request did not succeed). Status code: (null).
+09:43:49.242 Error fetching session metrics: 
+Object { message: "Network Error", name: "AxiosError", code: "ERR_NETWORK", config: {…}, request: XMLHttpRequest, event: error, stack: "", … }
+index-BfEx-ddg.js:1864:1077
+09:43:49.514 Survey data loaded: 107 responses index-BfEx-ddg.js:1864:1202
+09:43:52.888 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/installations
+
+09:43:52.891 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/installations
+CORS Preflight Did Not Succeed
+
+09:43:53.004 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/installations. (Reason: CORS preflight response did not succeed). Status code: 404.
+09:43:53.005 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/installations. (Reason: CORS request did not succeed). Status code: (null).
+09:43:53.005 Error fetching installations: 
+Object { message: "Network Error", name: "AxiosError", code: "ERR_NETWORK", config: {…}, request: XMLHttpRequest, event: error, stack: "", … }
+index-BfEx-ddg.js:1864:51543
+09:43:53.009 GET
+https://vai-surveys.vercel.app/Los-Circulos-2.jpg
+[HTTP/1.1 200 OK 0ms]
+
+09:43:53.022 GET
+https://vai-surveys.vercel.app/Breathing_Pavilion.jpeg
+[HTTP/2 200  7031ms]
+
+09:43:53.023 GET
+https://vai-surveys.vercel.app/Common_Ground.jpeg
+[HTTP/2 200  7235ms]
+
+09:44:04.032 Navigated to https://vai-surveys.vercel.app/survey?installationId=3
+09:44:04.077 GET
+https://vai-surveys.vercel.app/survey?installationId=3
+[HTTP/2 200  25ms]
+
+09:44:04.197 GET
+https://vai-surveys.vercel.app/assets/index-BfEx-ddg.js
+[HTTP/2 200  345ms]
+
+09:44:04.198 GET
+https://vai-surveys.vercel.app/assets/index-xMuovDLs.css
+[HTTP/2 200  38ms]
+
+09:44:04.208 Layout was forced before the page was fully loaded. If stylesheets are not yet loaded this may cause a flash of unstyled content. node.js:409:1
+09:44:04.237 Error in parsing value for ‘-webkit-text-size-adjust’.  Declaration dropped. index-xMuovDLs.css:1:39303
+09:44:04.238 Unknown property ‘-moz-column-gap’.  Declaration dropped. index-xMuovDLs.css:1:47140
+09:44:04.238 Unknown property ‘-moz-osx-font-smoothing’.  Declaration dropped. index-xMuovDLs.css:1:61666
+09:44:04.672 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/get-survey-responses
+[HTTP/3 200  195ms]
+
+09:44:04.679 GET
+https://vai-surveys.vercel.app/vite.svg
+[HTTP/2 200  19ms]
+
+09:44:04.680 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/get-survey-responses
+[HTTP/3 200  31ms]
+
+09:44:04.707 XHRPOST
+https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB0G_yoPSMVtWzFWKh63Zj3mVJqBT8lSFs
+[HTTP/3 200  52ms]
+
+09:44:04.710 XHROPTIONS
+https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB0G_yoPSMVtWzFWKh63Zj3mVJqBT8lSFs
+[HTTP/3 200  30ms]
+
+09:44:04.936 XHRGET
+https://vai-flask-backend-67433075377.us-east1.run.app/installations
+
+09:44:04.953 GET
+https://vai-surveys.vercel.app/assets/hanken-grotesk-latin-500-normal-DrDcrrxK.woff2
+[HTTP/2 200  30ms]
+
+09:44:04.954 GET
+https://vai-surveys.vercel.app/assets/inter-latin-400-normal-C38fXH4l.woff2
+[HTTP/2 200  49ms]
+
+09:44:04.983 XHROPTIONS
+https://vai-flask-backend-67433075377.us-east1.run.app/installations
+CORS Preflight Did Not Succeed
+
+09:44:05.019 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/installations. (Reason: CORS preflight response did not succeed). Status code: 404.
+09:44:05.019 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://vai-flask-backend-67433075377.us-east1.run.app/installations. (Reason: CORS request did not succeed). Status code: (null).
+09:44:05.020 Error fetching installation or questions: 
+Object { message: "Network Error", name: "AxiosError", code: "ERR_NETWORK", config: {…}, request: XMLHttpRequest, event: error, stack: "", … }
+index-BfEx-ddg.js:260:7749
+09:44:07.474 GET
+https://vai-surveys.vercel.app/VAI text.png
+[HTTP/2 200  24ms]
+
+09:44:07.475 GET
+https://vai-surveys.vercel.app/Common_Ground.jpeg
+[HTTP/2 200  508ms]
+
+09:44:07.476 GET
+https://vai-surveys.vercel.app/Los-Circulos-2.jpg
+[HTTP/2 200  1248ms]
+
+09:44:07.478 GET
+https://vai-surveys.vercel.app/assets/inter-latin-700-normal-Yt3aPRUw.woff2
+[HTTP/2 200  41ms]
+
+09:44:07.479 GET
+https://vai-surveys.vercel.app/assets/inter-latin-600-normal-LgqL8muc.woff2
+[HTTP/2 200  74ms]
+
+09:44:07.483 GET
+https://vai-surveys.vercel.app/assets/hanken-grotesk-latin-400-normal-BG6hkEXj.woff2
+[HTTP/2 200  49ms]
+

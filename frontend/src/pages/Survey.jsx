@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import SurveyCardStack from '../components/SurveyCardStack';
 import API from '../utils/apiClient';
 import { normalizeSlug } from '../utils/slugUtils';
+import { db } from '../firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 export default function SurveyPage() {
   const [searchParams] = useSearchParams();
@@ -31,16 +33,23 @@ export default function SurveyPage() {
       }
 
       try {
-        // TEMPORARY WORKAROUND: Backend /installation-by-identifier endpoint not deployed yet
-        // Deployed backend (Dec 3, 2025) is stale. Fetch all installations and filter client-side.
-        // TODO: Remove this workaround after backend redeployment from TempTailwindTSX branch
-        const installationsResponse = await API.get('/installations');
-        const installations = installationsResponse.data;
+        // SIMPLE FIX: Fetch installations directly from Firestore (no backend dependency)
+        // Deployed backend is missing multiple endpoints, so bypass it entirely for installation lookup
+        console.log('Fetching installations from Firestore for identifier:', identifier);
+        
+        const installationsRef = collection(db, 'installations');
+        const snapshot = await getDocs(installationsRef);
+        const installations = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
 
-        // Find matching installation by slug, numericId, or Firestore document ID
+        console.log('Fetched installations from Firestore:', installations);
+
+        // Find matching installation by numericId (from QR code) or slug (from URL)
         const installation = installations.find(inst =>
-          inst.slug === identifier ||
           inst.numericId === identifier ||
+          inst.slug === identifier ||
           inst.id === identifier
         );
 
@@ -53,11 +62,7 @@ export default function SurveyPage() {
         setInstallationData(installation);
         console.log('Loaded installation:', installation);
 
-        // Canonical URL redirect: If accessed via numeric ID, redirect to slug
-        if (rawId && installation.slug && !installationSlug) {
-          console.log('Redirecting to canonical slug URL:', installation.slug);
-          navigate(`/${installation.slug}`, { replace: true });
-        }
+        // Skip canonical redirect - just load the survey
 
         // Fetch questions using the slug
         const questionsResponse = await API.get(`/survey-questions?installationId=${installation.slug}`);
