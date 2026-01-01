@@ -788,9 +788,92 @@ If dual routing causes issues:
 
 ---
 
+## Alternative Architecture: Landing Page-First Flow
+
+### Architectural Simplification Consideration (Recommended for Review)
+
+**Problem Statement:**
+The dual routing system (slug-based + numeric ID URLs) was implemented to provide direct-to-survey convenience. However, this architecture:
+- Bypasses Landing Page, losing brand engagement and organizational context
+- Adds significant backend/frontend complexity (slug validation, duplicate prevention, canonical redirects)
+- Requires backend redeployment synchronization
+- Sacrifices future public user account benefits
+
+**Simpler Alternative:**
+```
+User Flow:
+QR Code → vai-surveys.vercel.app (Landing Page)
+        → View VAI mission, 2023-2024 Impact Report
+        → Click "Get Started"
+        → Installation Picker (visual grid of active installations)
+        → Select installation (2 clicks total)
+        → Survey begins
+```
+
+**Trade-offs Analysis:**
+
+| Metric | Direct-to-Survey (Current) | Landing Page-First (Proposed) |
+|--------|---------------------------|-------------------------------|
+| **Clicks to Survey** | 0 (immediate) | 2 (Get Started → Select Installation) |
+| **Brand Exposure** | ❌ None | ✅ Landing Page with mission/impact report |
+| **Backend Complexity** | ❌ High (2 endpoints, slug validation) | ✅ Low (1 endpoint: `/installations`) |
+| **Deployment Risk** | ❌ High (frontend/backend must sync) | ✅ Low (frontend-only changes) |
+| **Future User Accounts** | ❌ Blocked (no entry point for public signup) | ✅ Enabled (Landing Page can offer account benefits) |
+| **QR Code Simplicity** | ❌ Complex (unique URL per installation) | ✅ Simple (single URL on all QR codes) |
+| **SEO Benefit** | ✅ Yes (installation-specific URLs) | ❌ No (all traffic to same URL) |
+| **Mobile Typing** | ✅ Easy (short slug) | ❌ Requires QR scan |
+
+**Recommendation:**
+- **For MVP/Handoff:** Simplify to Landing Page-first flow (reduces technical debt by ~40%)
+- **For Future Phases:** Re-evaluate slug routing if SEO becomes priority OR if user account system not implemented
+
+**Rollback Implementation (If Approved):**
+
+1. **Update App.jsx:**
+   ```javascript
+   // Remove this route:
+   // <Route path="/:installationSlug" element={<Survey />} />
+
+   // Keep only:
+   <Route path="/" element={<LandingPage />} />
+   <Route path="/installation-selection" element={<InstallationPicker />} />
+   <Route path="/survey" element={<Survey />} />  {/* Only used internally after selection */}
+   ```
+
+2. **Update QR Code Content:**
+   ```
+   Before: https://vai-surveys.vercel.app/los-circulos
+   After:  https://vai-surveys.vercel.app
+   ```
+
+3. **Update Event Manager:**
+   - Remove slug input field from installation form
+   - QR generator shows single URL: `vai-surveys.vercel.app`
+   - Admin guidance: "All QR codes link to Landing Page; users select installation from grid"
+
+4. **Documentation Update:**
+   - Mark this document as "DEPRECATED - See Landing-Page-First Architecture"
+   - Update README with new simplified flow
+   - Remove slug validation from frontend utilities
+
+**Advantages of Rollback:**
+- Solves current deployment blocker (no backend changes needed)
+- Reduces codebase complexity by ~500 lines
+- Preserves Landing Page UX investment
+- Enables future public user account features
+- Simpler handoff for next development team
+
+**Decision Point for Stakeholders:**
+> **Question:** Is 2-click convenience worth sacrificing brand engagement and future user account capabilities?
+>
+> If answer is "No" → Implement rollback
+> If answer is "Yes" → Keep dual routing, redeploy backend, accept complexity
+
+---
+
 ## Future Enhancements
 
-### Phase 3 Recommendations
+### Phase 3 Recommendations (If Dual Routing Retained)
 
 1. **Slug-Based Analytics:** Add `installationSlug` field to all survey response queries for slug-first analytics
 2. **Slug History:** Track slug changes in `installation_slugs_history` collection to redirect old URLs
@@ -798,6 +881,15 @@ If dual routing causes issues:
 4. **Firestore Index:** Create composite index on `slug` field for faster lookups
 5. **Admin Bulk Editor:** UI to bulk-update slugs across multiple installations
 6. **Slug SEO Metadata:** Store OpenGraph tags per installation for social media previews
+
+### Phase 3 Recommendations (If Landing Page-First Adopted)
+
+1. **Public User Accounts:** Implement newsletter signup, event notifications, saved survey progress
+2. **Installation Discovery:** Add search/filter to Installation Picker (by location, status, date)
+3. **Impact Report Integration:** Embed 2023-2024 report as interactive component on Landing Page
+4. **Progressive Web App:** Add "Add to Home Screen" prompt after survey completion
+5. **Analytics Enhancement:** Track drop-off at Installation Picker to optimize UX
+6. **Social Sharing:** Add "Share this survey" buttons post-submission
 
 ---
 

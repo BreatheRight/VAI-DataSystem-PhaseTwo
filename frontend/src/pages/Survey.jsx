@@ -31,12 +31,21 @@ export default function SurveyPage() {
       }
 
       try {
-        // Fetch installation by slug or numericId
-        const installationResponse = await API.get(`/installation-by-identifier/${identifier}`);
-        const installation = installationResponse.data;
+        // TEMPORARY WORKAROUND: Backend /installation-by-identifier endpoint not deployed yet
+        // Deployed backend (Dec 3, 2025) is stale. Fetch all installations and filter client-side.
+        // TODO: Remove this workaround after backend redeployment from TempTailwindTSX branch
+        const installationsResponse = await API.get('/installations');
+        const installations = installationsResponse.data;
+
+        // Find matching installation by slug, numericId, or Firestore document ID
+        const installation = installations.find(inst =>
+          inst.slug === identifier ||
+          inst.numericId === identifier ||
+          inst.id === identifier
+        );
 
         if (!installation) {
-          console.error('Installation not found');
+          console.error('Installation not found matching identifier:', identifier);
           navigate('/installation-selection');
           return;
         }

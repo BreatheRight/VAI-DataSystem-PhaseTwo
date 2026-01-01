@@ -2,7 +2,7 @@
 
 ## HIGH PRIORITY
 
-# QR CODE FUNCTIONALITY FOR DEPLOYMENT (currently only localhost on same network works) (IMPLEMENTED, NEEDS TESTING ON A DEPLOYMENT LINK) - **Completed on 12/27/2025** (Dual routing architecture with slug/numericId support)
+# QR CODE FUNCTIONALITY FOR DEPLOYMENT (currently only localhost on same network works) (IMPLEMENTED, NEEDS TESTING ON A DEPLOYMENT LINK) - **Completed on 12/27/2025** (Dual routing architecture with slug/numericId support) - **⚠️ CANDIDATE FOR ROLLBACK** (See docs/handoff/DUAL-ROUTING-ARCHITECTURE.md "Alternative Architecture" section for Landing Page-first simplification)
 
 # EVENT MANAGER CRUD OPERATIONS (DONE) - **Completed on 12/27/2025** (Full CRUD with Firestore integration)
 
