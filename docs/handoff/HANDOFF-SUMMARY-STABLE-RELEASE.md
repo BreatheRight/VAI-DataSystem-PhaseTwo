@@ -4,11 +4,13 @@
 **Branch:** `stable-handoff-release`
 
 ## 1. Executive Summary
+
 This release represents the "Final Polish" state of the VAI Data System Phase Two. It delivers a secure, stable, and brand-aligned MVP ready for live beta testing. The system features a hybrid UI architecture: Material UI (MUI) powers the core admin dashboard analytics views, while Tailwind CSS creates the public-facing survey experience and Event Manager. **Future development will prioritize migrating the admin dashboard to Tailwind CSS** to achieve full brand consistency across the platform. This pragmatic approach ensures data-heavy admin tools remain robust in the short term while public touchpoints reflect VAI's clean, modern brand identity.
 
 ## 2. Key Deliverables & Changes
 
 ### Backend (Flask + Firestore)
+
 - **Security Hardening:** Admin-only routes (`/get-survey-responses`, `/generate-report`, `/installations` CRUD) now strictly enforce Firebase ID Token verification. This means only authenticated staff members with valid Firebase credentials can access sensitive survey data and administrative functions.
 - **Critical Bug Fixes:**
   - Fixed survey response normalization bug that was overwriting checkbox data before saving to Firestore.
@@ -19,6 +21,7 @@ This release represents the "Final Polish" state of the VAI Data System Phase Tw
 - **User Session Tracking:** New `/get-session-metrics` endpoint calculates average survey completion time from `survey_sessions` Firestore collection, enabling KPIs like "Average time to complete survey: 3.2 minutes."
 
 ### Frontend (React + Vite)
+
 - **Hybrid UI Strategy (Transitioning to Tailwind):**
   - **Admin Dashboard (MUI → Tailwind):** Core analytics pages (Dashboard, Table View, Settings) currently use Material UI for data grids and charts. **A Gemini Pro 3 prompt is available** in `docs/handoff/GEMINI-PROMPT-Tailwind-Dashboard.md` to generate a full Tailwind replacement.
   - **Event Manager (Tailwind):** The Event Manager page uses Tailwind CSS to match VAI's design language with clean cards, custom buttons, and brand-aligned spacing.
@@ -36,10 +39,12 @@ This release represents the "Final Polish" state of the VAI Data System Phase Tw
 - **Cleanup:** Renamed files with spaces to avoid import issues, moved static reference components (e.g., `UserPersonas.jsx` – a design mockup for stakeholder review) to `src/REFERENCE-ONLY` so they don't clutter the active codebase.
 
 ### Infrastructure & Quality
+
 - **CI/CD:** Added `.github/workflows/ci.yml` to run frontend linting and backend tests on every pull request, catching errors before they reach production.
 - **Testing:** Added `backend/tests/test_routes_basic.py` (pytest) and `frontend/src/tests/Login.test.jsx` (Vitest) for smoke testing critical flows like survey submission, login, and token validation.
 
 ## 3. Deferred Items (Future Roadmap)
+
 - **Spanish Translation:** UI components are ready for internationalization, but full Spanish content is deferred to next development phase when translation resources are available.
 - **Survey Question CRUD UI:** Survey questions now have full CRUD API endpoints (`/survey-questions`), and a migration script exists (`backend/scripts/migrate_questions_to_firestore.py`) to seed initial questions. The frontend Survey page fetches questions dynamically from this API. **Next step:** Build an admin UI (Survey Builder) where staff can visually add/edit/delete questions without code changes.
 - **Admin Dashboard Tailwind Migration:** MUI dashboard works well for analytics, but full Tailwind migration is recommended for brand consistency. Use `docs/handoff/GEMINI-PROMPT-Tailwind-Dashboard.md` to generate Tailwind replacement via Gemini Pro 3.
@@ -49,21 +54,27 @@ This release represents the "Final Polish" state of the VAI Data System Phase Tw
 ## 4. Handoff Instructions for Deployment
 
 ### Step 1: Push to GitHub
+
 ```bash
 git push origin stable-handoff-release
 ```
+
 This triggers the CI pipeline and prepares code for deployment. Vercel and Cloud Run are pre-configured to deploy from this branch automatically.
 
 ### Step 2: Configure Environment Variables
+
 **Frontend (Vercel):**
+
 - `VITE_API_BASE_URL` – Set to your deployed backend URL (e.g., `https://vai-backend-xxxx.run.app`).
 - Firebase config variables (see `frontend/src/utils/firebaseConfig.js` for required keys).
 
 **Backend (Cloud Run):**
+
 - `FIREBASE_KEY_JSON` – Path to Firebase service account key file (stored as a secret in Google Secret Manager or mounted as a file).
 - `FRONTEND_URL` – Set to your deployed frontend URL for CORS (e.g., `https://vai-survey.vercel.app`).
 
 ### Step 3: Test QR Code Flow
+
 1. Log into the admin dashboard.
 2. Navigate to **Event Manager**.
 3. Create a test installation (e.g., "Test Plaza").
@@ -73,5 +84,10 @@ This triggers the CI pipeline and prepares code for deployment. Vercel and Cloud
 7. Submit a test response and confirm it appears in the **Dashboard** analytics view.
 
 ### Reference Materials
+## OUTDATED STYLE GUDIE ##
+## Use tailwind.config.js only for the Stacked Survey Cards ##
+
 - **Design Artifacts:** See `frontend/src/REFERENCE-ONLY` for stakeholder design mockups (e.g., `UserPersonas.jsx`) not included in the production build.
-- **Style Guide:** VAI branding uses Inter (body text), Hanken Grotesk (headings), and a Neo-Brutalist color palette (black `#121212`, orange `#FF710F`, white `#FFFFFF`).
+- **Style Guide:** VAI branding uses Inter (body text), Hanken Grotesk (headings), and a Neo-Brutalist color palette (black `#121212`, orange `#FF710F`, white `#FFFFFF`). ##OUTDATED STYLE GUDIE## ##DO NOT USE tailwind.config.js FROM PREVIOUS PHASE##.
+
+# USE FINAL Style Guide Color Palette Van Alen.md in /Van Alen UI UX Style Guide/" folder for accurate comprehensive guide for UI UX styling #

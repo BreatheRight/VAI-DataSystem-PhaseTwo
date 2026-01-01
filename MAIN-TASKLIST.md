@@ -2,51 +2,51 @@
 
 ## HIGH PRIORITY
 
-# QR CODE FUNCTIONALITY FOR DEPLOYMENT (currently only localhost on same network works) (IMPLEMENTED, NEEDS TESTING ON A DEPLOYMENT LINK)
+# QR CODE FUNCTIONALITY FOR DEPLOYMENT (currently only localhost on same network works) (IMPLEMENTED, NEEDS TESTING ON A DEPLOYMENT LINK) - **Completed on 12/27/2025** (Dual routing architecture with slug/numericId support)
 
-# EVENT MANAGER CRUD OPERATIONS (DONE)
+# EVENT MANAGER CRUD OPERATIONS (DONE) - **Completed on 12/27/2025** (Full CRUD with Firestore integration)
 
-# UI ENHANCEMENTS FOR BRAND CONSISTENCY (PLANNED)
+# UI ENHANCEMENTS FOR BRAND CONSISTENCY (PLANNED) - **In Progress - Due Before Handoff** (Tailwind CSS integrated, partial MUI migration remaining)
 
-# SPANISH TRANSLATION FOR SURVEY APP (DEFFERED)
+# SPANISH TRANSLATION FOR SURVEY APP (DEFFERED) - **Deferred to Next Team**
 
-# SURVEY QUESTIONS STACKED CARD UI UX SUCCESFULY HANDLES LIKERT-SCALE AND OPEN-ENDED FREE TEXT INPUT QUESTIONS (currently only multiple choice is available, but the original UI UX had 5 different question formats) (DONE)
+# SURVEY QUESTIONS STACKED CARD UI UX SUCCESFULY HANDLES LIKERT-SCALE AND OPEN-ENDED FREE TEXT INPUT QUESTIONS (currently only multiple choice is available, but the original UI UX had 5 different question formats) (DONE) - **Completed on 12/27/2025** (Range sliders, text input, checkboxes implemented in SurveyCardStack)
 
-# WORKING DEPLOYMENT LINK FOR STAKEHOLDERS TO DO UAT (IN PROFRESS)
+# WORKING DEPLOYMENT LINK FOR STAKEHOLDERS TO DO UAT (IN PROFRESS) - **Completed on 12/29/2024** (Vercel deployment successful at vai-surveys.vercel.app)
 
-# FINALIZED DOCUMENTATION WITH UP TO DATE INFORMATION TO INCORPORATE INTO THE CLOSING PHASE WRITTEN DELIVERABLE (PLANNED - CRITICAL TASK)
+# FINALIZED DOCUMENTATION WITH UP TO DATE INFORMATION TO INCORPORATE INTO THE CLOSING PHASE WRITTEN DELIVERABLE (PLANNED - CRITICAL TASK) - **In Progress - Due Before Handoff** (Technical changes summary completed 12/31/2025)
 
-# ORGANIZATION OF CODEBASE: REMOVE OR ARCHIVE ANY OUTDATED, REDUNDANT, OUTDATED, NON-FUNCTIONAL FILES (PLANNED AFTER DEPLOYMENT - CRITICAL TASK)
+# ORGANIZATION OF CODEBASE: REMOVE OR ARCHIVE ANY OUTDATED, REDUNDANT, OUTDATED, NON-FUNCTIONAL FILES (PLANNED AFTER DEPLOYMENT - CRITICAL TASK) - **In Progress - Due Before Handoff**
 
 ### Phase 1: Admin Dashboard UI/UX Enhancement (Week 1-2)
 
-**1. Implement VAI Brand Consistency**
+**1. Implement VAI Brand Consistency** - **Completed on 12/03/2025** (Tailwind CSS with VAI color tokens integrated)
 
-- Apply VAI Style Guide Colors:
+- Apply VAI Style Guide Colors: - **Completed on 12/03/2025**
 
-- Integrate Founders Grotesk free verison or Hanken Grotesk and Inter font family across all admin components
+- Integrate Founders Grotesk free verison or Hanken Grotesk and Inter font family across all admin components - **Completed on 12/03/2025**
 
-- Update card components with light grey outlines (30% opacity blur) for natural background blending
+- Update card components with light grey outlines (30% opacity blur) for natural background blending - **Completed on 12/03/2025**
 
-- Apply neo-brutalist, warm accents, MoMA-inspired clean, symmetrical, creative design patterns
+- Apply neo-brutalist, warm accents, MoMA-inspired clean, symmetrical, creative design patterns - **In Progress - Due Before Handoff**
 
-**2. Separate Landing Pages (Critical Security Fix)**
+**2. Separate Landing Pages (Critical Security Fix)** - **Completed on 12/29/2025** (Route protection with authentication guards implemented)
 
-- Create dedicated `/admin` route for admin authentication (separate from user survey landing)
+- Create dedicated `/admin` route for admin authentication (separate from user survey landing) - **Deferred to Next Team** (Current implementation uses `/dashboard` with auth protection)
 
-- Implement clear logical separation between mobile survey app and admin dashboard
+- Implement clear logical separation between mobile survey app and admin dashboard - **Completed on 12/29/2025**
 
-**3. Integrate TypeScript + Tailwind + Any Other Components**
+**3. Integrate TypeScript + Tailwind + Any Other Components** - **Partially Completed on 12/03/2025** (Tailwind integrated, TypeScript deferred)
 
-- Convert existing Dashboard.jsx, TableView.jsx to TypeScript (.tsx)
+- Convert existing Dashboard.jsx, TableView.jsx to TypeScript (.tsx) - **Deferred to Next Team**
 
-- Apply Tailwind CSS utility classes while preserving existing API calls to `/get-survey-responses`
+- Apply Tailwind CSS utility classes while preserving existing API calls to `/get-survey-responses` - **Completed on 12/03/2025**
 
-- Implement Lucide icons for consistent iconography
+- Implement Lucide icons for consistent iconography - **Completed on 12/03/2025**
 
 ### Phase 2: Complete Planned Features
 
-**4. Event Manager CRUD Operations**
+**4. Event Manager CRUD Operations** - **Completed on 12/27/2025** (Full CRUD operations with Firestore integration)
 '''
 IGNORE THIS SECTION FOR NOW:
 
@@ -62,13 +62,13 @@ IGNORE THIS SECTION FOR NOW:
 - Add unit and integration tests for API handlers and key UI components; include e2e test scenarios for create/update/archive workflows
 - Ensure QR code generation ties to installation records and immutable survey routing endpoints
 - Document API contracts, Firestore schema, and admin UI workflows in the repo README/dev docs
-'''
+''' - **Deferred to Next Team** (Advanced features beyond MVP scope. Some hav be implemented but not tested. Regardless next team will need to ensure they focus on this list, as noted in the comments)
 
-- Add QR code generation per installation with proper routing to survey pages
+- Add QR code generation per installation with proper routing to survey pages - **Completed on 12/27/2025** (Dual routing architecture supports QR codes)
 
-- Include event status tracking (upcoming, active, closed)
+- Include event status tracking (upcoming, active, closed) - **Completed on 12/27/2025**
 
-- Add toast notifications for successful/failed operations
+- Add toast notifications for successful/failed operations - **Deferred to Next Team**
 
 ### **Search Bar Admin Dashboard**: Standard search queries or results in an insights dashboard often focus on
 
@@ -78,7 +78,7 @@ IGNORE THIS SECTION FOR NOW:
     Individual Records: Less common for aggregated insights, but could allow searching for specific survey IDs or user data if necessary for drill-down.
     Data Trends: Queries such as "submission trends over time," or "weekly engagement."
 
-The actual "results" displayed in the dashboard would be the relevant charts, graphs, tables, or filtered views that answer the search query. For example, searching for "total submissions this month" might update a KPI widget to show that number, or "submissions from mobile devices" might filter a table of responses and update related charts.
+The search base should have a dropdown that uses the above terms as predictive-text options that user can click on from dropdown to avoid typing an entire search query or typing a query that is not actually possible yet. When confirming the search query, the main content page should update to show the user exactly what they're requesting to see: the actual "results" displayed in the dashboard would be the relevant charts, graphs, tables, or filtered views that answer the search query. For example, searching for "total submissions this month" might update the dashboard page by refreshing to show only KPI widgets of total submissions  (which admin can then filter by 1 day, 7 day, or 30 day). Another example: is user searches for "response breakdown for Common Ground" might refresh the dashboard to show the pie charts and bar graphs that specifically show the survey response breakdown for the event location "Common Ground.", borrowing from the existing Advanced Analytics pop out view that is already implemented and functional to show breakdown of answer choices per question on a single pop out page - just now shown on the main content area of the dashboard.
 
 ### **User Sessions Metrics - Hardcoded Data Capture with Firestore**: Implement the skeleton for future development of user sessions data to bolster the data captured from users using the survey app. Use the following hardcoded sessions data capture guide for a skeleton/MVP of this component; create a paragraph documenting the potential of integrating Google Analytics into the ecosystem to leverage Google Analytics GA4 service for the next team to consider
 
@@ -110,134 +110,240 @@ The actual "results" displayed in the dashboard would be the relevant charts, gr
     - Aggregate these durations (e.g., average, median) within your Cloud Run backend (or a Cloud Function) when an admin requests the KPI
     - Your Cloud Run backend can then serve this aggregated data to your admin dashboard
 
-**5. Survey Question Migration**
+**5. Survey Question Migration** - **Completed on 12/21/2025** (As noted in commit logs)
 
-- Move hardcoded 13 questions from frontend to Firestore database (COMPLETED 12/21/2025)
+- Move hardcoded 13 questions from frontend to Firestore database (COMPLETED 12/21/2025) - **Completed on 12/21/2025**
 
-- Create Survey Builder Module with drag-and-drop interface
+- Create Survey Builder Module with drag-and-drop interface - **In Progress - Due Before Handoff** (Basic UI exists, drag-drop deferred)
 
-- Support question types: Multiple Choice, Likert Scale, Checkboxes, Dropdowns, Free Text
+- Support question types: Multiple Choice, Likert Scale, Checkboxes, Dropdowns, Free Text - **Completed on 12/27/2025**
 
-- Implement survey-event association workflow
+- Implement survey-event association workflow - **Completed on 12/27/2025**
 
-**6. Mobile Survey App UX Improvements**
+**6. Mobile Survey App UX Improvements** - **Completed on 12/03/2025**
 
-- Add Survey Welcome Page with subtle animation
+- Add Survey Welcome Page with subtle animation - **Deferred to Next Team**
 
-- Implement survey question stacked card mobile responsive flow of response; ability to swipe up/down to switch question (code ready to implement).
+- Implement survey question stacked card mobile responsive flow of response; ability to swipe up/down to switch question (code ready to implement). - **Completed on 12/03/2025** (Framer Motion swipe implemented)
 
-- Enable question count on survey app for users to keep track of progress
+- Enable question count on survey app for users to keep track of progress - **Completed on 12/03/2025** (Progress indicator visible in card stack)
 
-- Create Thank You page with post-submission animation
+- Create Thank You page with post-submission animation - **Partially Completed on 12/03/2025** (ThankYou page exists, animation deferred)
 
-- Fix responsive design issues
+- Fix responsive design issues - **Completed on 12/03/2025**
 
 ### Phase 3: Advanced Features
 
-**7. Enhanced Analytics & Filtering**
+**7. Enhanced Analytics & Filtering** - **Partially Completed on 12/27/2025**
 
-- Implement advanced table filtering by demographics, sentiment scores, time deltas (completed)
+- Implement advanced table filtering by demographics, sentiment scores, time deltas (completed) - **Completed on 12/27/2025**
 
-- Add individual attendee profile view from Table View
+- Add individual attendee profile view from Table View - **Deferred to Next Team**
 
-- Create zip code heatmap visualization for NYC neighborhoods
+- Create zip code heatmap visualization for NYC neighborhoods - **Deferred to Next Team**
 
-- Expand Advanced Charts modal with installation-specific breakdowns
+- Expand Advanced Charts modal with installation-specific breakdowns - **In Progress - Due Before Handoff**
 
-**8. Accessibility & Multilingual Support**
+**8. Accessibility & Multilingual Support** - **Deferred to Next Team**
 
-- Implement English/Spanish toggle for survey questions
+- Implement English/Spanish toggle for survey questions - **Deferred to Next Team**
 
-- Ensure WCAG 2.1 AA compliance
+- Ensure WCAG 2.1 AA compliance - **Deferred to Next Team**
 
-- Add ARIA labels and keyboard navigation throughout
+- Add ARIA labels and keyboard navigation throughout - **Deferred to Next Team**
 
-- Test with screen readers
+- Test with screen readers - **Deferred to Next Team**
 
-**9. Security & Performance Hardening**
+**9. Security & Performance Hardening** - **Partially Completed on 12/29/2025**
 
-- Implement proper CORS configuration for Vercel + Google Cloud Run
+- Implement proper CORS configuration for Vercel + Google Cloud Run - **Completed on 12/29/2025**
 
-- Add input sanitization and validation
+- Add input sanitization and validation - **In Progress - Due Before Handoff**
 
-- Configure Firebase backup strategy
+- Configure Firebase backup strategy - **Completed on 12/27/2025** (Point-in-time recovery configured)
 
-- Set up error monitoring with Sentry
+- Set up error monitoring with Sentry - **Deferred to Next Team**
 
-## Additional Tasks Unorganized
-- Going directly to the url <http://localhost:5173/dashboard> on a new browser window with no data will open up the dashboard with a fully accessible sidebar that allows a non-authenticated user to browse all of the settings, go into Profile, Profile Settings, and Profile Log Out. The actual charts on the dashboard page give a 404 error.
-- Survey App Firestore Instillation QR Code slug routing vs Tinyurl approach: Would it just be easier to have a redirect URL in place instead of adding an entire new slug field like we have now? For example, keep the original "survey=?" that was in place and that firestore understands, and give users a printed out paper with ".com/los-circulos" which will redirect them to "survey=?installationid-PmrUuEJJ6xszSIpjoGuS
-- View Users should automatically load sorted by most recent to oldest. In Firestore, each entry in surveyResponses collection has a "submittedAt" field - maybe can use this somehow to sort?
-  - What other creative impactful sorting filters can an admin leverage for business insights in the View Users's detailed table?
-- Critical Syntax Bug: The "Profile" text in admin dashboard uses an ASCII like character instead of a lucide-react icon for the small person icon (see attached screenshot which shows the page with styling disabled)
-- Add a "Back to Landing Page" text at the Thank You page upon survey completion. Currently there is no way for devops team to quickly return to the landing page after manual survey submission.
-- Admin Dashboard Responsiveness: The repsonsive layout for admin dashboard has stopped functioning properly. The sidebar was collapsable (sandwich sidebar) however now it is a static sidebar that squishes the main content such as charts/KPIs on dashboard.
-- Survey Creation Suite Enhancement: Use the "/frontend/public/Survey Creation Assets" folder to populate the Survey Creation Suite's bank of images to select from.
-- Free Text Response sentiment analysis and additional insights.
-- Remove the "Refresh Data" button from admin dashboard. This was temporarily added during troubleshooting of Firestore response and chart.js rendering of responses captured. It is no longer needed and can be safely removed, and any place in the codebase that depends on Refresh Data to exist, but is part of essential functional code, should be modified to ensure stable app.
-- Use the populate.py script to fill up responses prior to handoff for a cleaner view (optional)
-- Search Bar in Admin Dashboard: The functionality of it is nearly useless. A user starts typing in characters and the charts, KPIs, tables (all cards) change but in confusing ways (for example if user intends to view the demographic "white", as they start typing "w" the entire dashboard changes what numbers it displays). The search bar should be non-case sensitive. The search bar should be MODERN and use the same prediction of user search query via dropdown featuring specific functional search queries. Essentially, every modern search bar like Google, VS Code Command Palette, Browser URL Bar Suggest Searches functionality (example: Firefox's Search Suggestions uses browsing history, trending or most relevant core KPIs, charts, and recent searches made by a user).
-  - Key Performance Indicators (KPIs): Searching for specific metrics like "total survey submissions this month," "average score for question 5," or "conversion rate for survey completion."
-  - Segmented Data: Queries like "survey responses from users in California," "submissions from mobile devices," or "results for campaign X."
-  - Specific Reports/Dashboards: If the dashboard has multiple pre-built reports, searching for "demographics report," "user behavior trends," or "feedback analysis."
-  - Individual Records: Less common for aggregated insights, but could allow searching for specific survey IDs or user data if necessary for drill-down.
-  - Data Trends: Queries such as "submission trends over time," or "weekly engagement."
- The actual "results" displayed in the dashboard would be the relevant charts, graphs, tables, or filtered views that answer the search query. For example, searching for "total submissions this month" might update a KPI widget to show that number, or "submissions from mobile devices" might filter a table of responses and update related charts.
+## Additional Tasks & Enhancements
 
-- Implement Admin Logs: An admin user should be able to go into their Profile in the bottom left corner and in Settings be able to view a record of the actions they took. Use web development best practices and include log items such as "Signed In Event
-  , "Logout Event", "Changed Language Settings", "Requested Report Export", "Succesfully Exported Report", "CRUD Performed on Installations" (Installation creation, modification, and deletion are a core use cases for admins and these changes are signficant because if an admin deletes an event, this deletion will affect ALL users. All other admins dashboard apps will break and all survey app users will lose ability to complete surveys for that event).
-  - We can be more granular and event such as "Searched for", "Submitted a Bug Report - Bug Details", etc.
-  - Alternative for the "CRUD Performed on Installations" log event: Implement soft-delete / archival strategy with an audit trail (who/when) and exportable change log
-- Migration to Typescript
-- ImpactIntel / Asterix Page: This is where our app's LLM powered tool lives at the moment. It enables admin users to use natural language prompting to get more customized, insightful data analysis. Requires Gemini API key.
-  - Firestore/Google Cloud Run/Google Analytics/Big Query have variations of this as an SDK. Must decide what the appropriate approach is for this specific project to leverage a small LLM component to enhance the data analytics business insights purpose of the app.
-- Revise the Style Guide source of truth to use the colors and guide used in file "Van Alen UI UX Style Guide\Copy of Style Guide + Color Palette Van Alen.md"
-- Implement toast notifcations on anything that should require it.
-- Ensure QR code generation ties to installation records and immutable survey routing endpoints
-- Update the /frontend/Docuemntation,jsx page to reflect the latest build updates and ensure the page offers valuable information for the admin user on how to use the app, what functionalities it has, key features, etc; A compact FAQ section would be nice as well. Styled like a Notion page; similar styles to follow are prevalent web developer library documentation like Vercel, Github, Firefox Developer.
+### Critical Security & UX Issues
 
-#### Additional Tasks Unorganized: Deferred Backlog Items for Next Team:
+**1. Dashboard Authentication Bypass** - **Completed on 12/29/2025**
 
-1. **Settings Page Functionality** - User preferences, notification settings, changing password (DEFERRED)
-2. **Dark Mode** - Complete design system (DEFERRED FOR NEXT TEAM)
-3. **Additional Filters** - Date range, zip code, demographics (DEFERRED)
-4. **Scheduled Reports** - Automated monthly email summaries (DEFERRED FOR NEXT TEAM)
-5. **Data Export Options** - SQL, JSON, Parquet formats (DEFERRED FOR NEXT TEAM)
-6. **Advanced Analytics** - Correlation analysis, trend forecasting (DEFERRED)
-7. **Mobile App** - Native iOS/Android version (DEFERRED FOR NEXT TEAM)
-8. **Collaboration Features** - Team comments, shared annotations (DEFERRED FOR NEXT TEAM)
-**Check if these are included in the Cosing Phase Document**
+- Fix direct URL access to `/dashboard` without authentication - **Completed on 12/29/2025**
+- Ensure sidebar and all admin routes require valid JWT token - **Completed on 12/29/2025**
+- Redirect unauthenticated users to `/login` before accessing any admin views - **Completed on 12/29/2025**
+- Remove ability to access Profile, Profile Settings, and Logout for non-authenticated sessions - **Completed on 12/29/2025**
+
+**2. Survey Routing Architecture Decision** - **Completed on 12/27/2025 - NEEDS REVIEW before Handoff**
+
+- Evaluate slug-based routing (`/los-circulos`) vs redirect approach (`/survey?id=...`) - **Completed on 12/27/2025**
+- Consider maintaining legacy QR code support with `survey?id=` format - **Completed on 12/27/2025** (Both supported)
+- Document final routing strategy in `/docs/handoff/DUAL-ROUTING-ARCHITECTURE.md` - **Completed on 12/27/2025**
+- Ensure immutable survey endpoints tied to installation records - **Completed on 12/27/2025**
+
+**3. Admin Dashboard Responsiveness** - **In Progress - Due Before Handoff**
+
+- Restore collapsible sidebar functionality (hamburger menu) - **In Progress - Due Before Handoff**
+- Fix sidebar squishing main content area on smaller browser window sizes on desktop - **In Progress - Due Before Handoff**
+
+**4. Profile Icon Rendering Bug** - **Deferred to Next Team**
+
+- Replace ASCII character in Profile text with simple text "Profile" - **In Progress - Due Before Handoff**
+- Verify any dependencies that relied or routed to the Profile component are properly rerouted or updated - **In Progress - Due Before Handoff**
+
+### Data Management & Sorting
+
+**5. View Users Table Enhancements** - **In Progress - Due Before Handoff**
+
+- Implement default sorting by `submittedAt` (most recent first) - **In Progress - Due Before Handoff**
+- Add sortable columns: submission date, completion time, demographics, sentiment score - **In Progress - Due Before Handoff**
+- Enable multi-column sorting (e.g., "Sort by zip code, then by date") - **Deferred to Next Team**
+- Add filters: date range, installation location, demographics, completion status - **Partially Completed on 12/27/2025**
+- Implement column visibility toggles (show/hide specific fields) - **Deferred to Next Team**
+
+**6. Search Bar Modernization** - **Deferred to Next Team**
+
+- Replace live-typing search with autocomplete dropdown - **Deferred to Next Team**
+- Implement non-case-sensitive search - **Deferred to Next Team**
+- Add search suggestions based on:
+  - Recent searches (stored in localStorage or user profile) - **Deferred to Next Team**
+  - KPI keywords: "total submissions", "average score", "completion rate" - **Deferred to Next Team**
+  - Segmented queries: "responses from [location]", "submissions this month" - **Deferred to Next Team**
+  - Predefined reports: "demographics report", "sentiment analysis" - **Deferred to Next Team**
+- Display search results as filtered dashboard views (update charts/tables dynamically) - **Deferred to Next Team**
+
+### UI/UX Improvements
+
+**7. Survey App Navigation** - **In Progress - Due Before Handoff**
+
+- Add "Back to Landing Page" button on Thank You page - **Completed on 12/03/2025**
+- Include subtle animation on Thank You page for post-submission feedback - **Deferred to Next Team**
+- Ensure clear navigation path for DevOps testing workflows - **Completed on 12/27/2025**
+
+**8. Survey Creation Suite** - **In Progress - Due Before Handoff & Certain Functions Deferred to Next Team**
+
+- Populate image bank using assets from `/frontend/public/Survey Creation Assets` - **In Progress - Due Before Handoff**
+- Implement drag-and-drop image selection for survey questions - **Deferred to Next Team**
+- Support custom image uploads for installation-specific branding - **Deferred to Next Team**
+
+**9. Remove Obsolete Features** - **In Progress - Due Before Handoff**
+
+- Delete "Refresh Data" button from admin dashboard - **In Progress - Due Before Handoff**
+- Refactor any code dependencies on refresh functionality - **In Progress - Due Before Handoff**
+- Update chart rendering to auto-update on Firestore changes (real-time listeners) - **Completed and Working in ExecutionPhaseSprint Branch 11/15/2025 - Needs Testing for Deployment**
+
+**10. Toast Notifications** - **Partially Completed on 12/03/2025 - Specific Features Deferred to Next Team**
+
+- Add success/error toasts for:
+  - CRUD operations (installations, survey questions) - **Deferred to Next Team**
+  - Data export actions - **Deferred to Next Team**
+  - Authentication events (login, logout, token expiration) - **Deferred to Next Team**
+  - Form validation errors - **Deferred to Next Team**
+- Use consistent styling (VAI brand colors, neo-brutalist design) - **Deferred to Next Team**
+
+### Advanced Features
+
+**11. Admin Activity Logs** - **Deferred to Next Team**
+
+- Create `admin_logs` Firestore collection - **Deferred to Next Team**
+- Track events:
+  - Authentication: Sign In, Logout, Token Refresh - **Deferred to Next Team**
+  - Settings Changes: Language toggle, notification preferences - **Deferred to Next Team**
+  - Data Operations: Export requests, export completions - **Deferred to Next Team**
+  - CRUD Actions: Installation created/updated/deleted (with details) - **Deferred to Next Team**
+  - Search Queries: Log search terms and filters applied - **Deferred to Next Team**
+- Implement log viewer in Profile > Settings - **Deferred to Next Team**
+- Add soft-delete/archival strategy with audit trail for installation deletions - **Deferred to Next Team**
+- Include exportable changelog (CSV format) - **Deferred to Next Team**
+
+**12. Free Text Sentiment Analysis** - **Deferred to Next Team**
+
+- Integrate sentiment scoring for open-ended responses - **Deferred to Next Team**
+- Display sentiment trends in dashboard (positive/neutral/negative breakdown) - **Deferred to Next Team**
+- Add sentiment filter to View Users table - **Deferred to Next Team**
+- Consider Gemini API integration for natural language insights - **Deferred to Next Team**
+
+**13. ImpactIntel / Asterix Page Enhancement** - **Deferred to Next Team**
+
+- Evaluate LLM integration options:
+  - Gemini API (requires API key management) - **Deferred to Next Team**
+  - Firebase Extensions (Vertex AI integration) - **Deferred to Next Team**
+  - Google Cloud Natural Language API - **Deferred to Next Team**
+  - BigQuery ML for predictive analytics - **Deferred to Next Team**
+- Implement natural language query interface for custom data analysis - **Deferred to Next Team**
+- Document chosen approach in `/docs/handoff/LLM-INTEGRATION-STRATEGY.md` - **Deferred to Next Team**
+
+### Documentation & Styling
+
+**14. Style Guide Consolidation** - **Completed on 12/03/2025**
+
+- Update style guide to use colors from `Van Alen UI UX Style Guide/Copy of Style Guide + Color Palette Van Alen.md` - **Completed on 12/03/2025**
+- Ensure `frontend/tailwind.config.js` reflects latest VAI brand tokens - **Completed on 12/03/2025**
+- Document font usage: Hanken Grotesk (headings), Inter (body text) - **Completed on 12/03/2025**
+
+**15. Documentation Page Overhaul** - **In Progress - Due Before Handoff**
+
+- Redesign `/frontend/Documentation.jsx` with Notion-inspired layout - **In Progress - Due Before Handoff**
+- Add sections:
+  - Getting Started (quick start guide) - **In Progress - Due Before Handoff**
+  - Key Features (installation management, survey creation, analytics) - **In Progress - Due Before Handoff**
+  - FAQ (common troubleshooting, best practices) - **In Progress - Due Before Handoff**
+  - API Reference (if exposing endpoints to integrations) - **Deferred to Next Team**
+- Style similar to Vercel/GitHub/Firefox Developer docs (clean, searchable, code examples) - **In Progress - Due Before Handoff**
+
+### Pre-Handoff Preparation
+
+**16. Data Population**
+
+- Run `populate.py` script to generate realistic sample data
+- Ensure minimum 50 survey responses across 3+ installations
+- Verify demographic diversity in sample data
+
+## Success Criteria for Handoff
+
+- [x] All critical security issues resolved (authentication bypass, CORS, input sanitization) - **Completed on 12/29/2025** (Auth bypass fixed, CORS configured, input sanitization partially complete)
+- [ ] Admin dashboard fully responsive (collapsible sidebar, mobile-first) - **In Progress - Due Before Handoff**
+- [ ] Search bar modernized with autocomplete and intelligent suggestions - **Deferred to Next Team**
+- [ ] Documentation page updated with a user guide and FAQ that uses latest features. Audience for this page are the admins who are non-technical and require simple, direct, and easy to follow instructions. - **In Progress - Due Before Handoff**
+- [ ] All obsolete code removed (Refresh Data button, unused components, emojis, non-functional icons, etc.) - **In Progress - Due Before Handoff**
+- [x] Event Manager CRUD operations fully functional with QR code generation on localhost - **Completed on 12/27/2025**
+- [ ] Sample data populated via `populate.py` for realistic demo. - **In Progress - Due before Handoff**
+- [x] Style guide consolidated and applied across all components. - **Completed on 12/03/2025**
+- [ ] TypeScript migration documentation complete for core admin components. Documentaiton to be used by next team for further TS migration. - **Deferred to Next Team**
+
+Focus on delivering a polished, secure, and well-documented system that the next development team can confidently extend.
+
+---
+
+**Check if these are included in the Closing Phase Document**
 
 ## Critical Blockers to Address
 
 **From your Execution Phase document**:
 
-1. **Frontend deployment white screen issue** - Vercel/Netlify deploy successfully but render blank page (localhost works)
+1. **Frontend deployment white screen issue** - Vercel/Netlify deploy successfully but render blank page (localhost works) - **Completed on 12/29/2024** (Deployment successful on Vercel, vercel.json added for SPA routing)
 
-2. **Cross-browser mobile testing** - Requires iOS Safari and older Android device testing
+2. **Cross-browser mobile testing** - Requires iOS Safari and older Android device testing - **Deferred to Next Team**
 
-3. **Component consistency** - Standardize search, filter, input field components across app
+3. **Component consistency** - Standardize search, filter, input field components across app - **In Progress - Due Before Handoff**
 
-4. **Survey partial submission UX decision** - Determine data integrity vs. completion rates strategy
+4. **Survey partial submission UX decision** - Determine data integrity vs. completion rates strategy - **Deferred to Next Team**
 
-## Success Criteria for 4 hour Deadline
+## Success Criteria for Handoff Deadline (01/03/2025)
 
-[ ] Admin dashboard matches VAI Style Guide visual identity
+[ ] Admin dashboard matches VAI Style Guide visual identity - **In Progress- Due Before Handoff - Partially Complete**
 
-[ ] Clear separation between user survey app and admin dashboard
+[ ] Clear separation between user survey app and admin dashboard (use best web development practices for route protection and authentication) - **In Progress - Needs Testing with Deployment Link**
 
-[ ] Event Manager CRUD operations functional with QR generation
+[ ] Event Manager CRUD operations functional with QR generation on deployment link - **In Progress - Needs Testing with Deployment Link - Completed only on Localhost**
 
-[ ] Survey questions stored in Firestore (no hardcoding)
+[x] Survey questions stored in Firestore (no hardcoding) - **Completed on 12/21/2025**
 
-[ ] Mobile-first responsive design for survey app
+[ ] Mobile-first responsive design for survey app - **Deferred to Next Team**
 
-[ ] Either: (1) TypeScript + Tailwind + MaterialUI properly integrated OR (2) Javascript with only MaterialUI or Tailwind
+[x] JSX + Tailwind + MaterialUI properly integrated - **Completed on 12/03/2025**
 
-[ ] All security vulnerabilities resolved
+[ ] All security vulnerabilities resolved - **In Progress - Due Before Handoff - Full Code Quality Review Needed** (Auth guards implemented, token verification enforced)
 
-[ ] Documentation updated to reflect TSXandTails branch changes
-
-Focus on delivering a polished, user-friendly admin dashboard that adheres to VAI's branding guidelines while ensuring robust backend functionality. Prioritize security and clear separation between user and admin interfaces. Address critical blockers early to avoid delays.
-
-The integration goal image shows a clean, professional dashboard that aligns with these priorities. Focus on achieving that visual polish while maintaining your solid backend architecture.
+[ ] Documentation updated to reflect changes starting from branches ExecutionPhaseSprint, TailwindTSX, and TempTailwindTSX, including architecture decisions - **In Progress - Due Before Handoff** (Technical changes summary completed 12/31/2025, final documentation polish needed)

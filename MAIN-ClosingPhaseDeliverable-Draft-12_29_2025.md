@@ -536,7 +536,6 @@ Under **Option B**, our repository already contains the complete execution-phase
 16. Assuming goal of supplementing narrative-driven impact reporting with quantitative data, what are the top 3-5 metrics VAI wants to highlight to funders and partners?
 
 ***
-
 ## Planned Backlog Itemlist Table
 
 | Forward ID | Task | Role | Notes |
@@ -560,19 +559,29 @@ Under **Option B**, our repository already contains the complete execution-phase
 | F017 | Stakeholder Demo Preparation | Project Mgmt/All | |
 | F018 | Security Vulnerability Remediation | Full Stack/Security | Based on findings from security review/testing. |
 | F019 | Refactor to React Native or move to full iOS/Android programming kits (Swift, Kotlin, etc.) | Full Stack Dev | Technical research and recommendation |
-|F020| Admin Role-Based Access Control | Full Stack Dev | Requires VAI-controlled Google Account. |
+| F020 | Admin Role-Based Access Control | Full Stack Dev | Requires VAI-controlled Google Account. |
 | F021 | Data Retention & Deletion Policies | Backend/Project Mgmt | Requires VAI stakeholder input. |
 | F022 | Audit Logging for Admin Actions | Backend/Project Mgmt | Requires VAI stakeholder input. |
 | F023 | Integration with Mailchimp/SendGrid | Full Stack Dev | For follow-up emails to survey respondents. vanalen.org/ has Wordpress plugins for Mailchimp |
 | F024 | Validate the post-survey completion Donation flow | Quality Tester | Ensure smooth transition from survey to donation page. |
 | F025 | Integrate Google Gemini Flash or 3.0 Pro for AI-powered analytics | Data Scientist/Backend Dev | Technical research and recommendation. |
-| F026 | Finish Implementation of Typescript Migration | Full Stack Dev | Refactor existing JS code to TS for type safety. |
-| F027 | Implement Paper Survey Data Entry Module | Full Stack Dev | Backend and frontend for manual data entry of paper surveys. Resarch shows paper suverys receieve 30% more respones and responses are more accurate/honest |
-| F028 | Implement Open Space Meeting Feedback Module | Full Stack Dev | Backend and frontend for capturing feedback from Van Alen's open space meetings at their headquarters. Will require user informed consent (can be listed as part of open space meeting registration policy agreement) |
+| F026 | Finish Implementation of TypeScript Migration | Full Stack Dev | Refactor existing JS code to TS for type safety. |
+| F027 | Implement Paper Survey Data Entry Module | Full Stack Dev | Backend and frontend for manual data entry of paper surveys. Research shows paper surveys receive 30% more responses and responses are more accurate/honest. |
+| F028 | Implement Open Space Meeting Feedback Module | Full Stack Dev | Backend and frontend for capturing feedback from Van Alen's open space meetings at their headquarters. Will require user informed consent (can be listed as part of open space meeting registration policy agreement). |
 | F029 | Data Visualization Dashboard Enhancements | Full Stack Dev/Data | Additional visualizations based on stakeholder feedback. |
 | F030 | User Training Documentation | Project Mgmt/All | Create user guides and training materials for VAI staff. |
-| F031 | Post-Handoff System Audit & Review | Quality Tester/Project Mgmt | Comprehensive review of system functionality and performance, resulting in a GAP Analsysis artifact |
+| F031 | Post-Handoff System Audit & Review | Quality Tester/Project Mgmt | Comprehensive review of system functionality and performance, resulting in a GAP Analysis artifact. |
 | F032 | Live Deployment Beta | Team & Stakeholders | Live beta deployment with stakeholder and PM present for end-to-end functionality testing and quality control. |
+| F033 | Settings Page Functionality | Frontend Dev | User preferences, notification settings, password management. |
+| F034 | Dark Mode Implementation | Frontend/Design | Complete design system with theme toggle across mobile app and admin dashboard. |
+| F035 | Date Range Filters | Frontend Dev | Custom date pickers for advanced filtering in analytics dashboard. |
+| F036 | Scheduled Reports | Backend Dev | Automated monthly email summaries (SendGrid/Mailgun integration). |
+| F037 | Advanced Export Formats | Backend Dev | SQL, JSON, Parquet support for data exports. |
+| F038 | Predictive Analytics | Data Scientist/Backend Dev | Correlation analysis, trend forecasting (BigQuery ML). |
+| F039 | Native Mobile Apps | Full Stack Dev | iOS/Android versions (React Native consideration). |
+| F040 | Collaboration Features | Full Stack Dev | Team comments, shared annotations on survey data. |
+| F041 | Sentiment Analysis | Data Scientist/Backend Dev | Functional implementation for free-text survey responses. |
+| F042 | Admin Activity Logs | Backend Dev | Implement and make accessible via Profile > Settings for audit trail visibility. |
 
 ***
 
