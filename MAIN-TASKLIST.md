@@ -292,6 +292,13 @@ The search base should have a dropdown that uses the above terms as predictive-t
   - API Reference (if exposing endpoints to integrations) - **Deferred to Next Team**
 - Style similar to Vercel/GitHub/Firefox Developer docs (clean, searchable, code examples) - **In Progress - Due Before Handoff**
 
+16. Miscellaneous Fixes - **In Progress - Due Before Handoff**
+
+- Fix deployment white screen issue on Vercel (add vercel.json for SPA routing) - **Completed on 12/29/2024**
+- Standardize input fields, buttons, modals across admin dashboard - **In Progress - Due Before Handoff**
+- Ensure consistent error handling and loading states - **In Progress - Due Before Handoff**
+- Add fallbacks to Dashboard.jsx or App.jsx (e.g., try-catch around API calls) - **In Progress - Due Before Handoff**
+
 ### Pre-Handoff Preparation
 
 **16. Data Population**

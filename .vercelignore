@@ -1,0 +1,29 @@
+# Documentation folders (not needed for frontend build)
+
+docs/
+ExecutionPhaseSprint Branch Documentation Backlog and Images/
+Goal UI UX References/
+Van Alen UI UX Style Guide/
+docs/Screenshots Latest Build 12-25/
+
+# Markdown files in root (keep critical ones, exclude drafts)
+
+MAIN-ClosingPhaseDeliverable-Draft-*.md
+ClosingPhaseDeliverableOUTLINEOriginal.md
+CLOSING-PHASE-STATUS-SUMMARY.md
+
+# Backend files (not needed for frontend deployment)
+
+backend/
+*.py
+requirements.txt
+
+# Development files
+
+.vscode/
+*.log
+
+# Git files
+
+.git/
+.gitignore

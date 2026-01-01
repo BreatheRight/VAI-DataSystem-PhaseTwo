@@ -1,6 +1,9 @@
 # Community Engagement Data System
+
 ### CIS 5800 EMWA - Team 6
+
 ### Sprint 5 Deliverable
+
 ### 12/15/25
 
 ***
@@ -27,7 +30,7 @@
     - Full Component Status List
     - Full Technology Stack List
     - Wireframes & Demos
-8. References
+7. References
 
 ***
 
@@ -68,10 +71,10 @@ Our team’s mission for Phase Two is to reproduce and validate the proof of con
 
 **Primary Objective**: Develop a functional, scalable data platform that enables VAI staff to:
 
-1.  Collect real-time survey responses from community members at public art installations
-2.  Analyze engagement metrics and sentiment trends across demographics
-3.  Generate reports for grant applications, board presentations, and partner organizations
-4.  Manage events and installations with QR code distribution for frictionless survey access
+1. Collect real-time survey responses from community members at public art installations
+2. Analyze engagement metrics and sentiment trends across demographics
+3. Generate reports for grant applications, board presentations, and partner organizations
+4. Manage events and installations with QR code distribution for frictionless survey access
 
 **Secondary Objective**: Set up our successor team (next semester) with:
 
@@ -165,7 +168,6 @@ The following table represents our revised Product Backlog, organized by system 
 | 56 | Sprint 5 | Analytics Feature Plan | Charts | Chart Type Toggle | Medium | **Completed** |
 | 57 | Sprint 5 | Analytics Feature Plan | Charts | QR Code Generation | Medium | **Completed** |
 
-
 *Items marked with \* will be prioritized in the Forward Backlog for future development teams.*
 
 ## System Design
@@ -181,42 +183,43 @@ The following Use Case, Activity, Class, ERD, and System Architecture diagrams c
 - **Database**: Google Firestore (NoSQL cloud database)
 - **Authentication**: Firebase Authentication with email/password and domain restrictions
 - **Deployment**:
-    - Frontend: Vercel (serverless deployment platform)
-    - Backend: Google Cloud Run (containerized serverless platform)
+  - Frontend: Vercel (serverless deployment platform)
+  - Backend: Google Cloud Run (containerized serverless platform)
 - **Data Visualization**: Chart.js 4.4 with datalabels plugin
 - **Data Analysis**: Python pandas 2.2, matplotlib 3.10, openpyxl 3.1
 
 ### System Diagrams and Flows
+
 ## ALL EIGHT DIAGRAMS ARE LOCATED IN /docs/handoff FOLDER AS .png FILES
 
 - NOTE: (Replacing Images Due to Markdown Limitations; diagrams available as .png in /docs/handoff folder)
 
 **Diagram Type & Name:** POC Use Case Diagram - Admin
-*   **Description:** High-level overview of core admin processes.
-*   **Sprint User Stories Covered:** US-11, 12, 13, 16, 17 & Backlog No. 4,6,18,23,27
-*   **Backlog/Epic:** Admin auth, analytics, report download
+- **Description:** High-level overview of core admin processes.
+- **Sprint User Stories Covered:** US-11, 12, 13, 16, 17 & Backlog No. 4,6,18,23,27
+- **Backlog/Epic:** Admin auth, analytics, report download
 
 **Diagram Type & Name:** POC Use Case Diagram - Community User
-*   **Description:** High-level overview of core user processes.
-*   **Sprint User Stories Covered:** US-06, 07, 08, 10 & Backlog No. 1,2,3,15,16
-*   **Backlog/Epic:** QR Scan, Survey Submission, Answer Questions, Mobile/API
+- **Description:** High-level overview of core user processes.
+- **Sprint User Stories Covered:** US-06, 07, 08, 10 & Backlog No. 1,2,3,15,16
+- **Backlog/Epic:** QR Scan, Survey Submission, Answer Questions, Mobile/API
 
 **Diagram Type & Name:** POC Activity Diagram - Admin
-*   **Description:** High-level overview of purpose for dashboard. Illustrates the workflow: Login -> Overview -> Analytics -> Export workflow.
-*   **Sprint User Stories Covered:** US-12, 13, 16, 17 & Backlog No. 5,18,23
-*   **Backlog/Epic:** Login-> Overview -> Analytics -> Export workflow. Admin/Security
+- **Description:** High-level overview of purpose for dashboard. Illustrates the workflow: Login -> Overview -> Analytics -> Export workflow.
+- **Sprint User Stories Covered:** US-12, 13, 16, 17 & Backlog No. 5,18,23
+- **Backlog/Epic:** Login-> Overview -> Analytics -> Export workflow. Admin/Security
 
 **Diagram Type & Name:** POC Activity Diagram - Community User
-*   **Description:** High-level overview of survey-taking workflow. Steps include: Start Survey, Scan QR, Input URL, Answer Questions, Submit.
-*   **Sprint User Stories Covered:** US-06, 07, 08, & Backlog No. 1,2,16
-*   **Backlog/Epic:** Start Survey, Scan QR, Input URL, Answer Questions, Submit
+- **Description:** High-level overview of survey-taking workflow. Steps include: Start Survey, Scan QR, Input URL, Answer Questions, Submit.
+- **Sprint User Stories Covered:** US-06, 07, 08, & Backlog No. 1,2,16
+- **Backlog/Epic:** Start Survey, Scan QR, Input URL, Answer Questions, Submit
 
 *These are the original POC high-level use case and activity diagrams which capture the core processes an art installation attendee and an admin would be able to accomplish. They are still accurate, therefore are included for reference here. Additional diagrams created during Sprint 5, as well as POC diagrams, are elucidateded below. Full resolution diagrams are available in the /docs/handoff folder.*
 
 **Diagram Type & Name:** Use Case Diagram - User and Admin
-*   **Description:** Expanded Use Case diagram that contributes Sprint 5-specific tasks for a technical, comprehensive view of user processes.
-*   **Sprint User Stories Covered:** The diagram has embedded the US and backlog items.
-*   **Backlog/Epic:** Admin auth, Report download - QR Scan, Survey Submission, Answer Questions, Mobile / API
+- **Description:** Expanded Use Case diagram that contributes Sprint 5-specific tasks for a technical, comprehensive view of user processes.
+- **Sprint User Stories Covered:** The diagram has embedded the US and backlog items.
+- **Backlog/Epic:** Admin auth, Report download - QR Scan, Survey Submission, Answer Questions, Mobile / API
 
 ### ERD Summary
 
@@ -236,11 +239,11 @@ The VAI Data System Architecture illustrates how the platform is organized into 
 
 We modeled VAI’s data system as a traditional 4-tier architecture pattern that consists of a presentation layer (HCI) layer, a business logic (problem domain) layer, a data access layer, and the persistent data storage layer. This is a high-level overview, and the surgical, technical version may be reviewed in this deliverable’s appendix.
 
-1.  **Presentation Layer**: React frontend deployed on Vercel; components include home page, survey page, questions component, navbar, signup page, event manager page, datatable, and so forth.
-2.  **Business Logic Layer**: Processes information received from the presentation layer via the Data Access Layer’s Python Flask API with analytics processing via Google Cloud Run. The components that reside in this layer handle negotiation between the user-facing presentation layer and physical architecture in order to accomplish all required business processes – this includes survey analysis (data aggregation, statistics), data validation, user sign-up requests, email domain validation, and downloading survey data.
-3.  **Data Access Layer**: Determines where data lives and how components in our system reach other external systems.
-    1.  *Physical Architecture Package*: Responsible for communication between system and outside world (internet, cloud provider services). Networking components include CORS configuration, HTTPS encryption, API gateway to Flask, Firebase/GoogleCloudRun firewalls, and static hosting of our web apps. DeFirebase integration (Admin SDK, Auth, Firestore Client) with networking/security.
-4.  **Data Persistence Layer**: Firestore NoSQL database, Firebase Authentication, temporary file storage
+1. **Presentation Layer**: React frontend deployed on Vercel; components include home page, survey page, questions component, navbar, signup page, event manager page, datatable, and so forth.
+2. **Business Logic Layer**: Processes information received from the presentation layer via the Data Access Layer’s Python Flask API with analytics processing via Google Cloud Run. The components that reside in this layer handle negotiation between the user-facing presentation layer and physical architecture in order to accomplish all required business processes – this includes survey analysis (data aggregation, statistics), data validation, user sign-up requests, email domain validation, and downloading survey data.
+3. **Data Access Layer**: Determines where data lives and how components in our system reach other external systems.
+    1. *Physical Architecture Package*: Responsible for communication between system and outside world (internet, cloud provider services). Networking components include CORS configuration, HTTPS encryption, API gateway to Flask, Firebase/GoogleCloudRun firewalls, and static hosting of our web apps. DeFirebase integration (Admin SDK, Auth, Firestore Client) with networking/security.
+4. **Data Persistence Layer**: Firestore NoSQL database, Firebase Authentication, temporary file storage
 
 ### Diagram Summary Table
 
@@ -250,15 +253,13 @@ We modeled VAI’s data system as a traditional 4-tier architecture pattern that
 | Entity Relationship Diagram - Survey Responses | US 11, 14, 06, 09, 08, 10, 07, 12, 17, | Security Implementation, database implementation, Multilingual Support, Process Data for Analytics, Data Visualization, Survey filtered by Installation | Installation attributes ‘id’, ‘title’, and ‘location’ drive admin selection UI, and QR-deep link. Survey Version for A/B testing iteration (Planned Sprint 4). Data capture points in JSON, processing and displaying exportable CSV/PDF |
 | Component – Layered Architecture | All sprints (1–3) | Four layered OO system architecture diagram. | |
 
-
-
 ## Quality Control & Testing
 
 | Test ID | User Story ID | Test Title | Expected Result | Test Type | Status Pass/Fail | Tester Name | Test Date | Sprint |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | T-001 | US-07 | Survey Question Validation | Required questions must be answered before proceeding | Unit Test | Pass | Vitaliy | Nov 8, 2025 | Sprint 2 |
 | T-002 | US-07 | Survey Progress Indicator | Progress bar updates correctly as user moves through survey | Functional Test | Fail | Denia | Nov 8, 2025 | Sprint 2 |
-| T-003 | US-11 | Domain Restriction Validation | Non-@vai.org emails are rejected during signup | Functional Test | Pass | Bukola | Nov 10, 2025 | Sprint 3 |
+| T-003 | US-11 | Domain Restriction Validation | <Non-@vai.org> emails are rejected during signup | Functional Test | Pass | Bukola | Nov 10, 2025 | Sprint 3 |
 | T-004 | US-10 | Mock Data Generation Script | Script generates 30+ realistic survey responses | Functional Test | Pass | Vitaliy | Nov 9, 2025 | Sprint 2 |
 | T-005 | US-12 | Dashboard KPI Calculation | KPIs (sentiment, counts, totals) calculate and display correctly | Integration Test | Pass | Wylie | Nov 11, 2025 | Sprint 3 |
 | T-006 | US-14 | Data Filtering by Installation | Admin can filter responses by installation name and date range without errors | Functional Test | Pass | Vitaliy | Nov 12, 2025 | Sprint 3 |
@@ -294,6 +295,7 @@ We modeled VAI’s data system as a traditional 4-tier architecture pattern that
 Our codebase follows industry-standard practices:
 
 **Frontend (React)**:
+
 - Component-based architecture with functional components and hooks
 - Consistent file naming: PascalCase for components, camelCase for utilities
 - Centralized state management with React Context (AuthContext)
@@ -303,6 +305,7 @@ Our codebase follows industry-standard practices:
 - Typescript Refactoring: All componenets use consistent JSX. Team 1 reccomended TS; we created the migration infrastructure. Additionally, a Typescript based dashboard was created, but refactoring halted due to time constraints. Codebase has TS migration files+utils in repository's /docs folder.
 
 **Backend (Python Flask)**:
+
 - Blueprint-based modular routing
 - Separation of concerns: routes, models, utilities, config
 - Type hints where applicable
@@ -310,6 +313,7 @@ Our codebase follows industry-standard practices:
 - Firebase Admin SDK for server-side security
 
 **Version Control**:
+
 - Commit often, always include a commit message
 - Feature branch workflow (main → Proto → ProtoLiveTemp (rapid iteration branch) → ExecutionPhase (Sprint 3 dedicated branch))
 - .gitignore properly configured to exclude .env and firebase_key.json
@@ -325,7 +329,6 @@ See **README.md(?)** for comprehensive deployment guides covering:
 - CORS configuration for cross-origin requests
 - Environment variable management
 
-
 ## Repository Transition Strategy
 
 ### Current State
@@ -340,16 +343,19 @@ During the Sprint 5, the system grew significantly beyond the scope and architec
 **Option A — Merge Sprint 5 Into the Original POC Repository (iden-a/VAI-DataSystem)**
 
 **Pros**
+
 - **Single historical location:** All project phases exist in one place.
 - **No new repo setup:** Avoids initial administration work.
 - **POC lineage preserved:** Maintains visual continuity in project history.
 
 **Cons**
+
 - **High merge complexity and breakage risk:** The POC codebase contains outdated dependencies, deprecated components, and a fundamentally different architecture. Merging would require extensive conflict resolution and risks breaking CI/CD, backend routing, and authentication flows.
 - **Ambiguous authority:** The POC repository was never intended as the production system. Keeping it as the source of truth confuses future developers.
 - **Ownership concerns:** The repository is not under VAI’s control. It is currently owned by a student developer and cannot be governed at an organizational level.
 
 **Risk Summary for Option A**
+
 - **High technical risk** (incompatible architectures, broken merges)
 - **High governance risk** (VAI does not own its system)
 - **Operational uncertainty** (future teams unsure which repo is authoritative)
@@ -359,16 +365,19 @@ During the Sprint 5, the system grew significantly beyond the scope and architec
 Our working repository contains the fully functional execution-phase system, including frontend, backend, analytics, GCR deployment files, and all technical documentation.
 
 **Pros**
+
 - **Technically accurate and production-ready:** This is the only repository that reflects the complete, working data system.
 - **Minimal transition risk:** No merging, rewriting, or code reorganization required.
 - **Preserves working CI/CD integrations:** Vercel and Google Cloud Run pipelines remain intact.
 - **Immediate continuity for future teams:** The next development team inherits a clean, modern, fully documented codebase.
 
 **Cons**
+
 - **Currently under a personal namespace:** It must eventually be transferred out of BreatheRight’s account.
 - **Requires one administrative step:** Ownership transfer to VAI’s GitHub organization must be coordinated.
 
 **Risk Summary for Option B**
+
 - **Low technical risk** (system already stable and deployed)
 - **Low operational risk** (future developers can begin immediately)
 - **Single administrative dependency** (ownership transfer)
@@ -376,21 +385,25 @@ Our working repository contains the fully functional execution-phase system, inc
 ### Transitional Risk Assessment
 
 **1. GitHub Merge/Migration Risks**
+
 - Merge conflicts between outdated POC code and execution-phase system.
 - Potential breakage of backend routing, authentication, or Cloud Run build steps.
 - Pipeline disruption if repository references change unexpectedly.
 
 **2. Deployment and Traffic Risks**
+
 - Incorrect configuration during repository transfer may interrupt GCR/Vercel deployments.
 - High survey traffic or real-time analytics load could expose untested operational bottlenecks.
 - Misconfigured service accounts or API keys may lock out the next team.
 
 **3. User Use-Case Edge Case Risks**
+
 - Users accessing outdated URLs if repo environment variables are not reconnected.
 - QR codes pointing to outdated deployment links.
 - Admins experiencing login failures if Firebase rules are not properly migrated.
 
 **4. Documentation Transition Risks**
+
 - Missing setup steps or lost environment keys could slow onboarding of future developers.
 - CI/CD pipeline secrets must be reconnected to whichever repository becomes official.
 
@@ -399,6 +412,7 @@ Our working repository contains the fully functional execution-phase system, inc
 **We recommend Option B: Designate our current execution-phase repository as the official system repository.**
 
 **Why Option B Is the Best Choice**
+
 - It is **already production-ready** and accurately represents the deployed system.
 - It avoids the **major technical and merging risks** presented by Option A.
 - It enables **clean, immediate adoption** by the next development team.
@@ -413,6 +427,7 @@ Once the project is fully completed and ready for organizational ownership:
 **VAI should create a dedicated GitHub Organization account and transfer the repository into it.**
 
 This will:
+
 - Centralize ownership under VAI
 - Eliminate dependence on a student team’s account
 - Provide structured governance, permissions, and security
@@ -423,6 +438,7 @@ This will:
 If the next development phase continues from our team’s working repository (BreatheRight/VAI-DataSystem-PhaseTwo), the following checklist ensures a complete and stable hand-off for future developers and VAI stakeholders.
 
 **1. Repository Transfer and Cleanup**
+
 - Transfer ownership of the repository from our team’s account to a VAI-controlled GitHub account.
 - Update repository visibility, access privileges, and branch protection rules.
 - Archive the original POC repository (iden-a/VAI-DataSystem) with a clear **deprecation notice** linking to the new active repository.
@@ -431,6 +447,7 @@ If the next development phase continues from our team’s working repository (Br
 
 **2. Documentation Completion**
 We must ensure all system documentation is complete, accessible, and stored within the repo:
+
 - Final system architecture documentation (frontend, backend, and infrastructure).
 - Deployment guides and cloud configuration instructions (Vercel, Google Cloud Run).
 - Full API documentation (endpoints, request/response structures, error handling).
@@ -440,12 +457,14 @@ We must ensure all system documentation is complete, accessible, and stored with
 - Performance optimization notes and scaling expectations for real-world foot traffic.
 
 **3. Review and Verification of Deployment Workflows**
+
 - Verify CI/CD pipelines for both frontend (Vercel) and backend (GCR) continue functioning after transfer.
 - Update any GitHub webhooks tied to deployment providers.
 - Validate that service accounts, API keys, and environment variables remain properly configured.
 
 **4. Migration Risk Mitigation**
 To reduce risk as the system moves between teams and accounts:
+
 - Confirm no sensitive credentials were ever pushed to GitHub.
 - Ensure .env files, Firebase keys, and service accounts follow secure storage guidelines.
 - Test admin login, survey submission, and analytics workflows end-to-end post-transfer.
@@ -454,6 +473,7 @@ To reduce risk as the system moves between teams and accounts:
 
 **5. Known Issues and Technical Debt**
 Document all known issues so the next team is not blindsided:
+
 - Deferred items requiring a VAI-controlled Google Account (PMP ID 13, 17, 20).
 - Any temporary workarounds or commented-out code.
 - Performance constraints discovered during testing or the live demonstration.
@@ -461,6 +481,7 @@ Document all known issues so the next team is not blindsided:
 
 **6. Recommendations and Roadmap for Future Development**
 Provide successors with a clear starting point:
+
 - Recommended next features such as A/B testing support, multilingual UI, and role-based analytics views.
 - Suggestions for upgrading dependencies (Firebase, Flask, React, Chart.js).
 - Technical roadmap for scalability if VAI installations expand.
@@ -468,6 +489,7 @@ Provide successors with a clear starting point:
 
 **7. Final Validation Before Handoff**
 Before the repository is officially transferred:
+
 - Run full integration tests across all major workflows.
 - Verify backups and Firestore rules are correctly configured.
 - Test event management CRUD, filtering, export tools, and analytics dashboards.
@@ -476,7 +498,6 @@ Before the repository is officially transferred:
 **Conclusion**
 
 Under **Option B**, our repository already contains the complete execution-phase system, including backend services, frontend application, and deployment pipelines. This checklist ensures the handoff is smooth, secure, fully documented, and ready for the next development team to build upon without confusion or technical risk.
-
 
 ## Project Management
 
@@ -497,6 +518,42 @@ Under **Option B**, our repository already contains the complete execution-phase
 | R-011 | Lack of stakeholder feedback delaying requirements clarification | High | Medium | Developed basic POC wireframes and team assumptions; documented open questions for future sprints | Ongoing |
 | R-012 | Team member availability during Thanksgiving week | High | Low | Accelerated Sprint 3 timeline to complete before Nov 15 | Resolved |
 | R-013 | Vercel deployment failures due to environment variable misconfiguration | Low | Medium | Created detailed deployment guide in MACOS-SETUP.md with step-by-step env setup | Resolved |
+| R-14  | **Partial Survey Submission Policy Undefined** - Current system only stores complete surveys. No data captured if user abandons mid-survey. Decision needed on whether to implement incremental save functionality. | Business Decision / Data Strategy | High | Medium | This is a significant data quality and analytics risk. Two options: (1) Demand full question set completion, lose partial data if survey exited (this is the current state of system); (2) Allow partial saves, capture drop-off analytics, requires null-handling logic, implmenet cache state, research and test best practices for handling incomplete input field data to confirm | Deferred |
+
+### Unresolved Business Decisions
+
+#### Partial Survey Submissions: Data Integrity vs. Completion Rates
+
+**Current Implementation:**
+
+- Survey submissions only saved to Firestore upon complete question set completion
+- User exits (browser close, Quick Exit button, navigation away) result in **zero data capture**
+- localStorage does not persist answers across sessions
+- Future dev team focused functional feature: A "Quick Exit" button in top-right corner enables DevOps testing workflows (quickly reset survey to test new questions/formats)
+
+**Trade-offs:**
+
+| Approach | Pros | Cons |
+|----------|------|------|
+| **Require Complete Surveys** (Current) | • Clean, complete datasets<br/>• No missing data handling<br/>• Simpler statistical analysis<br/>• Quick Exit useful for admin testing | • Lose all data from abandoned surveys<br/>• No drop-off point analytics<br/>• Higher perceived friction for time-constrained users |
+| **Allow Partial Submissions** | • Higher response rates<br/>• Analyze where users drop off<br/>• More inclusive (capture partial engagement)<br/>• Better completion funnel insights | • Requires null/missing data handling<br/>• May skew metrics if many incomplete<br/>• Adds complexity to analytics queries<br/>• localStorage.clear() must be removed |
+
+**Technical Implementation Considerations:**
+
+If stakeholders choose to allow partial submissions:
+
+1. Remove `localStorage.clear()` on page load in survey components
+2. Implement incremental Firestore writes (save after each question)
+3. Add `completionStatus` field to survey documents: `"partial"` or `"complete"`
+4. Update analytics queries to filter by completion status
+5. Add minimum completion threshold logic (e.g., require 50% of questions)
+6. Modify Quick Exit button to save progress before exit (or add separate "Discard" vs "Save & Exit" options)
+
+**Recommendation for Next Team:**
+
+- Conduct stakeholder workshop to determine priority: data volume vs. data completeness
+- If enabling partial saves, consider minimum viable completion (e.g., demographics + 3 questions)
+- Document decision in `/docs/handoff/SURVEY-SUBMISSION-POLICY.md`
 
 ### Stakeholder Questions and Action Items
 
@@ -536,6 +593,7 @@ Under **Option B**, our repository already contains the complete execution-phase
 16. Assuming goal of supplementing narrative-driven impact reporting with quantitative data, what are the top 3-5 metrics VAI wants to highlight to funders and partners?
 
 ***
+
 ## Planned Backlog Itemlist Table
 
 | Forward ID | Task | Role | Notes |
@@ -586,50 +644,52 @@ Under **Option B**, our repository already contains the complete execution-phase
 ***
 
 **Concluding Executive Summary**: Using latest research, discuss how the mobile survey is one part of a larger data system that will ensure Van Alen Institute is able to stride into the future with both its current narrative driven impact reporting as well as data-driven impact reporting. Note Van Alen's SWOT analysis, optimistic view, professional consulting points about certain aspects of the system (e.g, what kind of questions are most succesful and why using the new research, how to properly enable management to act on data, assigning a common pain point to one person at Van Alen to work on resolving rather than leaving it as a group effort to tend to, note the other data collection possibilities like paper suverys or notes/feedback from Van Alen's open space meetings at their headquarters).
+
 ## Works Cited
 
-1. Kitsaras, George, et al. "An Interactive Text Message Survey as a Novel Assessment for Bedtime Routines in Public Health Research: Observational Study." JMIR Public Health and Surveillance, vol. 6, no. 4, 2020, article e15524. PubMed Central, https://doi.org/10.2196/15524.
+1. Kitsaras, George, et al. "An Interactive Text Message Survey as a Novel Assessment for Bedtime Routines in Public Health Research: Observational Study." JMIR Public Health and Surveillance, vol. 6, no. 4, 2020, article e15524. PubMed Central, <https://doi.org/10.2196/15524>.
 
-2. Nova Scholar Team. "The Comprehensive Guide to Data Gathering in Psychology." Nova Scholar, 25 Oct. 2025, www.novascholar.org/blog-posts/the-comprehensive-guide-to-data-gathering-in-psychology. Accessed 17 Nov. 2025.
+2. Nova Scholar Team. "The Comprehensive Guide to Data Gathering in Psychology." Nova Scholar, 25 Oct. 2025, <www.novascholar.org/blog-posts/the-comprehensive-guide-to-data-gathering-in-psychology>. Accessed 17 Nov. 2025.
 
-3. Groff, Elizabeth, et al. "Comparing Responses from a Paper-Based Survey with a Web-Based Survey in Environmental Criminology." Crime Prevention and Community Safety, vol. 26, no. 4, 2024, pp. 405-22, https://doi.org/10.1057/s41300-024-00204-9.
+3. Groff, Elizabeth, et al. "Comparing Responses from a Paper-Based Survey with a Web-Based Survey in Environmental Criminology." Crime Prevention and Community Safety, vol. 26, no. 4, 2024, pp. 405-22, <https://doi.org/10.1057/s41300-024-00204-9>.
 
-4. Jones, Emily. “A Case Study of an International Exhibition Incorporating QR Codes.” JSTOR, ITHAKA, 2013, www.jstor.org/stable/48540045.
+4. Jones, Emily. “A Case Study of an International Exhibition Incorporating QR Codes.” JSTOR, ITHAKA, 2013, <www.jstor.org/stable/48540045>.
 
 5. “Migrating to React Native’s New Architecture.” Shopify Engineering, Shopify, 2025, shopify.engineering/react-native-new-architecture.
 
 6. Croft, B., et al. "Advanced Interactive Style Guide for Design Consistency." SpringerLink, Springer, 2021, link.springer.com/chapter/10.1007/978-3-030-80091-8_86.
 
-7. Bughin, Jacques. "Brand Success in an Era of Digital Darwinism." McKinsey & Company, McKinsey, 31 Jan. 2015, www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/brand-success-in-an-era-of-digital-darwinism.
+7. Bughin, Jacques. "Brand Success in an Era of Digital Darwinism." McKinsey & Company, McKinsey, 31 Jan. 2015, <www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/brand-success-in-an-era-of-digital-darwinism>.
 
-8. "Branding." McKinsey & Company, McKinsey, 2025, www.mckinsey.com/capabilities/growth-marketing-and-sales/how-we-help-clients/branding.
+8. "Branding." McKinsey & Company, McKinsey, 2025, <www.mckinsey.com/capabilities/growth-marketing-and-sales/how-we-help-clients/branding>.
 
-9. "Adopting an Ecosystem View of Business Technology." McKinsey & Company, McKinsey, 13 Feb. 2017, www.mckinsey.com/capabilities/mckinsey-digital/our-insights/adopting-an-ecosystem-view-of-business-technology.
+9. "Adopting an Ecosystem View of Business Technology." McKinsey & Company, McKinsey, 13 Feb. 2017, <www.mckinsey.com/capabilities/mckinsey-digital/our-insights/adopting-an-ecosystem-view-of-business-technology>.
 
-10. “Digital Community Engagement Case Studies.” Local Government Association, 2024, www.local.gov.uk/pas/plan-making/case-studies/digital-community-engagement-case-studies.
+10. “Digital Community Engagement Case Studies.” Local Government Association, 2024, <www.local.gov.uk/pas/plan-making/case-studies/digital-community-engagement-case-studies>.
 
-11. “Case Study: Building an Equitable Community Engagement Practice.” City of Philadelphia, 25 Apr. 2022, www.phila.gov/2022-04-25-case-study-building-an-equitable-community-engagement-practice/. Updated 2025.
+11. “Case Study: Building an Equitable Community Engagement Practice.” City of Philadelphia, 25 Apr. 2022, <www.phila.gov/2022-04-25-case-study-building-an-equitable-community-engagement-practice/>. Updated 2025.
 
-12. “From Community Engagement to Ownership: Tools and Case Studies.” Urban Sustainability Directors Network, 2023, www.usdn.org/uploads/cms/documents/community_engagement_to_ownership_-_tools_and_case_studies_final.pdf.
+12. “From Community Engagement to Ownership: Tools and Case Studies.” Urban Sustainability Directors Network, 2023, <www.usdn.org/uploads/cms/documents/community_engagement_to_ownership_-_tools_and_case_studies_final.pdf>.
 
-13. (https://council.nyc.gov/brad-lander/wp-content/uploads/sites/40/2021/11/Gowanus-POA-2021-11-10-Final-Clean.pdf)
+13. (<https://council.nyc.gov/brad-lander/wp-content/uploads/sites/40/2021/11/Gowanus-POA-2021-11-10-Final-Clean.pdf>)
 
-14. (https://nycfuture.org/research/surveying-nycs-arts-after-covid)
+14. (<https://nycfuture.org/research/surveying-nycs-arts-after-covid>)
     - Great example of organizaiton using surveys to collect data on arts organizations post-COVID and using that data to inform policy recommendations. * Data driven narrative report with clear visualizations and actionable insights.
 
-15. (https://www.vanalen.org/project/dear-neighbor/)
-    - Example of Van Alen's previous work in community engagement and data collection through surveys with physical QR code scans. "Each mural is paired with audio stories by longtime residents, students, small business owners and community leaders, who share what it’s like to live in a flood-prone neighborhood, the aftermath of storms and the emotional toll of disaster. Many installations feature QR codes linking to the project’s website, offering a deeper look at the stories and how the work came together." - quote from (https://www.brooklynpaper.com/gowanus-art-project-flooding-community-resilience/)
+15. (<https://www.vanalen.org/project/dear-neighbor/>)
+    - Example of Van Alen's previous work in community engagement and data collection through surveys with physical QR code scans. "Each mural is paired with audio stories by longtime residents, students, small business owners and community leaders, who share what it’s like to live in a flood-prone neighborhood, the aftermath of storms and the emotional toll of disaster. Many installations feature QR codes linking to the project’s website, offering a deeper look at the stories and how the work came together." - quote from (<https://www.brooklynpaper.com/gowanus-art-project-flooding-community-resilience/>)
 
-16. (https://www.vanalen.org/project/open-space/)
+16. (<https://www.vanalen.org/project/open-space/>)
     - Example of Van Alen's previous work in community engagement through open space meetings at their headquarters. "Open Space is a series of free, public conversations hosted at Van Alen Institute that bring together diverse voices to discuss pressing issues related to the built environment. Each event features a keynote speaker followed by small group discussions, allowing attendees to share their perspectives and ideas in an intimate setting."
 
-17. (https://nycfuture.org/pdf/CUF_CDFI_Report_FINAL.pdf)
+17. (<https://nycfuture.org/pdf/CUF_CDFI_Report_FINAL.pdf>)
     - Example of organization using surveys to collect data on community development financial institutions (CDFIs) in New York City and using that data to inform policy recommendations. * Data driven narrative report with clear visualizations and actionable insights.
 
-18. (https://www.typeform.com/connect/google-analytics)
+18. (<https://www.typeform.com/connect/google-analytics>)
     -
 
 ## Appendix
+
 Appendix A: Demo Screenshots & Tutorials
 (Screenshots from live demo on November 10, 2025 are available in the repository at FormalDeliverableDocs/demo-screenshots/)
 
