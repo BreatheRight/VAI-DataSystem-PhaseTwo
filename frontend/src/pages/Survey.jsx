@@ -5,6 +5,7 @@ import API from '../utils/apiClient';
 import { normalizeSlug } from '../utils/slugUtils';
 import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import surveyQuestionsFallback from '../data/surveyQuestions';
 
 export default function SurveyPage() {
   const [searchParams] = useSearchParams();
@@ -22,6 +23,7 @@ export default function SurveyPage() {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
 
   // Fetch installation data and questions
   useEffect(() => {
@@ -33,44 +35,70 @@ export default function SurveyPage() {
       }
 
       try {
+        setLoading(true);
+        setLoadingInstallation(true);
+        setFetchError('');
+
         // SIMPLE FIX: Fetch installations directly from Firestore (no backend dependency)
         // Deployed backend is missing multiple endpoints, so bypass it entirely for installation lookup
         console.log('Fetching installations from Firestore for identifier:', identifier);
-        
+
         const installationsRef = collection(db, 'installations');
-        const snapshot = await getDocs(installationsRef);
-        const installations = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
 
-        console.log('Fetched installations from Firestore:', installations);
+        let matchedInstallation = null;
 
-        // Find matching installation by numericId (from QR code) or slug (from URL)
-        const installation = installations.find(inst =>
-          inst.numericId === identifier ||
-          inst.slug === identifier ||
-          inst.id === identifier
-        );
+        if (rawId) {
+          const numericQuery = query(
+            installationsRef,
+            where('numericId', '==', String(rawId).trim())
+          );
+          const numericSnapshot = await getDocs(numericQuery);
+          if (!numericSnapshot.empty) {
+            const doc = numericSnapshot.docs[0];
+            matchedInstallation = { id: doc.id, ...doc.data() };
+          }
+        }
 
-        if (!installation) {
+        if (!matchedInstallation && normalizedSlug) {
+          const slugQuery = query(
+            installationsRef,
+            where('slug', '==', normalizedSlug)
+          );
+          const slugSnapshot = await getDocs(slugQuery);
+          if (!slugSnapshot.empty) {
+            const doc = slugSnapshot.docs[0];
+            matchedInstallation = { id: doc.id, ...doc.data() };
+          }
+        }
+
+        if (!matchedInstallation) {
           console.error('Installation not found matching identifier:', identifier);
-          navigate('/installation-selection');
+          setInstallationData(null);
+          setFetchError('Installation not found');
+          setQuestions([]);
           return;
         }
 
-        setInstallationData(installation);
-        console.log('Loaded installation:', installation);
+        setInstallationData(matchedInstallation);
+        console.log('Loaded installation:', matchedInstallation);
 
         // Skip canonical redirect - just load the survey
 
-        // Fetch questions using the slug
-        const questionsResponse = await API.get(`/survey-questions?installationId=${installation.slug}`);
-        console.log('Fetched questions for installation:', installation.slug, questionsResponse.data);
-        setQuestions(questionsResponse.data || []);
+        const firestoreQuestions = Array.isArray(matchedInstallation.surveyQuestions)
+          ? matchedInstallation.surveyQuestions.filter(Boolean)
+          : [];
+
+        if (firestoreQuestions.length > 0) {
+          setQuestions(firestoreQuestions);
+        } else {
+          console.warn('No surveyQuestions in Firestore; using fallback set');
+          setQuestions(surveyQuestionsFallback);
+        }
 
       } catch (err) {
         console.error('Error fetching installation or questions:', err);
+        setInstallationData(null);
+        setFetchError('Installation not found');
         setQuestions([]);
       } finally {
         setLoading(false);
@@ -79,7 +107,7 @@ export default function SurveyPage() {
     };
 
     fetchInstallationAndQuestions();
-  }, [identifier, navigate]);
+  }, [identifier, navigate, normalizedSlug, rawId]);
 
   const handleSurveyComplete = async (answers) => {
     if (!installationData) return;
@@ -120,7 +148,7 @@ export default function SurveyPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-vai-white">
         <div className="text-center">
-          <p className="text-vai-grayText font-medium mb-4">Installation not found</p>
+          <p className="text-vai-grayText font-medium mb-4">{fetchError || 'Installation not found'}</p>
           <button
             onClick={() => navigate('/installation-selection')}
             className="text-vai-orange hover:underline"
