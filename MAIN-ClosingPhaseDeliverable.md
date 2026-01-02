@@ -22,11 +22,11 @@
 5. Quality Assurance & Best Practices
     - Risk Register
     - Testing
-6. Change Managemen
+6. Change Management
     - Handoff Planning
     - Respository Transition Strategy
     - Future Roadmap
-7.. Appendix
+7. Appendix
     - Full Component Status List
     - Full Technology Stack List
     - Wireframes & Demos
@@ -522,7 +522,7 @@ Under **Option B**, our repository already contains the complete execution-phase
 
 ### Unresolved Business Decisions
 
-#### Partial Survey Submissions: Data Integrity vs. Completion Rates
+#### 1. Partial Survey Submissions: Data Integrity vs. Completion Rates
 
 **Current Implementation:**
 
@@ -554,6 +554,12 @@ If stakeholders choose to allow partial submissions:
 - Conduct stakeholder workshop to determine priority: data volume vs. data completeness
 - If enabling partial saves, consider minimum viable completion (e.g., demographics + 3 questions)
 - Document decision in `/docs/handoff/SURVEY-SUBMISSION-POLICY.md`
+
+2. **Donations UX**
+- Current flow allows users to navigate to the Van Alen main page "Support our Work" which both at the landing page with an inconscpiscious text in header as well as at survey submisison Thank You page which provides both a way for users to redirect to the "Support our Work" page and directly to the external donation page to make a donation with just one click.
+
+Reccomendation: Think in terms of guest checkout flow - minimize barriers to making a donaton. For instance, users should not have to signup and have a valid account with Van Alen to donate. To go a step further, print QR codes to donaton page on fabric that can be embeded into physical installaton space per creative director's discretion. See 
+***
 
 ### Stakeholder Questions and Action Items
 

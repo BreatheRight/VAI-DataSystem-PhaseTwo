@@ -2,10 +2,15 @@
 **/dist/
 .github/AGENT.md
 **/.env
-**/.venv
+.venv/Include
+.venv/Lib
+.venv/Scripts
+.venv/.gitignore
+.venv/pyvenv.cfg
 /__pycache__/
 *.pyc
 .DS_Store
 .idea/
 **/dist/
 ** /.vscode/
+node_modules/*
